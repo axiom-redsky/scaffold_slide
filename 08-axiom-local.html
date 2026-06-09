@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axiom AI — 왜 폐쇄망·로컬인가</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/08-axiom-local.css">
+</head>
+<body>
+  <div class="stage">
+    <header class="head">
+      <div class="eyebrow">The Axiom · 왜 폐쇄망인가</div>
+      <h2>코드는 <span class="em">회사 밖으로 나가지 않습니다</span></h2>
+      <p class="lede">
+        가장 큰 이유는 <b>보안</b>입니다. 모든 처리는 사내 폐쇄망 <b>로컬 sLLM</b>에서 이뤄지고,
+        외부 클라우드로는 단 한 줄도 전송되지 않습니다.
+        LLM 백엔드는 <b>OpenAI 호환 API</b>나 <b>Ollama</b>로 연동하며, 모델은 사내 환경에 맞춰 교체합니다.
+      </p>
+    </header>
+
+    <!-- 데이터 흐름도 -->
+    <div class="flow">
+
+      <!-- 사내 폐쇄망 영역 -->
+      <div class="zone internal">
+        <div class="zlabel"><span class="lock">🔒</span> 사내 폐쇄망 (On-Prem)</div>
+        <div class="inner">
+          <div class="node client">
+            <div class="nico">✦</div>
+            <div class="nname">VSCode · Axiom</div>
+            <div class="nsub">개발자 코드</div>
+          </div>
+
+          <div class="pipes">
+            <div class="lane out">
+              <span class="ltag">코드 · 컨텍스트</span>
+              <span class="rail"></span>
+              <span class="pkt"></span><span class="pkt"></span><span class="pkt"></span><span class="pkt"></span>
+              <span class="ar">▶</span>
+            </div>
+            <div class="lane back">
+              <span class="ltag">생성 · 안전한 diff</span>
+              <span class="rail"></span>
+              <span class="pkt"></span><span class="pkt"></span><span class="pkt"></span><span class="pkt"></span>
+              <span class="ar">◀</span>
+            </div>
+          </div>
+
+          <div class="node server" id="serverNode" role="button" tabindex="0"
+               aria-expanded="false" aria-controls="serverPop">
+            <span class="info-dot" aria-hidden="true">!</span>
+            <div class="nico">▦</div>
+            <div class="nname">사내 sLLM 서버</div>
+            <div class="nsub">on-prem GPU</div>
+            <span class="tap-hint">클릭 · 운영 이슈</span>
+
+            <!-- 운영 이슈 popover -->
+            <div class="issue-pop" id="serverPop" role="dialog" aria-label="사내 sLLM 서버 운영 이슈">
+              <div class="ip-head">
+                <span class="ip-ico">▦</span>
+                <div class="ip-htext">
+                  <div class="ip-title">사내 sLLM 서버 — 운영 이슈</div>
+                  <div class="ip-sub">도입 전 점검 포인트</div>
+                </div>
+                <button class="ip-x" id="serverPopX" aria-label="닫기">✕</button>
+              </div>
+              <div class="ip-body">
+                <div class="ip-item">
+                  <span class="ip-tag warn">① 서버 미제공 시</span>
+                  <p>고객사가 sLLM 서버(GPU)를 <b>제공하지 않는 경우</b>, 수행팀이 <b>자체 서버를 반입</b>할지 사전 협의가 필요합니다. 비용·반입·보안 승인을 도입 전 점검 항목으로 다룹니다.</p>
+                </div>
+                <div class="ip-item">
+                  <span class="ip-tag ok">② 서버 장애 시</span>
+                  <p>LLM 서버가 응답하지 않아도 <b>작업은 끊기지 않습니다.</b> Axiom은 <b>오프라인 폴백</b>으로 전환해 scaffold 기반 <b>가이드·코드 예제(스텁)</b>를 대신 보여줍니다.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 방화벽 / 차단 -->
+      <div class="firewall">
+        <span class="blk-pkt"></span>
+        <div class="fw-wall"></div>
+        <div class="fw-badge">⛨ 외부 전송 차단</div>
+      </div>
+
+      <!-- 외부 클라우드 (차단됨) -->
+      <div class="zone external">
+        <div class="zlabel">외부 클라우드</div>
+        <div class="node ext-node">
+          <div class="nico">☁</div>
+          <div class="nname">ChatGPT · Copilot</div>
+          <div class="nsub">전송 안 함</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 지원 백엔드 -->
+    <div class="backends">
+      <span class="be-label">지원 백엔드</span>
+      <span class="be">OpenAI 호환 API</span>
+      <span class="be">Ollama</span>
+      <span class="be">qwen3-coder <em>기본 · 교체 가능</em></span>
+    </div>
+  </div>
+
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){closePop();document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+
+  /* ── 사내 sLLM 서버 운영 이슈 popover ── */
+  var node=document.getElementById('serverNode');
+  var pop=document.getElementById('serverPop');
+  function openPop(){node.classList.add('open');node.setAttribute('aria-expanded','true');}
+  function closePop(){if(!node)return;node.classList.remove('open');node.setAttribute('aria-expanded','false');}
+  function togglePop(e){e.stopPropagation();node.classList.contains('open')?closePop():openPop();}
+  if(node){
+    node.addEventListener('click',togglePop);
+    node.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();togglePop(e);}});
+    pop.addEventListener('click',function(e){e.stopPropagation();});
+    document.getElementById('serverPopX').addEventListener('click',function(e){e.stopPropagation();closePop();});
+    document.addEventListener('click',closePop);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')closePop();});
+  }
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axiom AI — 한마디로 무엇인가</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/07-axiom-what.css">
+</head>
+<body>
+  <div class="stage">
+    <header class="head">
+      <div class="eyebrow">The Axiom · 한마디로</div>
+      <h2>Axiom은 <span class="em">scaffold를 이해하는</span><br>VSCode AI 개발 어시스턴트</h2>
+      <p class="lede">
+        사내 <b>폐쇄망 sLLM</b> 위에서 동작하는
+        <b>Scaffold-Aware Developer Assistant</b> — VSCode 사이드바에서 대화하면
+        우리 표준에 맞는 코드를 만들고 고칩니다.
+      </p>
+    </header>
+
+    <!-- 결합 애니메이션: VSCode  +  Axiom(Extension)  →  하나 -->
+    <div class="combine">
+
+      <!-- VSCode 창 -->
+      <section class="vscode" aria-label="VSCode">
+        <div class="titlebar">
+          <i class="dot r"></i><i class="dot y"></i><i class="dot g"></i>
+          <span class="tt">LoginForm.tsx — react-app-scaffold</span>
+        </div>
+        <div class="vsbody">
+          <!-- 액티비티 바 (Axiom 아이콘이 여기 도킹) -->
+          <nav class="activity">
+            <span class="ai-ico">▤</span>
+            <span class="ai-ico">⌕</span>
+            <span class="ai-ico">⎇</span>
+            <span class="ai-ico slot" id="slot">✦</span>
+          </nav>
+
+          <!-- 코드 에디터 -->
+          <main class="editor">
+            <div class="gutter"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+            <pre class="code-area"><span class="cl"><span class="kw">import</span> { Button, Input } <span class="kw">from</span> <span class="st">'@axiom/components/ui'</span></span>
+<span class="cl"></span>
+<span class="cl"><span class="kw">export function</span> <span class="fn">LoginForm</span>() {</span>
+<span class="cl">  <span class="kw">const</span> { form } = <span class="vr">$util</span>.<span class="fn">useForm</span>()</span>
+<span class="cl">  <span class="kw">return</span> <span class="tg">&lt;Input</span> {...form} <span class="tg">/&gt;</span></span>
+<span class="cl">}</span></pre>
+          </main>
+
+          <!-- Axiom 사이드바 채팅 (확장 설치 후 오른쪽에서 열림) -->
+          <aside class="sidebar" aria-label="Axiom 채팅">
+            <div class="panel-head"><span class="logo">✦</span> AXIOM</div>
+            <div class="chat">
+              <div class="msg user">로그인 폼 컴포넌트 만들어줘</div>
+              <div class="msg ai">
+                <div class="ai-tag"><span class="logo">✦</span> Scaffold 표준으로 생성</div>
+                <div class="code">
+                  <span class="ln add">+ import {'{'} Button, Input {'}'} from '@axiom/components/ui'</span>
+                  <span class="ln add">+ const { '{' } form { '}' } = $util.useForm()</span>
+                  <span class="ln ctx">  export function LoginForm() {'{'}</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- 결합 기호 -->
+      <div class="plus">+</div>
+
+      <!-- Axiom 확장(.vsix) 카드 — 날아 들어가 도킹 -->
+      <div class="ext" id="ext">
+        <div class="ext-logo">✦</div>
+        <div class="ext-name">Axiom AI</div>
+        <div class="ext-sub">VSCode Extension · .vsix</div>
+      </div>
+    </div>
+
+    <!-- 핵심 차별점 배지 -->
+    <div class="badges">
+      <span class="badge"><i></i>폐쇄망 · 로컬 sLLM</span>
+      <span class="badge"><i></i>Scaffold-Aware</span>
+      <span class="badge"><i></i>RAG 기반 생성</span>
+      <span class="badge"><i></i>안전한 diff 적용</span>
+    </div>
+  </div>
+
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>

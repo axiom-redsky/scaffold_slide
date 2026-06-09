@@ -1,0 +1,161 @@
+:root{--line:rgba(167,139,250,.13);--line2:rgba(167,139,250,.32);--vio:#A78BFA;--vio2:#C4B5FD}
+body{
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(167,139,250,.09), transparent 55%),
+    radial-gradient(90% 90% at 0% 100%, rgba(94,211,240,.05), transparent 55%),
+    linear-gradient(var(--line) 1px,transparent 1px) 0 0/46px 46px,
+    linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/46px 46px,
+    var(--ink);
+}
+.stage{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;
+  gap:clamp(18px,2.4vw,30px);padding:clamp(34px,5vw,80px) clamp(40px,7vw,110px)}
+
+/* ── header ───────────────────────────── */
+.head{max-width:1100px}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.34em;
+  color:var(--vio);text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:12px;opacity:0;transform:translateX(-12px)}
+.eyebrow::before{content:"07";color:var(--gold);font-weight:500}
+body.in .eyebrow{animation:slin .6s ease forwards .1s}
+
+h2{font-family:"Space Grotesk",sans-serif;font-weight:600;
+  font-size:clamp(28px,3.9vw,50px);letter-spacing:-.02em;line-height:1.06;
+  opacity:0;transform:translateY(18px)}
+body.in h2{animation:rise .7s ease forwards .2s}
+h2 .em{color:var(--vio);text-shadow:0 0 38px rgba(167,139,250,.4)}
+
+.lede{margin-top:14px;max-width:62em;color:var(--muted);
+  font-size:clamp(13px,1.35vw,16px);line-height:1.65;
+  opacity:0;transform:translateY(14px)}
+body.in .lede{animation:rise .7s ease forwards .34s}
+.lede b{color:var(--text);font-weight:600}
+
+/* ── combine stage ────────────────────── */
+.combine{position:relative;display:flex;align-items:center;justify-content:center;
+  flex:0 0 auto}
+
+/* VSCode window */
+.vscode{width:min(880px,72vw);border-radius:12px;overflow:hidden;
+  border:1px solid var(--line2);background:#0d1322;
+  box-shadow:0 40px 110px rgba(0,0,0,.6),0 0 0 1px rgba(167,139,250,.05);
+  opacity:0;transform:translateY(26px) scale(.97)}
+body.in .vscode{animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards .5s}
+
+.titlebar{display:flex;align-items:center;gap:8px;padding:9px 14px;
+  background:#0a1020;border-bottom:1px solid var(--line)}
+.titlebar .dot{width:11px;height:11px;border-radius:50%;background:#2b3656}
+.titlebar .dot.r{background:#ff5f57}.titlebar .dot.y{background:#febc2e}.titlebar .dot.g{background:#28c840}
+.titlebar .tt{margin-left:8px;font-family:"JetBrains Mono",monospace;font-size:11.5px;
+  color:var(--muted);letter-spacing:.04em}
+
+.vsbody{display:flex;height:clamp(196px,24vw,262px)}
+
+/* activity bar */
+.activity{width:46px;flex:0 0 46px;background:#0a1020;border-right:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;gap:20px;padding:16px 0}
+.activity .ai-ico{font-size:17px;color:#46557d;line-height:1}
+.activity .slot{position:relative;color:#46557d;transition:color .4s ease}
+.activity .slot::after{content:"";position:absolute;left:-13px;top:50%;transform:translateY(-50%);
+  width:2px;height:0;background:var(--vio);border-radius:2px;box-shadow:0 0 10px var(--vio)}
+body.in .slot{color:var(--vio2);animation:dock-flash .7s ease 2.25s}
+body.in .slot::after{animation:tab-mark .5s ease forwards 2.35s}
+@keyframes dock-flash{0%{color:#46557d}30%{color:#fff;text-shadow:0 0 22px var(--vio)}100%{color:var(--vio2);text-shadow:0 0 12px rgba(167,139,250,.6)}}
+@keyframes tab-mark{to{height:22px}}
+
+/* Axiom sidebar (opens after install) */
+.sidebar{width:0;flex:0 0 auto;overflow:hidden;background:#0b1124;
+  border-left:1px solid transparent;white-space:nowrap}
+body.in .sidebar{animation:open-side .6s cubic-bezier(.2,.7,.2,1) forwards 2.55s}
+@keyframes open-side{to{width:clamp(180px,22vw,250px);border-left-color:var(--line)}}
+.panel-head{padding:11px 14px;font-family:"JetBrains Mono",monospace;font-size:11px;
+  letter-spacing:.22em;color:var(--vio2);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:8px}
+.logo{color:var(--vio);font-size:13px}
+.chat{padding:13px 12px;display:flex;flex-direction:column;gap:10px}
+.msg{font-size:11.5px;line-height:1.5;border-radius:9px;padding:8px 10px;
+  opacity:0;transform:translateY(8px);white-space:normal}
+body.in .msg.user{animation:rise .5s ease forwards 3.05s}
+body.in .msg.ai{animation:rise .5s ease forwards 3.5s}
+.msg.user{align-self:flex-end;max-width:88%;background:rgba(167,139,250,.16);
+  border:1px solid var(--line2);color:var(--text)}
+.msg.ai{align-self:flex-start;width:100%;background:rgba(255,255,255,.025);
+  border:1px solid var(--line)}
+.ai-tag{display:flex;align-items:center;gap:6px;font-family:"JetBrains Mono",monospace;
+  font-size:9.5px;letter-spacing:.06em;color:var(--muted);margin-bottom:7px}
+.code{font-family:"JetBrains Mono",monospace;font-size:10px;line-height:1.55;
+  display:flex;flex-direction:column;gap:1px}
+.code .ln{display:block}
+.code .add{color:#7ee0a6}.code .ctx{color:var(--muted)}
+
+/* editor */
+.editor{flex:1;display:flex;min-width:0;background:#0d1322}
+.gutter{padding:16px 0;text-align:right;width:34px;flex:0 0 34px;
+  font-family:"JetBrains Mono",monospace;font-size:11px;color:#37446a}
+.gutter span{display:block;line-height:1.7;color:#37446a;padding-right:9px}
+.code-area{padding:16px 16px;font-family:"JetBrains Mono",monospace;
+  font-size:clamp(11px,1.25vw,13.5px);color:var(--text);overflow:hidden}
+.code-area .cl{display:block;opacity:0;transform:translateX(8px)}
+body.in .code-area .cl{animation:slin .5s ease forwards}
+body.in .code-area .cl:nth-child(1){animation-delay:1s}
+body.in .code-area .cl:nth-child(2){animation-delay:1.08s}
+body.in .code-area .cl:nth-child(3){animation-delay:1.16s}
+body.in .code-area .cl:nth-child(4){animation-delay:1.24s}
+body.in .code-area .cl:nth-child(5){animation-delay:1.32s}
+body.in .code-area .cl:nth-child(6){animation-delay:1.4s}
+.code-area .kw{color:var(--vio)}.code-area .st{color:var(--gold)}
+.code-area .fn{color:var(--cyan)}.code-area .vr{color:#7ee0a6}.code-area .tg{color:#8fb4ff}
+
+/* plus sign */
+.plus{position:absolute;left:calc(50% + min(440px,36vw) - 6px);font-family:"Space Grotesk",sans-serif;
+  font-weight:600;font-size:34px;color:var(--vio);opacity:0;transform:scale(.4)}
+body.in .plus{animation:pop .5s cubic-bezier(.2,1.4,.4,1) forwards .8s,plus-out .4s ease forwards 2.05s}
+@keyframes pop{to{opacity:1;transform:scale(1)}}
+@keyframes plus-out{to{opacity:0;transform:scale(.4)}}
+
+/* Axiom extension card — flies in and docks */
+.ext{position:absolute;left:calc(50% + min(490px,40vw));top:50%;
+  width:170px;padding:18px 16px;border-radius:14px;text-align:center;
+  background:linear-gradient(160deg,rgba(167,139,250,.22),rgba(94,211,240,.08));
+  border:1px solid var(--line2);box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 0 1px rgba(167,139,250,.1);
+  transform:translate(0,-50%) scale(1);opacity:0;z-index:5}
+body.in .ext{animation:ext-in .55s ease forwards .95s,ext-dock 1s cubic-bezier(.5,0,.2,1) forwards 1.55s}
+@keyframes ext-in{to{opacity:1}}
+/* travel from right edge into the activity-bar slot, shrinking to a point */
+@keyframes ext-dock{
+  0%{opacity:1;transform:translate(0,-50%) scale(1)}
+  70%{opacity:1}
+  100%{opacity:0;
+    transform:translate(calc(-1 * (min(490px,40vw) + min(440px,36vw) - 6px)),-50%) scale(.06)}
+}
+.ext-logo{font-size:34px;color:var(--vio2);text-shadow:0 0 26px rgba(167,139,250,.7);
+  margin-bottom:8px}
+.ext-name{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:16px;color:var(--text)}
+.ext-sub{margin-top:4px;font-family:"JetBrains Mono",monospace;font-size:9.5px;
+  letter-spacing:.05em;color:var(--muted)}
+
+/* ── badges ───────────────────────────── */
+.badges{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.badge{display:inline-flex;align-items:center;gap:9px;
+  font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.04em;
+  color:var(--text);padding:8px 15px;border-radius:999px;
+  border:1px solid var(--line2);background:rgba(167,139,250,.06);
+  opacity:0;transform:translateY(12px)}
+.badge i{width:7px;height:7px;border-radius:50%;background:var(--vio);
+  box-shadow:0 0 10px var(--vio)}
+body.in .badge{animation:rise .5s ease forwards}
+body.in .badge:nth-child(1){animation-delay:3.7s}
+body.in .badge:nth-child(2){animation-delay:3.82s}
+body.in .badge:nth-child(3){animation-delay:3.94s}
+body.in .badge:nth-child(4){animation-delay:4.06s}
+
+@media (max-width:760px){
+  .sidebar{display:none}
+  .plus,.ext{display:none}
+  .vscode{width:92vw}
+}
+@media (prefers-reduced-motion:reduce){
+  .eyebrow,h2,.lede,.vscode,.msg,.badge,.code-area .cl{opacity:1!important;transform:none!important}
+  .sidebar{width:clamp(180px,22vw,250px)!important;border-left-color:var(--line)!important}
+  .slot{color:var(--vio2)!important}
+  .ext,.plus{display:none}
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axiom AI — RAG로 '우리 표준'을 알고 생성한다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/09-axiom-rag.css">
+</head>
+<body>
+  <div class="stage">
+    <header class="head">
+      <div class="eyebrow">The Axiom · 핵심 RAG</div>
+      <h2>일반 AI는 모르는 <span class="em">"우리 팀 방식"</span>, Axiom은 읽고 만듭니다</h2>
+      <p class="lede">
+        일반 AI는 학습된 <b>일반 지식</b>으로 코드를 짭니다 — 우리 팀 방식은 모릅니다.
+        Axiom은 <b>RAG</b>로 scaffold의 규칙·컴포넌트·유틸 사용법을 정리한 <b>마크다운 지식(corpus)</b>을
+        검색해, 그 근거를 바탕으로 <b>우리 scaffold 방식에 맞는 코드</b>를 생성합니다.
+      </p>
+    </header>
+
+    <!-- ── RAG 파이프라인 ────────────────────────────── -->
+    <div class="rag">
+
+      <!-- 01 · 의도 -->
+      <section class="box s1">
+        <div class="sbadge"><i>01</i> 의도</div>
+        <div class="prompt">
+          <span class="caret">›</span>
+          <span class="typed">"회원 목록 화면 만들어줘"</span>
+        </div>
+        <div class="ssub">개발자의 한 줄</div>
+      </section>
+
+      <!-- connector -->
+      <div class="conn">
+        <span class="rail"></span>
+        <span class="pkt"></span><span class="pkt"></span><span class="pkt"></span>
+        <span class="ar">▶</span>
+      </div>
+
+      <!-- 02 · RAG 검색 -->
+      <section class="box s2">
+        <div class="sbadge"><i>02</i> RAG 검색</div>
+        <div class="corpus" aria-label="scaffold 지식 corpus">
+          <div class="beam"></div>
+          <div class="doc"><span class="dico">▤</span> reset-rules.md</div>
+          <div class="doc hit"><span class="dico">▤</span> shared-ui.md</div>
+          <div class="doc"><span class="dico">▤</span> routing.md</div>
+          <div class="doc hit"><span class="dico">▤</span> util-guide.md</div>
+          <div class="doc"><span class="dico">▤</span> tokens.md</div>
+          <div class="doc hit"><span class="dico">▤</span> domain-ddd.md</div>
+        </div>
+        <div class="evidence">
+          <span class="ev">@/shared/ui</span>
+          <span class="ev">$util</span>
+          <span class="ev">DDD 구조</span>
+        </div>
+        <div class="ssub">corpus(.md) 검색 → 근거 추출</div>
+      </section>
+
+      <!-- connector -->
+      <div class="conn">
+        <span class="rail"></span>
+        <span class="pkt"></span><span class="pkt"></span><span class="pkt"></span>
+        <span class="ar">▶</span>
+      </div>
+
+      <!-- 03 · 근거 기반 생성 -->
+      <section class="box s3">
+        <div class="sbadge"><i>03</i> 근거 기반 생성</div>
+        <div class="code">
+          <div class="cl"><span class="kw">import</span> { Table, Button } <span class="kw">from</span> <span class="hl">'@/shared/ui'</span></div>
+          <div class="cl"><span class="cm">// scaffold 표준 컴포넌트 사용</span></div>
+          <div class="cl"><span class="kw">const</span> { data } = <span class="hl2">$util</span>.api.get(<span class="str">'/members'</span>)</div>
+          <div class="cl"><span class="kw">const</span> rows = <span class="hl2">$util</span>.array.toRows(data)</div>
+          <div class="cl"><span class="cm">// 도메인 구조(DDD)에 맞춰 배치</span></div>
+        </div>
+        <div class="verdict">
+          <span class="vchk">✓</span> 우리 scaffold 방식에 맞는 코드
+        </div>
+        <div class="ssub">"Scaffold-Aware" — 근거와 함께 생성</div>
+      </section>
+
+    </div>
+
+    <!-- ── 하단: 대조 + 확장 가능 ───────────────────── -->
+    <div class="footrow">
+      <div class="compare">
+        <div class="cmp bad">
+          <span class="ct">일반 AI</span>
+          <span class="cflow">일반 지식 → <s>그냥 동작하는 코드</s></span>
+        </div>
+        <div class="cmp good">
+          <span class="ct">Axiom</span>
+          <span class="cflow">RAG · 우리 표준 → <b>우리 방식 코드</b></span>
+        </div>
+      </div>
+      <div class="extend">
+        <span class="exi">⊕</span>
+        <span><b>확장 가능한 지식</b> — 사용자 RAG 폴더·문서를 지정하면 그대로 인덱스에. 규칙이 바뀌면 코드가 아니라 <b>문서</b>를 고칩니다.</span>
+      </div>
+    </div>
+  </div>
+
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>
