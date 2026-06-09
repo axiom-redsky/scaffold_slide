@@ -55,7 +55,7 @@
           <div class="doc hit"><span class="dico">▤</span> domain-ddd.md</div>
         </div>
         <div class="evidence">
-          <span class="ev">@/shared/ui</span>
+          <span class="ev">@axiom/components/ui</span>
           <span class="ev">$util</span>
           <span class="ev">DDD 구조</span>
         </div>
@@ -73,9 +73,9 @@
       <section class="box s3">
         <div class="sbadge"><i>03</i> 근거 기반 생성</div>
         <div class="code">
-          <div class="cl"><span class="kw">import</span> { Table, Button } <span class="kw">from</span> <span class="hl">'@/shared/ui'</span></div>
+          <div class="cl"><span class="kw">import</span> { Table, Button } <span class="kw">from</span> <span class="hl">'@axiom/components/ui'</span></div>
           <div class="cl"><span class="cm">// scaffold 표준 컴포넌트 사용</span></div>
-          <div class="cl"><span class="kw">const</span> { data } = <span class="hl2">$util</span>.api.get(<span class="str">'/members'</span>)</div>
+          <div class="cl"><span class="kw">const</span> { data } = <span class="hl2">useApi</span>(<span class="str">'/members'</span>)</div>
           <div class="cl"><span class="kw">const</span> rows = <span class="hl2">$util</span>.array.toRows(data)</div>
           <div class="cl"><span class="cm">// 도메인 구조(DDD)에 맞춰 배치</span></div>
         </div>
