@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scaffold &amp; Axiom 소개</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#070B16;--cyan:#5ED3F0;--gold:#F5B14C;--violet:#A78BFA;
+    --muted:#7E8FB8;--dur:.95s;--ease:cubic-bezier(.62,.04,.26,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;overflow:hidden;background:var(--ink)}
+  body{font-family:"JetBrains Mono",monospace}
+
+  /* 3D stage */
+  .stage{position:fixed;inset:0;perspective:1900px;perspective-origin:50% 50%;
+    background:radial-gradient(120% 120% at 50% 50%, #0c1326, #05080f);}
+  .cube{position:absolute;inset:0;transform-style:preserve-3d;
+    transform:translateZ(var(--negd)) rotateY(0deg)}
+  .layer{position:absolute;inset:0;backface-visibility:hidden;
+    transform:rotateY(180deg) translateZ(var(--d));visibility:hidden;
+    box-shadow:0 40px 120px rgba(0,0,0,.55)}
+  .layer iframe{width:100%;height:100%;border:0;display:block;background:var(--ink)}
+  .layer.active{visibility:visible;transform:rotateY(0deg) translateZ(var(--d))}
+
+  /* fade fallback (reduced motion) */
+  body.flat .cube{transform:none!important}
+  body.flat .layer{transform:none!important;transition:opacity .45s ease;opacity:0}
+  body.flat .layer.active{opacity:1}
+
+  /* top progress bar */
+  .bar{position:fixed;top:0;left:0;height:3px;z-index:20;
+    background:linear-gradient(90deg,var(--cyan),var(--violet));
+    width:0;transition:width .5s var(--ease);box-shadow:0 0 14px rgba(94,211,240,.5)}
+
+  /* HUD */
+  .hud{position:fixed;z-index:20;color:var(--muted);font-size:12px;letter-spacing:.12em;
+    user-select:none}
+  .counter{left:28px;bottom:24px}
+  .counter b{color:var(--cyan);font-weight:500}
+  .counter .t{color:#e7eeff}
+  .hint{right:28px;bottom:24px;display:flex;align-items:center;gap:14px}
+  .hint kbd{display:inline-block;min-width:22px;text-align:center;padding:3px 6px;
+    border:1px solid rgba(126,143,184,.35);border-radius:5px;color:#c8d4f0;font-size:11px;
+    background:rgba(255,255,255,.03)}
+  .hint span{opacity:.7}
+
+  /* nav arrows */
+  .nav{position:fixed;top:50%;transform:translateY(-50%);z-index:20;
+    width:46px;height:46px;border-radius:50%;border:1px solid rgba(126,143,184,.28);
+    background:rgba(10,16,32,.5);color:#c8d4f0;cursor:pointer;
+    display:grid;place-items:center;font-size:18px;backdrop-filter:blur(6px);
+    transition:.2s;opacity:.5}
+  .nav:hover{opacity:1;border-color:var(--cyan);color:var(--cyan)}
+  .nav.prev{left:22px}.nav.next{right:22px}
+  .nav:disabled{opacity:.12;cursor:default;border-color:rgba(126,143,184,.2);color:var(--muted)}
+
+  /* bottom controls: prev · dots · next */
+  .controls{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:20;
+    display:flex;align-items:center;gap:16px}
+  .dots{display:flex;gap:11px}
+  .dot{width:9px;height:9px;border-radius:50%;cursor:pointer;border:0;padding:0;
+    background:rgba(126,143,184,.3);transition:.3s var(--ease)}
+  .dot.on{background:var(--gold);width:26px;border-radius:5px;box-shadow:0 0 12px rgba(245,177,76,.5)}
+  .ctrl{width:38px;height:38px;border-radius:50%;border:1px solid rgba(126,143,184,.28);
+    background:rgba(10,16,32,.5);color:#c8d4f0;cursor:pointer;
+    display:grid;place-items:center;font-size:17px;line-height:1;
+    backdrop-filter:blur(6px);transition:.2s var(--ease)}
+  .ctrl:hover:not(:disabled){border-color:var(--cyan);color:var(--cyan);
+    box-shadow:0 0 14px rgba(94,211,240,.25)}
+  .ctrl:disabled{opacity:.18;cursor:default;border-color:rgba(126,143,184,.2);color:var(--muted)}
+
+  @media (max-width:680px){.nav{display:none}.hint span{display:none}}
+</style>
+</head>
+<body>
+  <div class="bar" id="bar"></div>
+  <div class="stage"><div class="cube" id="cube"></div></div>
+
+  <button class="nav prev" id="prev" aria-label="이전">‹</button>
+  <button class="nav next" id="next" aria-label="다음">›</button>
+
+  <div class="hud counter"><b id="cur">01</b> / <span id="total">05</span> &nbsp;·&nbsp; <span class="t" id="name">Title</span></div>
+  <div class="hud hint"><kbd>←</kbd><kbd>→</kbd><span>전환</span>&nbsp;<kbd>F11</kbd><span>전체화면</span></div>
+  <div class="controls">
+    <button class="ctrl" id="cprev" aria-label="이전 슬라이드">‹</button>
+    <div class="dots" id="dots"></div>
+    <button class="ctrl" id="cnext" aria-label="다음 슬라이드">›</button>
+  </div>
+
+<script>
+  const SLIDES = [
+    {file:"01-title.html",    name:"Title"},
+    {file:"02-why.html",      name:"왜 만들었나"},
+    {file:"03-why-situation-1.html", name:"개선 전 ①"},
+    {file:"03-why-situation-2.html", name:"개선 전 ②"},
+    {file:"03-why-situation-3.html", name:"개선 후 ①"},
+    {file:"03-why-situation-4.html", name:"개선 후 ②"},
+    {file:"02-scaffold.html", name:"Scaffold"},
+    {file:"03-axiom.html",    name:"Axiom"},
+    {file:"04-pipeline.html", name:"Pipeline"},
+    {file:"05-closing.html",  name:"Closing"},
+  ];
+
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const cube = document.getElementById("cube");
+  const stage = document.querySelector(".stage");
+  let cur = 0;          // currently shown slide
+  let dest = 0;         // slide we are heading toward (=== cur when idle)
+  let animating = false;
+  let activeDone = null, activeFrom = null, activeTo = null;
+  const layers = [];
+
+  if(reduce) document.body.classList.add("flat");
+
+  // build layers + preload all slides
+  SLIDES.forEach((s,i)=>{
+    const L = document.createElement("div");
+    L.className = "layer" + (i===0?" active":"");
+    const f = document.createElement("iframe");
+    f.src = s.file; f.title = s.name; f.loading = "eager";
+    L.appendChild(f); cube.appendChild(L); layers.push(L);
+  });
+
+  // depth = half width so cube side edges meet
+  function setDepth(){
+    const d = Math.round(stage.clientWidth/2);
+    document.documentElement.style.setProperty("--d", d+"px");
+    document.documentElement.style.setProperty("--negd", (-d)+"px");
+  }
+  setDepth();
+  addEventListener("resize", ()=>{ if(!animating) setDepth(); });
+
+  // build dots
+  const dotsWrap = document.getElementById("dots");
+  SLIDES.forEach((s,i)=>{
+    const b = document.createElement("button");
+    b.className = "dot"+(i===0?" on":""); b.title = s.name;
+    b.addEventListener("click", ()=>goTo(i));
+    dotsWrap.appendChild(b);
+  });
+  document.getElementById("total").textContent = String(SLIDES.length).padStart(2,"0");
+
+  function notify(i){
+    const w = layers[i].querySelector("iframe").contentWindow;
+    try{ w.postMessage({type:"slide:enter"}, "*"); }catch(e){}
+  }
+  function updateHUD(){
+    const i = dest;                       // reflect where we're heading, not just where we are
+    document.getElementById("cur").textContent = String(i+1).padStart(2,"0");
+    document.getElementById("name").textContent = SLIDES[i].name;
+    document.getElementById("bar").style.width = ((i+1)/SLIDES.length*100)+"%";
+    [...dotsWrap.children].forEach((d,k)=>d.classList.toggle("on", k===i));
+    const atStart = i===0, atEnd = i===SLIDES.length-1;
+    ["prev","cprev"].forEach(id=>{const el=document.getElementById(id); if(el) el.disabled=atStart;});
+    ["next","cnext"].forEach(id=>{const el=document.getElementById(id); if(el) el.disabled=atEnd;});
+  }
+  updateHUD(); notify(0);
+
+  function goTo(target){
+    if(target<0 || target>=SLIDES.length) return;
+    if(target===dest) return;              // already there / already heading there
+    if(animating) finalizeNow();           // snap the in-flight transition to its end
+    if(target===cur) return;               // re-check after settling
+    startTransition(cur, target);
+  }
+
+  function startTransition(fromIdx, target){
+    const from = layers[fromIdx], to = layers[target];
+    const dir = target>fromIdx ? 1 : -1;   // 1 = forward(→), -1 = back(←)
+    animating = true; dest = target;
+    activeFrom = from; activeTo = to;
+    updateHUD();                           // HUD jumps to destination immediately
+
+    if(reduce){                            // simple cross-fade
+      to.classList.add("active");
+      from.classList.remove("active");
+      cur = target; animating = false;
+      activeFrom = activeTo = null;
+      notify(target); return;
+    }
+
+    setDepth();
+    const enter = dir>0 ? 90 : -90;        // incoming face starts on right/left
+    const spin  = dir>0 ? -90 : 90;        // cube rotates opposite
+
+    // place faces, no transition
+    to.style.transition = "none";
+    to.style.transform = `rotateY(${enter}deg) translateZ(var(--d))`;
+    to.style.visibility = "visible";
+    from.style.transition = "none";
+    from.style.transform = `rotateY(0deg) translateZ(var(--d))`;
+    cube.style.transition = "none";
+    cube.style.transform = `translateZ(var(--negd)) rotateY(0deg)`;
+    void cube.offsetWidth;                 // reflow
+
+    // animate the cube
+    cube.style.transition = `transform var(--dur) var(--ease)`;
+    cube.style.transform = `translateZ(var(--negd)) rotateY(${spin}deg)`;
+    notify(target);                         // replay incoming content anim
+
+    activeDone = (e)=>{
+      if(e.target!==cube || e.propertyName!=="transform") return;
+      settleState(from, to, target);
+    };
+    cube.addEventListener("transitionend", activeDone);
+  }
+
+  // land 'to' as the front face instantly and park 'from'
+  function settleState(from, to, target){
+    if(activeDone){ cube.removeEventListener("transitionend", activeDone); activeDone = null; }
+    cube.style.transition = "none";
+    cube.style.transform = `translateZ(var(--negd)) rotateY(0deg)`;
+    to.style.transition = "none";
+    to.style.transform = `rotateY(0deg) translateZ(var(--d))`;
+    to.style.visibility = "visible";
+    to.classList.add("active");
+    from.classList.remove("active");
+    from.style.transition = "none";
+    from.style.transform = `rotateY(180deg) translateZ(var(--d))`;
+    from.style.visibility = "hidden";
+    cur = target; dest = target; animating = false;
+    activeFrom = activeTo = null;
+    updateHUD();
+  }
+
+  // force the current transition to complete right now (for interruption)
+  function finalizeNow(){
+    if(!animating) return;
+    settleState(activeFrom, activeTo, dest);
+  }
+
+  const next = ()=>goTo(dest+1), prev = ()=>goTo(dest-1);
+  ["next","cnext"].forEach(id=>document.getElementById(id).addEventListener("click", next));
+  ["prev","cprev"].forEach(id=>document.getElementById(id).addEventListener("click", prev));
+
+  // keyboard
+  addEventListener("keydown",(e)=>{
+    switch(e.key){
+      case "ArrowRight": case "ArrowDown": case "PageDown": case " ":
+        e.preventDefault(); next(); break;
+      case "ArrowLeft": case "ArrowUp": case "PageUp":
+        e.preventDefault(); prev(); break;
+      case "Home": e.preventDefault(); goTo(0); break;
+      case "End":  e.preventDefault(); goTo(SLIDES.length-1); break;
+      case "f": case "F":
+        if(document.fullscreenElement) document.exitFullscreen();
+        else document.documentElement.requestFullscreen?.(); break;
+    }
+  });
+
+  // touch swipe
+  let sx=0, sy=0;
+  addEventListener("touchstart",e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+  addEventListener("touchend",e=>{
+    const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)){ dx<0 ? next() : prev(); }
+  },{passive:true});
+</script>
+</body>
+</html>

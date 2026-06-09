@@ -1,0 +1,43 @@
+body{
+  background:
+    radial-gradient(120% 120% at 50% 50%, rgba(94,211,240,.06), transparent 60%),
+    linear-gradient(var(--line) 1px,transparent 1px) 0 0/44px 44px,
+    linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/44px 44px,
+    var(--ink);}
+.stage{position:fixed;inset:0;display:grid;place-items:center;text-align:center;
+  padding:clamp(40px,7vw,100px)}
+.wrap{width:min(900px,86vw)}
+
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.4em;
+  color:var(--cyan);text-transform:uppercase;margin-bottom:26px;
+  opacity:0;transform:translateY(10px)}
+body.in .eyebrow{animation:rise .7s ease forwards .1s}
+
+h2{font-family:"Space Grotesk",sans-serif;font-weight:600;
+  font-size:clamp(40px,8vw,92px);letter-spacing:-.02em;line-height:1.02;
+  opacity:0;transform:translateY(20px)}
+body.in h2{animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards .22s}
+h2 .g{color:var(--gold);font-style:italic;font-weight:400}
+
+.recap{display:flex;gap:18px;justify-content:center;margin:40px 0 34px;flex-wrap:wrap}
+.card{flex:1 1 240px;max-width:300px;text-align:left;
+  border:1px solid var(--line);border-radius:14px;padding:22px 22px;
+  background:rgba(255,255,255,.015);opacity:0;transform:translateY(22px)}
+body.in .card{animation:rise .65s ease forwards}
+body.in .card:nth-child(1){animation-delay:.5s}
+body.in .card:nth-child(2){animation-delay:.66s}
+.card .tag{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;margin-bottom:10px}
+.card.s .tag{color:var(--cyan)}.card.a .tag{color:var(--violet)}
+.card h3{font-family:"Space Grotesk",sans-serif;font-size:22px;font-weight:600;margin-bottom:6px}
+.card p{color:var(--muted);font-size:14px;line-height:1.55}
+.card .rule{height:2px;width:38px;margin-bottom:14px;border-radius:2px}
+.card.s .rule{background:var(--cyan)}.card.a .rule{background:var(--violet)}
+
+.foot{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--muted);
+  letter-spacing:.06em;opacity:0;transform:translateY(10px)}
+body.in .foot{animation:rise .7s ease forwards .9s}
+.foot b{color:var(--cyan)}
+
+@media (prefers-reduced-motion:reduce){
+  .eyebrow,h2,.card,.foot{opacity:1!important;transform:none!important}}

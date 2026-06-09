@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scaffold</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/02-scaffold.css">
+</head>
+<body>
+  <div class="stage">
+    <div class="col">
+      <div class="eyebrow">The Scaffold</div>
+      <h2>구성은 <span class="em">검색</span>해서<br>조립한다</h2>
+      <p class="lead"><b>Scaffold</b>는 로컬 마크다운 지식베이스를 RAG로 검색해
+        프로젝트 표준에 맞는 React 구조를 만들어내는 어시스턴트입니다.
+        규칙이 바뀌면 문서만 고치면 됩니다.</p>
+      <ul class="feat">
+        <li><span class="dot"></span><div><h3>로컬 지식베이스</h3>
+          <p>폐쇄망에서도 동작하는 <code>.md</code> 기반 RAG · 외부 API 불필요</p></div></li>
+        <li><span class="dot"></span><div><h3>라우팅 &amp; 퓨전</h3>
+          <p>frontmatter + centroid 라우팅, <code>RRF</code>로 결과 융합</p></div></li>
+        <li><span class="dot"></span><div><h3>리랭킹</h3>
+          <p><code>bge-reranker-v2-m3</code>로 관련도 재정렬</p></div></li>
+        <li><span class="dot"></span><div><h3>게이팅</h3>
+          <p>근거가 부족하면 생성 대신 질문 — 환각 차단</p></div></li>
+      </ul>
+    </div>
+    <div class="viz">
+      <svg viewBox="0 0 360 420" preserveAspectRatio="xMidYMid meet">
+        <!-- scaffold beams -->
+        <path class="beam" d="M40 380 L40 60 L320 60 L320 380"/>
+        <path class="beam" d="M40 230 L320 230 M40 150 L320 150 M40 305 L320 305"/>
+        <path class="beam" d="M180 60 L180 380"/>
+        <!-- joints -->
+        <circle class="joint" cx="40" cy="60" r="4"/><circle class="joint" cx="180" cy="60" r="4"/>
+        <circle class="joint" cx="320" cy="60" r="4"/><circle class="joint" cx="40" cy="150" r="4"/>
+        <circle class="joint" cx="320" cy="150" r="4"/><circle class="joint" cx="180" cy="230" r="4"/>
+        <circle class="joint" cx="320" cy="305" r="4"/>
+        <!-- blocks slotting in -->
+        <rect class="blk b1" x="52" y="74"  width="56" height="62" rx="4" fill="rgba(94,211,240,.14)" stroke="var(--cyan)"/>
+        <rect class="blk b2" x="124" y="74" width="44" height="62" rx="4" fill="rgba(167,139,250,.14)" stroke="var(--violet)"/>
+        <rect class="blk b3" x="196" y="74" width="110" height="62" rx="4" fill="rgba(245,177,76,.12)" stroke="var(--gold)"/>
+        <rect class="blk b4" x="52" y="164" width="116" height="52" rx="4" fill="rgba(94,211,240,.10)" stroke="var(--cyan)"/>
+        <rect class="blk b5" x="196" y="164" width="110" height="52" rx="4" fill="rgba(94,211,240,.10)" stroke="var(--cyan)"/>
+        <rect class="blk b6" x="52" y="244" width="254" height="48" rx="4" fill="rgba(167,139,250,.10)" stroke="var(--violet)"/>
+        <text class="vlabel" x="40" y="408">components · pages · hooks · api</text>
+      </svg>
+    </div>
+  </div>
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+</script>
+</body>
+</html>

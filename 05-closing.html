@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Closing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/05-closing.css">
+</head>
+<body>
+  <div class="stage">
+    <div class="wrap">
+      <div class="eyebrow">Wrap-up</div>
+      <h2>찾고, 계획하고,<br><span class="g">조립한다</span></h2>
+      <div class="recap">
+        <div class="card s"><div class="tag">Scaffold</div><div class="rule"></div>
+          <h3>검색하는 구조</h3>
+          <p>문서가 곧 지식. 폐쇄망에서도 표준에 맞는 React 구성을 RAG로 만든다.</p></div>
+        <div class="card a"><div class="tag">Axiom</div><div class="rule"></div>
+          <h3>계획하는 생성</h3>
+          <p>Plan → Retrieve → Diff. 한 번에 한 변경만, 검증 가능한 형태로 적용.</p></div>
+      </div>
+      <p class="foot">감사합니다 · <b>Q &amp; A</b></p>
+    </div>
+  </div>
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+</script>
+</body>
+</html>

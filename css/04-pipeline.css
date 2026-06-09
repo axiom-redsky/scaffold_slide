@@ -1,0 +1,63 @@
+body{
+  background:
+    radial-gradient(120% 100% at 50% 120%, rgba(94,211,240,.06), transparent 55%),
+    linear-gradient(var(--line) 1px,transparent 1px) 0 0/44px 44px,
+    linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/44px 44px,
+    var(--ink);}
+.stage{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(40px,7vw,100px)}
+
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.34em;
+  color:var(--cyan);text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:12px;opacity:0;transform:translateX(-12px)}
+.eyebrow::before{content:"03";color:var(--gold);font-weight:500}
+body.in .eyebrow{animation:slin .6s ease forwards .1s}
+h2{font-family:"Space Grotesk",sans-serif;font-weight:600;
+  font-size:clamp(30px,4.6vw,52px);letter-spacing:-.02em;line-height:1.05;
+  opacity:0;transform:translateY(18px);margin-bottom:8px}
+body.in h2{animation:rise .7s ease forwards .2s}
+h2 .s{color:var(--cyan)}h2 .a{color:var(--violet)}
+.lead{color:var(--muted);font-size:clamp(14px,1.6vw,17px);margin-bottom:40px;
+  opacity:0;transform:translateY(12px);max-width:34em}
+body.in .lead{animation:rise .7s ease forwards .3s}
+
+.flow{position:relative;width:100%;max-width:1100px;margin:0 auto}
+.flow svg{width:100%;height:auto;overflow:visible}
+.conn{stroke:var(--line2);stroke-width:1.6;fill:none;
+  stroke-dasharray:240;stroke-dashoffset:240}
+body.in .conn{animation:draw .6s ease forwards}
+body.in .c1{animation-delay:.7s}body.in .c2{animation-delay:1.05s}
+body.in .c3{animation-delay:1.4s}body.in .c4{animation-delay:1.75s}
+body.in .c5{animation-delay:2.1s}
+
+.nodeg{opacity:0;transform-box:fill-box;transform-origin:center}
+body.in .nodeg{animation:np .5s cubic-bezier(.2,.8,.2,1) forwards}
+body.in .n1{animation-delay:.5s}body.in .n2{animation-delay:.85s}
+body.in .n3{animation-delay:1.2s}body.in .n4{animation-delay:1.55s}
+body.in .n5{animation-delay:1.9s}body.in .n6{animation-delay:2.25s}
+@keyframes np{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+.nbox{fill:rgba(13,20,40,.85)}
+.nlabel{font-family:"Space Grotesk",sans-serif;font-weight:600;fill:var(--text)}
+.nsub{font-family:"JetBrains Mono",monospace;fill:var(--muted)}
+.tag-s{stroke:var(--cyan)}.tag-s .nlabel{fill:#dff7ff}
+.tag-a{stroke:var(--violet)}
+.tag-io{stroke:var(--gold)}
+
+/* traveling signal */
+.pkt{fill:var(--gold);opacity:0;filter:drop-shadow(0 0 6px var(--gold))}
+body.in .pkt{animation:run 2.4s ease-in-out forwards 2.5s}
+@keyframes run{
+  0%{opacity:0;offset-distance:0%}5%{opacity:1}
+  95%{opacity:1}100%{opacity:0;offset-distance:100%}}
+
+.legend{display:flex;gap:24px;justify-content:center;margin-top:34px;flex-wrap:wrap;
+  font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);
+  opacity:0;transform:translateY(10px)}
+body.in .legend{animation:rise .7s ease forwards 3s}
+.legend span{display:flex;align-items:center;gap:8px}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.lg-s{background:var(--cyan)}.lg-a{background:var(--violet)}.lg-io{background:var(--gold)}
+
+@media (prefers-reduced-motion:reduce){
+  .eyebrow,h2,.lead,.nodeg,.legend{opacity:1!important;transform:none!important}
+  .conn{stroke-dashoffset:0!important}.pkt{display:none}}

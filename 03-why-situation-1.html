@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>왜 만들었나 — 개선 전 ①</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/03-why-situation.css">
+</head>
+<body class="before">
+  <span class="reg tl"></span><span class="reg tr"></span>
+  <span class="reg bl"></span><span class="reg br"></span>
+  <div class="stage">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow">
+          <span class="tag">Before · 개선 전</span>
+          <span class="sep"></span>
+          <span class="step"><b>01</b> / 02</span>
+        </div>
+        <h2>SI 투입 시, 매번 똑같은 <span class="em">초기 설정</span> 작업을 반복합니다</h2>
+        <!-- <p class="lead">프로젝트가 바뀔 때마다 빌드·라우팅·환경 구성 같은 <b>동일한 세팅을 처음부터 다시</b> 합니다. 본질적인 일에 닿기까지 시간이 걸립니다.</p> -->
+      </div>
+      <figure class="shot" data-ph="개선 전 ① · 반복되는 초기 설정 — img/why-before-1.png">
+        <img src="img/03_01.png" alt="SI 투입 시 매번 반복되는 초기 설정 작업"
+             onload="this.closest('.shot').classList.add('has-img')"
+             onerror="this.style.display='none'">
+      </figure>
+    </div>
+  </div>
+
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pipeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/04-pipeline.css">
+</head>
+<body>
+  <div class="stage">
+    <div class="eyebrow">How it fits</div>
+    <h2><span class="s">Scaffold</span>가 찾고, <span class="a">Axiom</span>이 적용한다</h2>
+    <p class="lead">의도 한 줄이 검증된 변경으로 끝까지 흐르는 단일 파이프라인.</p>
+
+    <div class="flow">
+      <svg viewBox="0 0 1100 230" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <path id="track" d="M120 115 H300 M420 115 H545 M665 115 H790 M910 115 H980"/>
+        </defs>
+        <!-- connectors -->
+        <path class="conn c1" d="M120 115 H300"/>
+        <path class="conn c2" d="M420 115 H545"/>
+        <path class="conn c3" d="M665 115 H790"/>
+        <path class="conn c4" d="M910 115 H980"/>
+
+        <!-- node: intent (io) -->
+        <g class="nodeg n1 tag-io"><rect class="nbox" x="10" y="80" width="110" height="70" rx="10"/>
+          <rect x="10" y="80" width="110" height="70" rx="10" fill="none" stroke-width="1.5"/>
+          <text class="nlabel" x="65" y="110" text-anchor="middle" font-size="15">의도</text>
+          <text class="nsub" x="65" y="130" text-anchor="middle" font-size="10">intent</text></g>
+        <!-- node: planner (a) -->
+        <g class="nodeg n2 tag-a"><rect class="nbox" x="300" y="80" width="120" height="70" rx="10"/>
+          <rect x="300" y="80" width="120" height="70" rx="10" fill="none" stroke-width="1.5"/>
+          <text class="nlabel" x="360" y="110" text-anchor="middle" font-size="15">Planner</text>
+          <text class="nsub" x="360" y="130" text-anchor="middle" font-size="10">task graph</text></g>
+        <!-- node: retrieve (s) -->
+        <g class="nodeg n3 tag-s"><rect class="nbox" x="545" y="80" width="120" height="70" rx="10"/>
+          <rect x="545" y="80" width="120" height="70" rx="10" fill="none" stroke-width="1.5"/>
+          <text class="nlabel" x="605" y="106" text-anchor="middle" font-size="15">Retrieve</text>
+          <text class="nsub" x="605" y="126" text-anchor="middle" font-size="10">RAG + RRF</text></g>
+        <!-- node: rerank (s) -->
+        <g class="nodeg n4 tag-s"><rect class="nbox" x="790" y="80" width="120" height="70" rx="10"/>
+          <rect x="790" y="80" width="120" height="70" rx="10" fill="none" stroke-width="1.5"/>
+          <text class="nlabel" x="850" y="106" text-anchor="middle" font-size="15">Rerank</text>
+          <text class="nsub" x="850" y="126" text-anchor="middle" font-size="10">+ gate</text></g>
+        <!-- node: apply (io) -->
+        <g class="nodeg n5 tag-io"><rect class="nbox" x="980" y="80" width="110" height="70" rx="10"/>
+          <rect x="980" y="80" width="110" height="70" rx="10" fill="none" stroke-width="1.5"/>
+          <text class="nlabel" x="1035" y="106" text-anchor="middle" font-size="14">적용</text>
+          <text class="nsub" x="1035" y="126" text-anchor="middle" font-size="9">diff</text></g>
+
+        <circle class="pkt" r="5" style="offset-path:path('M120 115 H980')"/>
+      </svg>
+    </div>
+
+    <div class="legend">
+      <span><i class="lg-io"></i> 입·출력</span>
+      <span><i class="lg-a"></i> Axiom · 오케스트레이션</span>
+      <span><i class="lg-s"></i> Scaffold · 검색</span>
+    </div>
+  </div>
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+</script>
+</body>
+</html>

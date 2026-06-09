@@ -1,0 +1,74 @@
+:root{--line:rgba(167,139,250,.12);--line2:rgba(167,139,250,.3)}
+body{
+  background:
+    radial-gradient(110% 90% at 0% 0%, rgba(167,139,250,.07), transparent 55%),
+    linear-gradient(var(--line) 1px,transparent 1px) 0 0/44px 44px,
+    linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/44px 44px,
+    var(--ink);}
+.stage{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(40px,7vw,110px)}
+
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.34em;
+  color:var(--violet);text-transform:uppercase;margin-bottom:16px;
+  display:flex;align-items:center;gap:12px;opacity:0;transform:translateX(-12px)}
+.eyebrow::before{content:"02";color:var(--gold);font-weight:500}
+body.in .eyebrow{animation:slin .6s ease forwards .1s}
+
+h2{font-family:"Space Grotesk",sans-serif;font-weight:600;
+  font-size:clamp(34px,5.2vw,60px);letter-spacing:-.02em;line-height:1.02;
+  opacity:0;transform:translateY(18px);max-width:14em}
+body.in h2{animation:rise .7s ease forwards .2s}
+h2 .em{color:var(--violet)}
+
+/* axiom card with typed line */
+.axiom{margin:30px 0 36px;max-width:760px;
+  border:1px solid var(--line2);border-radius:12px;overflow:hidden;
+  background:rgba(167,139,250,.05);opacity:0;transform:translateY(16px)}
+body.in .axiom{animation:rise .7s ease forwards .38s}
+.axiom .bar{display:flex;align-items:center;gap:8px;padding:11px 16px;
+  border-bottom:1px solid var(--line);font-family:"JetBrains Mono",monospace;
+  font-size:12px;color:var(--muted);letter-spacing:.08em}
+.axiom .bar b{color:var(--violet);font-weight:500}
+.axiom .bar i{width:9px;height:9px;border-radius:50%;background:#2b3656;font-style:normal}
+.axiom .body{padding:20px 18px;font-family:"JetBrains Mono",monospace;
+  font-size:clamp(14px,1.7vw,17px);line-height:1.7}
+.type{display:inline-block;white-space:nowrap;overflow:hidden;
+  border-right:2px solid var(--cyan);width:0;vertical-align:bottom}
+body.in .type{animation:typing 1.4s steps(34,end) forwards .9s,
+  caret .8s step-end infinite .9s}
+body.in .type.t2{animation:typing 1.5s steps(40,end) forwards 2.3s,
+  caret .8s step-end infinite 2.3s}
+body.in .type.t2{width:0}
+.type.t1{color:var(--text)}
+.type .kw{color:var(--violet)}.type .st{color:var(--gold)}.type .fn{color:var(--cyan)}
+@keyframes typing{to{width:100%}}
+@keyframes caret{50%{border-color:transparent}}
+
+/* three stages */
+.stages{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:900px}
+@media (max-width:760px){.stages{grid-template-columns:1fr}.axiom .body{font-size:13px}}
+.st-card{border:1px solid var(--line);border-radius:12px;padding:20px 18px;
+  background:rgba(255,255,255,.015);position:relative;
+  opacity:0;transform:translateY(20px)}
+body.in .st-card{animation:rise .6s ease forwards}
+body.in .st-card:nth-child(1){animation-delay:3.6s}
+body.in .st-card:nth-child(2){animation-delay:3.78s}
+body.in .st-card:nth-child(3){animation-delay:3.96s}
+.st-card .n{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--gold);
+  letter-spacing:.2em;margin-bottom:10px}
+.st-card h3{font-family:"Space Grotesk",sans-serif;font-size:19px;font-weight:600;margin-bottom:6px}
+.st-card p{color:var(--muted);font-size:13.5px;line-height:1.55}
+.st-card .glow{position:absolute;inset:0;border-radius:12px;pointer-events:none;
+  box-shadow:0 0 0 1px transparent;opacity:0}
+body.in .st-card:nth-child(1) .glow{animation:flash .9s ease 4.1s}
+body.in .st-card:nth-child(2) .glow{animation:flash .9s ease 4.3s}
+body.in .st-card:nth-child(3) .glow{animation:flash .9s ease 4.5s}
+@keyframes flash{0%{opacity:0}40%{opacity:1;box-shadow:0 0 28px rgba(94,211,240,.25),inset 0 0 0 1px var(--cyan)}100%{opacity:0}}
+.arrow{position:absolute;right:-13px;top:50%;color:var(--cyan);font-size:18px;opacity:0}
+@media (max-width:760px){.arrow{display:none}}
+body.in .st-card:nth-child(1) .arrow{animation:rise .5s ease forwards 4s}
+body.in .st-card:nth-child(2) .arrow{animation:rise .5s ease forwards 4.2s}
+
+@media (prefers-reduced-motion:reduce){
+  .eyebrow,h2,.axiom,.st-card,.type{opacity:1!important;transform:none!important}
+  .type{width:100%!important;border-right:0}}

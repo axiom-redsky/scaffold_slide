@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>왜 만들었나 — 개선 후 ② · Time-to-value</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/03-why-situation.css">
+</head>
+<body class="after">
+  <span class="reg tl"></span><span class="reg tr"></span>
+  <span class="reg bl"></span><span class="reg br"></span>
+  <div class="stage">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow">
+          <span class="tag">After · 개선 후</span>
+          <span class="sep"></span>
+          <span class="step"><b>02</b> / 02</span>
+        </div>
+        <h2><span class="em">AS-IS</span> vs <span class="em">TO-BE</span> · Time-to-value 비교</h2>
+        <!-- <p class="lead">토대를 만드는 시간이 사라진 만큼, <b>가치를 만들어내기까지의 시간</b>이 짧아집니다.</p> -->
+      </div>
+      <figure class="shot" data-ph="AS-IS vs TO-BE · Time-to-value 비교 — img/why-after-2.png">
+        <img src="img/03_04.png" alt="AS-IS와 TO-BE의 Time-to-value 비교"
+             onload="this.closest('.shot').classList.add('has-img')"
+             onerror="this.style.display='none'">
+      </figure>
+    </div>
+  </div>
+
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+</script>
+</body>
+</html>
