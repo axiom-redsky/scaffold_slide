@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>디자인 시스템 — 토큰 빌드 과정</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/05-1-build-flow.css">
+</head>
+<body>
+  <div class="stage">
+    <div class="eyebrow">디자인 시스템 · 토큰 빌드 과정</div>
+    <h2>실제 폴더 구조에서 <span class="em">토큰이 흐르는 과정</span></h2>
+    <p class="lead"><b>편집 → 빌드 → 생성 → @import → 사용</b>. react-app-scaffold 구조 위에서 단계별로 따라갑니다.</p>
+
+    <div class="build">
+      <!-- ── 파일 탐색기 ── -->
+      <div class="explorer">
+        <div class="exbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>EXPLORER — react-app-scaffold</div>
+        <div class="tree">
+          <div class="row fold d0">src/</div>
+
+          <div class="row fold d1" data-step="1">design-tokens/<span class="note n-gold">① 편집</span></div>
+          <div class="row fold d2" data-step="1">primitive/</div>
+          <div class="row file json d3" data-step="1"><i></i>color.json</div>
+          <div class="row file json d3" data-step="1"><i></i>typography.json</div>
+          <div class="row file json d3" data-step="1"><i></i>shadow.json</div>
+          <div class="row fold d2" data-step="1">semantic/</div>
+          <div class="row file json d3" data-step="1"><i></i>light.json</div>
+          <div class="row file json d3" data-step="1"><i></i>dark.json</div>
+          <div class="row file js d2" data-step="2"><i></i>style-dictionary.config.js<span class="note n-violet">② 빌드 설정</span></div>
+
+          <div class="row fold d1">assets/styles/</div>
+          <div class="row fold d2" data-step="3">tokens/<span class="note n-cyan">③ 자동 생성</span></div>
+          <div class="row file css d3 gen" data-step="3"><i></i>primitive.css</div>
+          <div class="row file css d3 gen" data-step="3"><i></i>theme-light.css</div>
+          <div class="row file css d3 gen" data-step="3"><i></i>theme-dark.css</div>
+          <div class="row file css d2" data-step="4"><i></i>app.css<span class="note n-cyan">④ @import 진입점</span></div>
+
+          <div class="row fold d1">domains/main/pages/</div>
+          <div class="row file tsx d2" data-step="5"><i></i>DashboardPage.tsx<span class="note n-green">⑤ 사용</span></div>
+        </div>
+
+        <!-- ① 편집 시 보여줄 JSON 예시 -->
+        <div class="jsonview" data-step="1">
+          <div class="jvtab"><span class="jvdot"></span>color.json<span class="jvbadge">primitive</span></div>
+          <pre class="jvcode"><span class="jp">{</span>
+  <span class="jk">"color"</span><span class="jp">: {</span>
+    <span class="jk">"brand"</span><span class="jp">: {</span>
+      <span class="jk">"500"</span><span class="jp">: {</span> <span class="jk">"value"</span><span class="jp">:</span> <span class="jv">"#465FFF"</span> <span class="sw" style="--c:#465FFF"></span> <span class="jp">},</span>
+      <span class="jk">"600"</span><span class="jp">: {</span> <span class="jk">"value"</span><span class="jp">:</span> <span class="jv">"#3A4FD6"</span> <span class="sw" style="--c:#3A4FD6"></span> <span class="jp">}</span>
+    <span class="jp">},</span>
+    <span class="jk">"gray"</span><span class="jp">: {</span>
+      <span class="jk">"50"</span><span class="jp">:</span>  <span class="jp">{</span> <span class="jk">"value"</span><span class="jp">:</span> <span class="jv">"#F8FAFC"</span> <span class="sw" style="--c:#F8FAFC"></span> <span class="jp">},</span>
+      <span class="jk">"900"</span><span class="jp">: {</span> <span class="jk">"value"</span><span class="jp">:</span> <span class="jv">"#0B1120"</span> <span class="sw" style="--c:#0B1120"></span> <span class="jp">}</span>
+    <span class="jp">}</span>
+  <span class="jp">}</span>
+<span class="jp">}</span></pre>
+        </div>
+
+        <!-- ② 빌드 설정 -->
+        <div class="jsonview jv-js" data-step="2">
+          <div class="jvtab"><span class="jvdot"></span>style-dictionary.config.js<span class="jvbadge">config</span></div>
+          <pre class="jvcode"><span class="jw">export default</span> <span class="jp">{</span>
+  <span class="jk">source</span><span class="jp">: [</span><span class="jv">"src/design-tokens/**/*.json"</span><span class="jp">],</span>
+  <span class="jk">platforms</span><span class="jp">: {</span>
+    <span class="jk">css</span><span class="jp">: {</span>
+      <span class="jk">transformGroup</span><span class="jp">:</span> <span class="jv">"css"</span><span class="jp">,</span>
+      <span class="jk">buildPath</span><span class="jp">:</span> <span class="jv">"assets/styles/tokens/"</span><span class="jp">,</span>
+      <span class="jk">files</span><span class="jp">: [{</span>
+        <span class="jk">destination</span><span class="jp">:</span> <span class="jv">"primitive.css"</span><span class="jp">,</span>
+        <span class="jk">format</span><span class="jp">:</span> <span class="jv">"css/variables"</span>
+      <span class="jp">}]</span>
+    <span class="jp">}</span>
+  <span class="jp">}</span>
+<span class="jp">}</span></pre>
+        </div>
+
+        <!-- ③ 자동 생성 결과 -->
+        <div class="jsonview jv-css" data-step="3">
+          <div class="jvtab"><span class="jvdot"></span>primitive.css<span class="jvbadge">auto-gen</span></div>
+          <pre class="jvcode"><span class="jc">/* ⚠ 직접 편집 금지 — 자동 생성 */</span>
+<span class="jw">:root</span> <span class="jp">{</span>
+  <span class="jk ref">--color-brand-500</span><span class="jp">:</span> <span class="jv">#465FFF</span> <span class="sw" style="--c:#465FFF"></span><span class="jp">;</span>
+  <span class="jk">--color-brand-600</span><span class="jp">:</span> <span class="jv">#3A4FD6</span> <span class="sw" style="--c:#3A4FD6"></span><span class="jp">;</span>
+  <span class="jk">--color-gray-50</span><span class="jp">:</span>  <span class="jv">#F8FAFC</span> <span class="sw" style="--c:#F8FAFC"></span><span class="jp">;</span>
+  <span class="jk">--color-gray-900</span><span class="jp">:</span> <span class="jv">#0B1120</span> <span class="sw" style="--c:#0B1120"></span><span class="jp">;</span>
+<span class="jp">}</span></pre>
+        </div>
+
+        <!-- ④ @import 진입점 -->
+        <div class="jsonview jv-css" data-step="4">
+          <div class="jvtab"><span class="jvdot"></span>app.css<span class="jvbadge">@import</span></div>
+          <pre class="jvcode"><span class="jc">/* 전역 스타일 진입점 */</span>
+<span class="jw">@import</span> <span class="jv">"./tokens/primitive.css"</span><span class="jp">;</span>
+<span class="jw">@import</span> <span class="jv">"./tokens/theme-light.css"</span><span class="jp">;</span>
+<span class="jw">@import</span> <span class="jv">"./tokens/theme-dark.css"</span><span class="jp">;</span>
+<span class="jw">@import</span> <span class="jv">"./base/reset.css"</span><span class="jp">;</span></pre>
+        </div>
+
+        <!-- ⑤ 컴포넌트에서 사용 -->
+        <div class="jsonview jv-tsx" data-step="5">
+          <div class="jvtab"><span class="jvdot"></span>class 정의 → 사용<span class="jvbadge">component</span></div>
+          <pre class="jvcode"><span class="jc">/* 변수를 참조하는 클래스 (Tailwind 자동 생성) */</span>
+<span class="jt">.bg-brand-500</span> <span class="jp">{</span> <span class="jk">background</span><span class="jp">:</span> <span class="jw">var(</span><span class="ref">--color-brand-500</span><span class="jw">)</span> <span class="sw" style="--c:#465FFF"></span><span class="jp">; }</span>
+
+<span class="jc">/* 컴포넌트에서 클래스명으로 사용 */</span>
+<span class="jp">&lt;</span><span class="jt">Button</span> <span class="jk">className</span><span class="jp">=</span><span class="jv">"<span class="ref2">bg-brand-500</span>"</span><span class="jp">&gt;</span>Primary<span class="jp">&lt;/</span><span class="jt">Button</span><span class="jp">&gt;</span></pre>
+        </div>
+      </div>
+
+      <!-- ── 단계 + 터미널 ── -->
+      <div class="side">
+        <div class="steplist">
+          <div class="st" data-step="1"><span class="num">1</span><div><h4>JSON 토큰 편집</h4><p>색상·타이포·그림자 값을 정의</p></div></div>
+          <div class="st" data-step="2"><span class="num">2</span><div><h4>Style Dictionary 빌드</h4><p>config 기준으로 변환 실행</p></div></div>
+          <div class="st" data-step="3"><span class="num">3</span><div><h4>CSS 변수 자동 생성</h4><p>tokens/*.css 출력 (편집 금지)</p></div></div>
+          <div class="st" data-step="4"><span class="num">4</span><div><h4>app.css가 @import</h4><p>전역 진입점에서 토큰 로드</p></div></div>
+          <div class="st" data-step="5"><span class="num">5</span><div><h4>컴포넌트에서 사용</h4><p>.bg-brand-500 클래스 → var(--color-brand-500)</p></div></div>
+        </div>
+
+        <div class="terminal">
+          <div class="tbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>terminal</div>
+          <div class="tbody">
+            <div class="tl cmd" data-step="2"><span class="pr">$</span> npm run build:tokens</div>
+            <div class="tl run" data-step="2"><span class="sp"></span> Style Dictionary building…</div>
+            <div class="tl out o1" data-step="3"><b>✔</b> tokens/primitive.css</div>
+            <div class="tl out o2" data-step="3"><b>✔</b> tokens/theme-light.css</div>
+            <div class="tl out o3" data-step="3"><b>✔</b> tokens/theme-dark.css</div>
+            <div class="tl ok" data-step="3"><span class="spark">✨</span> 3 files generated</div>
+          </div>
+        </div>
+
+        <div class="render" data-step="5">
+          <span class="rlabel">결과</span>
+          <button class="btn-demo">Primary</button>
+          <code class="rcode">bg-brand-500</code>
+        </div>
+        <div class="clickhint" id="clickhint"><span class="ch-ic">▸</span> 클릭하여 다음 단계 <b id="ch-count">0 / 5</b></div>
+      </div>
+    </div>
+  </div>
+<script>
+  (function(){
+    var nodes = Array.prototype.slice.call(document.querySelectorAll('[data-step]'));
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var MAX = 5, cur = 0;
+    var hint = document.getElementById('clickhint');
+    var count = document.getElementById('ch-count');
+
+    function setStep(n){
+      cur = n;
+      nodes.forEach(function(el){
+        var s = +el.getAttribute('data-step');
+        el.classList.toggle('on', s <= n && n > 0);
+        el.classList.toggle('now', s === n);
+      });
+      if(count) count.textContent = n + ' / ' + MAX;
+      if(hint) hint.classList.toggle('done', n >= MAX);
+    }
+
+    // 클릭 = 다음 단계, Shift+클릭 = 이전 단계, 끝까지 가면 처음으로
+    function advance(back){
+      if(back){ setStep(cur > 0 ? cur - 1 : 0); return; }
+      setStep(cur >= MAX ? 0 : cur + 1);
+    }
+
+    document.addEventListener('click', function(e){
+      // 단계 항목(트리·단계리스트·터미널)을 직접 클릭하면 그 단계로 점프
+      var target = e.target.closest('[data-step]');
+      if(target){
+        setStep(+target.getAttribute('data-step'));
+        return;
+      }
+      advance(e.shiftKey); // 빈 영역 클릭은 다음/이전 단계
+    });
+
+    // 덱이 다시 진입할 때(slide:enter) 처음 단계부터 클릭으로 진행
+    window.__runFlow = function(){
+      if(reduce){ setStep(MAX); return; }
+      setStep(0);
+    };
+    window.__runFlow();
+  })();
+
+  /* ── 진입 애니메이션 / 덱 연동 ── */
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);if(window.__runFlow)window.__runFlow();}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>

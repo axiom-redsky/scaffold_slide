@@ -1,0 +1,53 @@
+:root{--line:rgba(94,211,240,.12);--line2:rgba(94,211,240,.3)}
+body{
+  background:
+    radial-gradient(110% 90% at 0% 0%, rgba(94,211,240,.07), transparent 55%),
+    linear-gradient(var(--line) 1px,transparent 1px) 0 0/44px 44px,
+    linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/44px 44px,
+    var(--ink);}
+.stage{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(40px,7vw,110px)}
+
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.34em;
+  color:var(--cyan);text-transform:uppercase;margin-bottom:16px;
+  display:flex;align-items:center;gap:12px;opacity:0;transform:translateX(-12px)}
+.eyebrow::before{content:"04";color:var(--gold);font-weight:500}
+body.in .eyebrow{animation:slin .6s ease forwards .1s}
+
+h2{font-family:"Space Grotesk",sans-serif;font-weight:600;
+  font-size:clamp(32px,5vw,56px);letter-spacing:-.02em;line-height:1.04;
+  opacity:0;transform:translateY(18px);max-width:16em}
+body.in h2{animation:rise .7s ease forwards .2s}
+h2 .em{color:var(--cyan)}
+
+.lead{margin:22px 0 38px;color:var(--muted);font-size:clamp(15px,1.7vw,18px);
+  line-height:1.65;max-width:42em;opacity:0;transform:translateY(14px)}
+body.in .lead{animation:rise .7s ease forwards .34s}
+.lead b{color:var(--text);font-weight:600}
+.lead code{font-family:"JetBrains Mono",monospace;font-size:.9em;color:var(--cyan)}
+
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1100px}
+@media (max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.cards{grid-template-columns:1fr}}
+
+.card{position:relative;border:1px solid var(--line);border-radius:12px;
+  padding:22px 20px 20px;background:rgba(255,255,255,.015);
+  opacity:0;transform:translateY(20px)}
+body.in .card{animation:rise .6s ease forwards}
+body.in .card:nth-child(1){animation-delay:.5s}
+body.in .card:nth-child(2){animation-delay:.64s}
+body.in .card:nth-child(3){animation-delay:.78s}
+body.in .card:nth-child(4){animation-delay:.92s}
+.card::before{content:"";position:absolute;left:0;top:18px;bottom:18px;width:2px;
+  border-radius:2px;background:linear-gradient(var(--cyan),transparent);
+  opacity:.55}
+
+.card .ix{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--gold);
+  letter-spacing:.2em;display:block;margin-bottom:12px}
+.card h3{font-family:"Space Grotesk",sans-serif;font-size:19px;font-weight:600;
+  margin-bottom:8px}
+.card p{color:var(--muted);font-size:13.5px;line-height:1.6}
+.card code{font-family:"JetBrains Mono",monospace;font-size:.86em;color:var(--cyan)}
+
+@media (prefers-reduced-motion:reduce){
+  .eyebrow,h2,.lead,.card{opacity:1!important;transform:none!important}}

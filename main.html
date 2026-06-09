@@ -100,6 +100,15 @@
     {file:"03-why-situation-2.html", name:"개선 전 ②"},
     {file:"03-why-situation-3.html", name:"개선 후 ①"},
     {file:"03-why-situation-4.html", name:"개선 후 ②"},
+    {file:"04-scaffold-what.html", name:"Scaffold란"},
+    {file:"04-1-scaffold-ui.html", name:"UI 컴포넌트"},
+    {file:"04-2-scaffold-util.html", name:"공통 유틸리티"},
+    {file:"04-3-scaffold-hooks.html", name:"커스텀 훅"},
+    {file:"04-4-scaffold-example.html", name:"인터랙티브 예제"},
+    {file:"04-5-scaffold-guide.html", name:"개발 가이드"},
+    {file:"05-1-design-tokens.html", name:"디자인 토큰"},
+    {file:"05-1-build-flow.html", name:"토큰 빌드 과정"},
+    {file:"05-2-publishing.html", name:"협업 워크플로우"},
     {file:"02-scaffold.html", name:"Scaffold"},
     {file:"03-axiom.html",    name:"Axiom"},
     {file:"04-pipeline.html", name:"Pipeline"},
@@ -123,6 +132,11 @@
     L.className = "layer" + (i===0?" active":"");
     const f = document.createElement("iframe");
     f.src = s.file; f.title = s.name; f.loading = "eager";
+    // forward key events from inside the slide to the parent handler,
+    // so arrow keys work even when focus is within the iframe
+    f.addEventListener("load", ()=>{
+      try{ f.contentWindow.addEventListener("keydown", onKey); }catch(err){}
+    });
     L.appendChild(f); cube.appendChild(L); layers.push(L);
   });
 
@@ -238,8 +252,9 @@
   ["next","cnext"].forEach(id=>document.getElementById(id).addEventListener("click", next));
   ["prev","cprev"].forEach(id=>document.getElementById(id).addEventListener("click", prev));
 
-  // keyboard
-  addEventListener("keydown",(e)=>{
+  // keyboard — shared handler so it works whether focus is on the parent
+  // page or inside a slide iframe
+  function onKey(e){
     switch(e.key){
       case "ArrowRight": case "ArrowDown": case "PageDown": case " ":
         e.preventDefault(); next(); break;
@@ -251,6 +266,14 @@
         if(document.fullscreenElement) document.exitFullscreen();
         else document.documentElement.requestFullscreen?.(); break;
     }
+  }
+  addEventListener("keydown", onKey);
+
+  // slides forward their key presses here (works even across origins / file://)
+  addEventListener("message", e=>{
+    const d = e.data;
+    if(d && d.type === "slide:key" && d.key)
+      onKey({ key:d.key, preventDefault(){} });
   });
 
   // touch swipe

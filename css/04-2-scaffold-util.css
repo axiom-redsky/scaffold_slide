@@ -1,0 +1,85 @@
+:root{--line:rgba(94,211,240,.12);--line2:rgba(94,211,240,.3)}
+body{
+  background:
+    radial-gradient(110% 90% at 100% 0%, rgba(94,211,240,.07), transparent 55%),
+    linear-gradient(var(--line) 1px,transparent 1px) 0 0/44px 44px,
+    linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/44px 44px,
+    var(--ink);}
+.stage{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(34px,6vw,90px)}
+
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.34em;
+  color:var(--cyan);text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:12px;opacity:0;transform:translateX(-12px)}
+.eyebrow::before{content:"04";color:var(--gold);font-weight:500}
+body.in .eyebrow{animation:slin .6s ease forwards .1s}
+
+h2{font-family:"Space Grotesk",sans-serif;font-weight:600;
+  font-size:clamp(26px,3.8vw,42px);letter-spacing:-.02em;line-height:1.08;
+  opacity:0;transform:translateY(18px);max-width:18em}
+body.in h2{animation:rise .7s ease forwards .2s}
+h2 .em{font-family:"JetBrains Mono",monospace;font-size:.66em;font-weight:500;color:var(--cyan)}
+
+.lead{margin:14px 0 14px;color:var(--muted);font-size:clamp(13px,1.5vw,16px);
+  line-height:1.6;max-width:40em;opacity:0;transform:translateY(14px)}
+body.in .lead{animation:rise .7s ease forwards .34s}
+.lead b{color:var(--text);font-weight:600}
+
+.usage{display:inline-flex;align-items:center;margin-bottom:24px;
+  padding:9px 16px;border:1px solid var(--line2);border-radius:8px;
+  background:rgba(94,211,240,.05);font-family:"JetBrains Mono",monospace;
+  font-size:clamp(12px,1.3vw,14px);letter-spacing:.01em;color:var(--text);
+  opacity:0;transform:translateY(14px)}
+body.in .usage{animation:rise .7s ease forwards .42s}
+.usage .gl{color:var(--cyan)}
+.usage .ns{color:var(--text)}
+.usage .fn{color:var(--violet)}
+.usage .num{color:var(--gold)}
+.usage .cmt{color:var(--muted);margin-left:10px}
+
+/* groups */
+.groups{display:flex;flex-direction:column;gap:18px}
+.g-date{--ac:var(--cyan)} .g-number{--ac:var(--gold)} .g-string{--ac:var(--violet)}
+
+.grp .gh{display:flex;align-items:center;gap:9px;margin-bottom:11px;
+  font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted);opacity:0;transform:translateY(10px)}
+body.in .grp .gh{animation:rise .6s ease forwards}
+body.in .g-date   .gh{animation-delay:.42s}
+body.in .g-number .gh{animation-delay:.5s}
+body.in .g-string .gh{animation-delay:.58s}
+.gh .gd{width:9px;height:9px;border-radius:2px;transform:rotate(45deg);background:var(--ac);
+  box-shadow:0 0 12px var(--ac)}
+.gh .gns{color:var(--ac);text-transform:none;letter-spacing:.02em;margin-right:2px}
+
+/* tiles */
+.tiles{display:flex;flex-wrap:wrap;gap:11px}
+.tile{min-width:138px;border:1px solid var(--line);border-radius:12px;
+  padding:11px 13px 10px;background:rgba(255,255,255,.018);
+  display:flex;flex-direction:column;gap:7px;
+  opacity:0;transform:translateY(16px);
+  transition:border-color .25s ease,background .25s ease,transform .25s ease}
+body.in .tile{animation:tileIn .55s cubic-bezier(.2,.8,.2,1) forwards;
+  animation-delay:calc(var(--i) * .045s + .42s)}
+@keyframes tileIn{to{opacity:1;transform:translateY(0)}}
+.tile:hover{border-color:var(--ac);background:rgba(255,255,255,.045);transform:translateY(-3px)}
+
+.tile .fn{font-family:"JetBrains Mono",monospace;font-size:12.5px;font-weight:500;
+  color:var(--text);letter-spacing:.01em}
+.tile .fn::after{content:"()";color:var(--ac);opacity:.6}
+
+.tile .demo{display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  font-family:"JetBrains Mono",monospace;font-size:11px;line-height:1.3}
+.tile .in{color:var(--muted)}
+.tile .arr{color:var(--ac);font-weight:600;
+  animation:nudge 3s ease-in-out infinite;animation-delay:calc(var(--i) * .12s)}
+@keyframes nudge{0%,18%{transform:translateX(-2px);opacity:.4}38%,80%{transform:translateX(0);opacity:1}100%{transform:translateX(-2px);opacity:.4}}
+.tile .out{color:var(--ac);font-weight:500;
+  padding:1px 6px;border-radius:5px;background:color-mix(in srgb,var(--ac) 13%,transparent);
+  animation:reveal 3s ease-in-out infinite;animation-delay:calc(var(--i) * .12s)}
+@keyframes reveal{0%,18%{opacity:0;transform:translateY(3px)}40%,82%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(3px)}}
+
+@media (prefers-reduced-motion:reduce){
+  .eyebrow,h2,.lead,.usage,.grp .gh,.tile{opacity:1!important;transform:none!important}
+  .tile .arr,.tile .out{animation:none!important;opacity:1!important;transform:none!important}
+}

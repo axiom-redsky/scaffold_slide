@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>react-app-scaffold — 공통 유틸리티</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/04-2-scaffold-util.css">
+</head>
+<body>
+  <div class="stage">
+    <div class="eyebrow">react-app-scaffold · 공통 유틸리티</div>
+    <h2>날짜·숫자·문자열 처리를<br><span class="em">window.$util</span> 전역으로 어디서나</h2>
+    <p class="lead">import 없이 호출하는 <b>타입 안전한 전역 유틸</b>. 도메인별 중복 구현을 줄입니다.</p>
+    <div class="usage"><span class="gl">$util</span>.<span class="ns">number</span>.<span class="fn">comma</span>(<span class="num">1234567</span>) <span class="cmt">// → 1,234,567</span></div>
+
+    <div class="groups">
+      <section class="grp g-date">
+        <h3 class="gh"><span class="gd"></span><span class="gns">$util.date</span>날짜</h3>
+        <div class="tiles">
+          <div class="tile" style="--i:0"><span class="fn">format</span>
+            <span class="demo"><span class="in">Date</span><span class="arr">→</span><span class="out">2026-06-09</span></span></div>
+          <div class="tile" style="--i:1"><span class="fn">now</span>
+            <span class="demo"><span class="in">( )</span><span class="arr">→</span><span class="out">…06-09 14:30</span></span></div>
+          <div class="tile" style="--i:2"><span class="fn">parse</span>
+            <span class="demo"><span class="in">'2026-06-09'</span><span class="arr">→</span><span class="out">Date</span></span></div>
+          <div class="tile" style="--i:3"><span class="fn">addDays</span>
+            <span class="demo"><span class="in">06-09, +7</span><span class="arr">→</span><span class="out">06-16</span></span></div>
+          <div class="tile" style="--i:4"><span class="fn">addMonths</span>
+            <span class="demo"><span class="in">06-09, +1</span><span class="arr">→</span><span class="out">07-09</span></span></div>
+          <div class="tile" style="--i:5"><span class="fn">diffDays</span>
+            <span class="demo"><span class="in">16, 09</span><span class="arr">→</span><span class="out">7</span></span></div>
+          <div class="tile" style="--i:6"><span class="fn">isValid</span>
+            <span class="demo"><span class="in">'x'</span><span class="arr">→</span><span class="out">false</span></span></div>
+        </div>
+      </section>
+
+      <section class="grp g-number">
+        <h3 class="gh"><span class="gd"></span><span class="gns">$util.number</span>숫자</h3>
+        <div class="tiles">
+          <div class="tile" style="--i:7"><span class="fn">comma</span>
+            <span class="demo"><span class="in">1234567</span><span class="arr">→</span><span class="out">1,234,567</span></span></div>
+          <div class="tile" style="--i:8"><span class="fn">round</span>
+            <span class="demo"><span class="in">3.14159, 2</span><span class="arr">→</span><span class="out">3.14</span></span></div>
+          <div class="tile" style="--i:9"><span class="fn">clamp</span>
+            <span class="demo"><span class="in">120, 0, 100</span><span class="arr">→</span><span class="out">100</span></span></div>
+          <div class="tile" style="--i:10"><span class="fn">toNumber</span>
+            <span class="demo"><span class="in">'₩1,200'</span><span class="arr">→</span><span class="out">1200</span></span></div>
+          <div class="tile" style="--i:11"><span class="fn">percent</span>
+            <span class="demo"><span class="in">0.1234</span><span class="arr">→</span><span class="out">12.3%</span></span></div>
+        </div>
+      </section>
+
+      <section class="grp g-string">
+        <h3 class="gh"><span class="gd"></span><span class="gns">$util.string</span>문자열</h3>
+        <div class="tiles">
+          <div class="tile" style="--i:12"><span class="fn">isEmpty</span>
+            <span class="demo"><span class="in">'&nbsp;&nbsp;'</span><span class="arr">→</span><span class="out">true</span></span></div>
+          <div class="tile" style="--i:13"><span class="fn">capitalize</span>
+            <span class="demo"><span class="in">hello</span><span class="arr">→</span><span class="out">Hello</span></span></div>
+          <div class="tile" style="--i:14"><span class="fn">truncate</span>
+            <span class="demo"><span class="in">Hello World</span><span class="arr">→</span><span class="out">Hello…</span></span></div>
+          <div class="tile" style="--i:15"><span class="fn">padStart</span>
+            <span class="demo"><span class="in">7, 3</span><span class="arr">→</span><span class="out">007</span></span></div>
+          <div class="tile" style="--i:16"><span class="fn">removeWhitespace</span>
+            <span class="demo"><span class="in">a b c</span><span class="arr">→</span><span class="out">abc</span></span></div>
+          <div class="tile" style="--i:17"><span class="fn">mask</span>
+            <span class="demo"><span class="in">01012345678</span><span class="arr">→</span><span class="out">010****5678</span></span></div>
+        </div>
+      </section>
+    </div>
+  </div>
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>

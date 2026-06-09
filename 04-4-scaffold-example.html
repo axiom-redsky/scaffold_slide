@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>react-app-scaffold — 인터랙티브 예제</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/04-4-scaffold-example.css">
+</head>
+<body>
+  <div class="stage">
+    <div class="eyebrow">react-app-scaffold · 인터랙티브 예제</div>
+    <h2>보고, 클릭하고, <span class="em">소스를 복사</span>한다</h2>
+    <p class="lead"><b>example 도메인</b>에 컴포넌트별 라이브 데모와 소스코드를 함께 제공. 개발자가 동작을 직접 확인하고 그대로 가져다 씁니다.</p>
+
+    <div class="demo-wrap">
+      <!-- ── 왼쪽: 라이브 미리보기 ─────────────────────────── -->
+      <div class="panel preview">
+        <div class="browser-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="url">redsky0212.dothome.co.kr/axiom/react/<span class="hash">#/example/ui-components/accordion</span></span>
+        </div>
+        <div class="app">
+          <div class="app-head">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="4" rx="1"/><rect x="3" y="11" width="18" height="4" rx="1"/><rect x="3" y="18" width="18" height="3" rx="1"/></svg>
+            </span>
+            <div>
+              <h4>Accordion 컴포넌트</h4>
+              <p><code>@axiom/components/ui</code> 라이브 예제</p>
+            </div>
+          </div>
+
+          <div class="controls">
+            <button class="ctrl-btn" data-open="item-1">item-1 열기</button>
+            <button class="ctrl-btn" data-open="item-2">item-2 열기</button>
+            <button class="ctrl-btn" data-open="item-3">item-3 열기</button>
+            <button class="ctrl-btn close" data-open="">모두 닫기</button>
+          </div>
+
+          <div class="acc" id="acc">
+            <div class="acc-item" data-id="item-1">
+              <button class="acc-trigger">스타터 플랜 ($9/월)
+                <svg class="chev" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="acc-panel"><div class="acc-inner">기본 저장 공간, API 접근, 이메일 지원이 포함됩니다. 개인 프로젝트에 적합합니다.</div></div>
+            </div>
+            <div class="acc-item" data-id="item-2">
+              <button class="acc-trigger">프로 플랜 ($29/월)
+                <svg class="chev" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="acc-panel"><div class="acc-inner">우선 지원, 팀 협업 기능, 고급 분석 도구가 함께 제공됩니다.</div></div>
+            </div>
+            <div class="acc-item" data-id="item-3">
+              <button class="acc-trigger">엔터프라이즈 ($99/월)
+                <svg class="chev" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="acc-panel"><div class="acc-inner">전담 지원, 무제한 저장 공간, SLA 보장, 커스텀 연동을 제공합니다.</div></div>
+            </div>
+          </div>
+
+          <div class="status">현재 열린 항목 : <code id="openVal">없음</code></div>
+        </div>
+      </div>
+
+      <!-- ── 오른쪽: 소스코드 ─────────────────────────────── -->
+      <div class="panel code">
+        <div class="code-head">
+          <span class="fname">AccordionExample.tsx</span>
+          <button class="copy-btn" id="copyBtn">복사</button>
+        </div>
+        <pre class="src"><code id="srcCode"><span class="k">import</span> { useState } <span class="k">from</span> <span class="s">'react'</span>;
+<span class="k">import</span> {
+  <span class="c">Accordion</span>, <span class="c">AccordionItem</span>,
+  <span class="c">AccordionTrigger</span>, <span class="c">AccordionContent</span>,
+} <span class="k">from</span> <span class="s">'@axiom/components/ui'</span>;
+
+<span class="k">export default function</span> <span class="fn">Example</span>() {
+  <span class="k">const</span> [open, setOpen] = <span class="fn">useState</span>(<span class="s">'item-1'</span>);
+
+  <span class="k">return</span> (
+    &lt;<span class="c">Accordion</span> type=<span class="s">"single"</span> collapsible
+      value={open} onValueChange={setOpen}&gt;
+      &lt;<span class="c">AccordionItem</span> value=<span class="s">"item-1"</span>&gt;
+        &lt;<span class="c">AccordionTrigger</span>&gt;스타터 플랜 ($9/월)&lt;/<span class="c">AccordionTrigger</span>&gt;
+        &lt;<span class="c">AccordionContent</span>&gt;기본 저장 공간, API 접근…&lt;/<span class="c">AccordionContent</span>&gt;
+      &lt;/<span class="c">AccordionItem</span>&gt;
+      &lt;<span class="c">AccordionItem</span> value=<span class="s">"item-2"</span>&gt;
+        &lt;<span class="c">AccordionTrigger</span>&gt;프로 플랜 ($29/월)&lt;/<span class="c">AccordionTrigger</span>&gt;
+        &lt;<span class="c">AccordionContent</span>&gt;우선 지원, 팀 협업…&lt;/<span class="c">AccordionContent</span>&gt;
+      &lt;/<span class="c">AccordionItem</span>&gt;
+      &lt;<span class="c">AccordionItem</span> value=<span class="s">"item-3"</span>&gt;
+        &lt;<span class="c">AccordionTrigger</span>&gt;엔터프라이즈 ($99/월)&lt;/<span class="c">AccordionTrigger</span>&gt;
+        &lt;<span class="c">AccordionContent</span>&gt;전담 지원, 무제한 저장…&lt;/<span class="c">AccordionContent</span>&gt;
+      &lt;/<span class="c">AccordionItem</span>&gt;
+    &lt;/<span class="c">Accordion</span>&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+  </div>
+
+<script>
+  /* ── 라이브 Accordion (controlled, single + collapsible) ── */
+  (function(){
+    var current = '';
+    var items = Array.prototype.slice.call(document.querySelectorAll('#acc .acc-item'));
+    var ctrls = Array.prototype.slice.call(document.querySelectorAll('.ctrl-btn'));
+    var openVal = document.getElementById('openVal');
+
+    function render(){
+      items.forEach(function(it){ it.classList.toggle('open', it.getAttribute('data-id') === current); });
+      ctrls.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-open') === current && current !== ''); });
+      openVal.textContent = current || '없음';
+    }
+    function setOpen(v){ current = (v === current) ? '' : v; render(); }
+
+    items.forEach(function(it){
+      it.querySelector('.acc-trigger').addEventListener('click', function(){ setOpen(it.getAttribute('data-id')); });
+    });
+    ctrls.forEach(function(b){
+      b.addEventListener('click', function(){ var v = b.getAttribute('data-open'); v ? setOpen(v) : (current='', render()); });
+    });
+    render();
+
+    /* 복사 버튼 */
+    var copyBtn = document.getElementById('copyBtn');
+    copyBtn.addEventListener('click', function(){
+      var txt = document.getElementById('srcCode').innerText;
+      var done = function(){ copyBtn.textContent = '복사됨 ✓'; copyBtn.classList.add('done'); setTimeout(function(){ copyBtn.textContent='복사'; copyBtn.classList.remove('done'); }, 1400); };
+      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done, done); }
+      else { try{ var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); }catch(e){} done(); }
+    });
+  })();
+
+  /* ── 진입 애니메이션 / 덱 연동 ── */
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>

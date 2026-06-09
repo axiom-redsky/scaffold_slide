@@ -21,7 +21,7 @@
           <span class="sep"></span>
           <span class="step"><b>02</b> / 02</span>
         </div>
-        <h2>공통 함수·유틸 <span class="em">기반 요소가 부재</span>, 비즈니스 로직에 집중하지 못합니다</h2>
+        <h2>공통 함수·유틸 <span class="em">기반 요소 부재</span>, 비즈니스 로직에 집중하지 못함.</h2>
         <!-- <p class="lead">프론트엔드 개발 시 매번 토대부터 새로 쌓느라, <b>정작 풀어야 할 비즈니스 로직</b>에 쓸 에너지가 분산됩니다.</p> -->
       </div>
       <figure class="shot shrink" data-ph="개선 전 ② · 기반 요소 부재 — img/why-before-2.png">
@@ -38,6 +38,7 @@
   if(document.readyState==='complete')requestAnimationFrame(play);
   else window.addEventListener('load',()=>requestAnimationFrame(play));
   window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
 </script>
 </body>
 </html>

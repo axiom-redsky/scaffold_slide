@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>디자인 시스템 — 디자인 토큰</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/05-1-design-tokens.css">
+</head>
+<body>
+  <div class="stage">
+    <div class="eyebrow">디자인 시스템 · 디자인 토큰</div>
+    <h2>Style Dictionary 기반 <span class="em">디자인 토큰</span> 시스템 내장</h2>
+    <p class="lead">색상 · 타이포그래피 · 그림자 같은 디자인 값을 <b>JSON 한 곳</b>에서 관리하면, 자동으로 <b>CSS 변수</b>로 만들어 줍니다.</p>
+
+    <!-- ── 생성 파이프라인 ── -->
+    <div class="pipeline">
+      <div class="node n-json" style="--d:.5s">
+        <div class="ico">{ }</div>
+        <div class="ntxt"><h4>토큰 JSON</h4><span>design-tokens/</span></div>
+        <div class="tags"><i>색상</i><i>타이포</i><i>그림자</i><i>간격</i></div>
+      </div>
+
+      <div class="conn" style="--d:.66s"><span class="spark"></span></div>
+
+      <div class="node n-sd" style="--d:.74s">
+        <div class="ico gear">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </div>
+        <div class="ntxt"><h4>Style Dictionary</h4><span class="mono">npm run build:tokens</span></div>
+      </div>
+
+      <div class="conn" style="--d:.9s"><span class="spark"></span></div>
+
+      <div class="node n-css" style="--d:.98s">
+        <div class="ico css">CSS</div>
+        <div class="ntxt"><h4>CSS 변수</h4><span class="mono">:root { --color-* }</span></div>
+      </div>
+
+      <div class="conn" style="--d:1.14s"><span class="spark"></span></div>
+
+      <div class="node n-comp" style="--d:1.22s">
+        <div class="ico cube">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 22V12"/></svg>
+        </div>
+        <div class="ntxt"><h4>컴포넌트</h4><span class="mono">bg-brand-500</span></div>
+      </div>
+    </div>
+
+    <!-- ── 2계층 구조 ── -->
+    <div class="layers">
+      <div class="layer prim" style="--d:1.4s">
+        <div class="lhead"><span class="lnum">①</span> Primitive <em>· 원시 팔레트</em></div>
+        <div class="swatches">
+          <span class="sw" style="--i:0"><i style="background:#465fff"></i>brand-500<b>#465fff</b></span>
+          <span class="sw" style="--i:1"><i style="background:#0ba5ec"></i>blue-light-500<b>#0ba5ec</b></span>
+          <span class="sw" style="--i:2"><i style="background:#12b76a"></i>success-500<b>#12b76a</b></span>
+          <span class="sw" style="--i:3"><i style="background:#f79009"></i>warning-500<b>#f79009</b></span>
+          <span class="sw" style="--i:4"><i style="background:#f04438"></i>error-500<b>#f04438</b></span>
+          <span class="sw" style="--i:5"><i style="background:#667085"></i>gray-500<b>#667085</b></span>
+        </div>
+      </div>
+
+      <div class="bridge" style="--d:1.62s"><span>의미 부여</span><em>var( ) 참조</em></div>
+
+      <div class="layer sem" style="--d:1.74s">
+        <div class="lhead"><span class="lnum">②</span> Semantic <em>· 의미 토큰 (라이트 / 다크)</em></div>
+        <div class="chips">
+          <span class="chip" style="--i:0"><i style="background:#465fff"></i>--color-primary<b>→ brand-500</b></span>
+          <span class="chip" style="--i:1"><i style="background:#0ba5ec"></i>--color-accent<b>→ blue-light-500</b></span>
+          <span class="chip" style="--i:2"><i style="background:#12b76a"></i>--color-success<b>→ success-500</b></span>
+          <span class="chip" style="--i:3"><i style="background:#f79009"></i>--color-warning<b>→ warning-500</b></span>
+          <span class="chip" style="--i:4"><i style="background:#f04438"></i>--color-error<b>→ error-500</b></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>

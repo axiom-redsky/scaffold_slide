@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>react-app-scaffold — 한마디로 무엇인가</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/04-scaffold-what.css">
+</head>
+<body>
+  <div class="stage">
+    <div class="eyebrow">react-app-scaffold</div>
+    <h2>바로 가져다 쓰는<br><span class="em">React · TypeScript · Vite</span> 기반</h2>
+    <p class="lead">실무에서 곧바로 쓰는 <b>UI 컴포넌트 · 유틸리티 · 예제 코드 · 가이드</b>를 담은 스타터 프로젝트입니다.
+      프로젝트 초기 세팅과 반복 개발을 없애, 개발자가 <b>비즈니스 로직에만 집중</b>하게 합니다.</p>
+
+    <div class="cards">
+      <div class="card">
+        <span class="ix">01</span>
+        <h3>UI 컴포넌트</h3>
+        <p><code>shadcn/ui</code>를 래핑한 자체 컴포넌트를 <code>@/shared/ui</code> 한 곳에서 import.</p>
+      </div>
+      <div class="card">
+        <span class="ix">02</span>
+        <h3>유틸리티</h3>
+        <p>전역 <code>$util</code> · <code>$router</code> · <code>$ui</code> 와 커스텀 훅으로 반복 로직을 바로 호출.</p>
+      </div>
+      <div class="card">
+        <span class="ix">03</span>
+        <h3>인터랙티브 데모</h3>
+        <p>컴포넌트를 직접 조작해보며 동작과 옵션을 확인 — 학습 곡선을 낮춥니다.</p>
+      </div>
+      <div class="card">
+        <span class="ix">04</span>
+        <h3>코드 예제 및 가이드</h3>
+        <p>복사해서 바로 쓰는 스니펫을 컴포넌트마다 함께 제공.</p>
+      </div>
+    </div>
+  </div>
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>

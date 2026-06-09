@@ -1,0 +1,106 @@
+:root{--line:rgba(94,211,240,.12);--line2:rgba(94,211,240,.3)}
+body{
+  background:
+    radial-gradient(110% 90% at 100% 0%, rgba(94,211,240,.07), transparent 55%),
+    linear-gradient(var(--line) 1px,transparent 1px) 0 0/44px 44px,
+    linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/44px 44px,
+    var(--ink);}
+.stage{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(30px,5vw,72px)}
+
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.34em;
+  color:var(--cyan);text-transform:uppercase;margin-bottom:12px;
+  display:flex;align-items:center;gap:12px;opacity:0;transform:translateX(-12px)}
+.eyebrow::before{content:"04";color:var(--gold);font-weight:500}
+body.in .eyebrow{animation:slin .6s ease forwards .1s}
+
+h2{font-family:"Space Grotesk",sans-serif;font-weight:600;
+  font-size:clamp(24px,3.4vw,38px);letter-spacing:-.02em;line-height:1.08;
+  opacity:0;transform:translateY(18px);max-width:20em}
+body.in h2{animation:rise .7s ease forwards .2s}
+h2 .em{color:var(--cyan)}
+
+.lead{margin:12px 0 22px;color:var(--muted);font-size:clamp(12px,1.4vw,15px);
+  line-height:1.6;max-width:44em;opacity:0;transform:translateY(14px)}
+body.in .lead{animation:rise .7s ease forwards .34s}
+.lead b{color:var(--text);font-weight:600}
+
+/* ── layout ── */
+.demo-wrap{display:flex;gap:18px;align-items:stretch;min-height:0}
+.panel{flex:1;border:1px solid var(--line2);border-radius:14px;overflow:hidden;
+  background:rgba(255,255,255,.02);display:flex;flex-direction:column;
+  opacity:0;transform:translateY(20px) scale(.985)}
+body.in .panel.preview{animation:rise .75s cubic-bezier(.2,.8,.2,1) forwards .46s}
+body.in .panel.code{animation:rise .75s cubic-bezier(.2,.8,.2,1) forwards .58s}
+@keyframes rise{to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* ── 미리보기 (라이트 앱) ── */
+.browser-bar{display:flex;align-items:center;gap:12px;padding:9px 14px;
+  background:#0d1426;border-bottom:1px solid rgba(94,211,240,.18)}
+.browser-bar .dots{display:flex;gap:6px}
+.browser-bar .dots i{width:9px;height:9px;border-radius:50%;background:#39466a}
+.browser-bar .dots i:first-child{background:#ed6a5e}
+.browser-bar .dots i:nth-child(2){background:#f4bf4f}
+.browser-bar .dots i:last-child{background:#61c554}
+.browser-bar .url{flex:1;font-family:"JetBrains Mono",monospace;font-size:11px;
+  color:#7e8fb8;background:#070d1c;border:1px solid rgba(94,211,240,.12);
+  border-radius:7px;padding:5px 11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.browser-bar .url .hash{color:var(--cyan)}
+
+.app{flex:1;background:#f8fafc;color:#0f172a;padding:18px 20px;overflow:auto}
+.app-head{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+.app-head .ico{display:flex;align-items:center;justify-content:center;width:34px;height:34px;
+  border-radius:10px;background:#ede9fe;color:#7c3aed;flex:none}
+.app-head h4{font-family:"Space Grotesk",sans-serif;font-size:16px;font-weight:600;color:#111827;line-height:1.2}
+.app-head p{font-size:11.5px;color:#64748b;margin-top:2px}
+.app-head code{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:600;
+  padding:1px 6px;border-radius:5px;border:1px solid #ddd6fe;background:#f5f3ff;color:#6d28d9}
+
+.controls{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.ctrl-btn{font-family:"Inter",sans-serif;font-size:11.5px;font-weight:500;cursor:pointer;
+  padding:5px 11px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;color:#475569;
+  transition:.18s ease}
+.ctrl-btn:hover{border-color:#a78bfa;color:#6d28d9}
+.ctrl-btn.active{background:#7c3aed;border-color:#7c3aed;color:#fff}
+.ctrl-btn.close{color:#94a3b8}
+
+.acc{border:1px solid #e8edf3;border-radius:12px;background:#fff;overflow:hidden}
+.acc-item{border-bottom:1px solid #eef2f7}
+.acc-item:last-child{border-bottom:0}
+.acc-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;
+  gap:10px;padding:12px 15px;background:none;border:0;cursor:pointer;text-align:left;
+  font-family:"Inter",sans-serif;font-size:13.5px;font-weight:500;color:#1e293b;transition:color .15s}
+.acc-trigger:hover{color:#7c3aed}
+.acc-trigger .chev{color:#94a3b8;flex:none;transition:transform .28s ease}
+.acc-item.open .acc-trigger{color:#6d28d9}
+.acc-item.open .acc-trigger .chev{transform:rotate(180deg);color:#7c3aed}
+.acc-panel{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.acc-item.open .acc-panel{max-height:140px}
+.acc-inner{padding:0 15px 13px;font-size:12.5px;line-height:1.6;color:#64748b}
+
+.status{margin-top:13px;font-size:11.5px;color:#64748b}
+.status code{font-family:"JetBrains Mono",monospace;font-weight:600;color:#7c3aed}
+
+/* ── 소스코드 ── */
+.panel.code{background:#0b1120}
+.code-head{display:flex;align-items:center;justify-content:space-between;
+  padding:9px 14px;background:#0d1426;border-bottom:1px solid rgba(94,211,240,.18)}
+.code-head .fname{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:#9fb2da}
+.copy-btn{font-family:"JetBrains Mono",monospace;font-size:11px;cursor:pointer;
+  padding:4px 11px;border-radius:7px;border:1px solid var(--line2);
+  background:rgba(94,211,240,.07);color:var(--cyan);transition:.18s ease}
+.copy-btn:hover{background:rgba(94,211,240,.16)}
+.copy-btn.done{color:#61c554;border-color:rgba(97,197,84,.5);background:rgba(97,197,84,.12)}
+
+.src{flex:1;margin:0;padding:16px 18px;overflow:auto;
+  font-family:"JetBrains Mono",monospace;font-size:11.5px;line-height:1.62;color:#c6d2ee}
+.src .k{color:var(--violet)}
+.src .s{color:var(--gold)}
+.src .c{color:var(--cyan)}
+.src .fn{color:#7ee0c4}
+
+@media (max-width:900px){.demo-wrap{flex-direction:column}}
+@media (prefers-reduced-motion:reduce){
+  .eyebrow,h2,.lead,.panel{opacity:1!important;transform:none!important}
+  .acc-panel,.chev{transition:none!important}
+}

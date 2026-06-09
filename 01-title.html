@@ -32,7 +32,10 @@
         <span class="word w2">Axiom</span>
       </h1>
       <p class="sub">실무에 바로 쓰는 컴포넌트·유틸리티를 <b>react-app-scaffold</b>로,<br>
-        그 위의 RAG 기반 코드 생성을 <b>Axiom AI</b> 어시스턴트로.</p>
+        그 위의 RAG 기반 코드 생성을 <b>Axiom AI</b> 어시스턴트.</p>
+      <a class="vlink" href="http://redsky0212.dothome.co.kr/presentation/media/scaffold_axiom.mp4" target="_blank" rel="noopener">
+        <span class="play">▶</span> 소개 영상 보기
+      </a>
     </div>
   </div>
   <div class="meta">
@@ -46,6 +49,7 @@
   if(document.readyState==='complete')requestAnimationFrame(play);
   else window.addEventListener('load',()=>requestAnimationFrame(play));
   window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
 </script>
 </body>
 </html>

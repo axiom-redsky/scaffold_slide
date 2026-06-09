@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>react-app-scaffold — 개발 가이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/04-5-scaffold-guide.css">
+</head>
+<body>
+  <div class="stage">
+    <div class="eyebrow">react-app-scaffold · 개발 가이드</div>
+    <h2>막히면 찾아보는 <span class="em">전체 개발 가이드</span></h2>
+    <p class="lead">설치부터 프로젝트 구조 · 디자인 토큰 · 컴포넌트 · 유틸 · 훅 · 협업 컨벤션까지 <b>한 문서에서</b>. 온라인으로 상시 제공됩니다.</p>
+
+    <div class="guide-wrap">
+      <div class="panel guide">
+        <div class="browser-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="url">redsky0212.dothome.co.kr/axiom/<span class="hash">react-guide/</span></span>
+          <span class="live">● LIVE</span>
+        </div>
+
+        <div class="docs">
+          <!-- ── 사이드바 목차 ── -->
+          <aside class="side">
+            <div class="brand"><span class="logo">A</span>react-guide</div>
+            <nav>
+              <div class="nav-group">시작하기</div>
+              <button class="nav-item" data-key="intro">소개</button>
+              <button class="nav-item" data-key="install">설치 &amp; 실행</button>
+              <button class="nav-item" data-key="structure">프로젝트 구조</button>
+
+              <div class="nav-group">스타일</div>
+              <button class="nav-item" data-key="tokens">디자인 토큰</button>
+              <button class="nav-item" data-key="theme">테마 (라이트/다크)</button>
+
+              <div class="nav-group">컴포넌트</div>
+              <button class="nav-item" data-key="ui">UI 컴포넌트</button>
+              <button class="nav-item" data-key="layout">레이아웃</button>
+
+              <div class="nav-group">개발</div>
+              <button class="nav-item" data-key="util">공통 유틸리티</button>
+              <button class="nav-item" data-key="hooks">커스텀 훅</button>
+              <button class="nav-item" data-key="routing">라우팅</button>
+              <button class="nav-item" data-key="data">데이터 통신</button>
+
+              <div class="nav-group">협업</div>
+              <button class="nav-item" data-key="publishing">퍼블리싱 가이드</button>
+              <button class="nav-item" data-key="convention">코딩 컨벤션</button>
+            </nav>
+          </aside>
+
+          <!-- ── 본문 ── -->
+          <section class="content">
+            <div class="crumb"><span id="c-group">시작하기</span><span class="sep">/</span><span id="c-title">소개</span></div>
+            <h1 id="d-title">소개</h1>
+            <p class="desc" id="d-desc"></p>
+            <ul class="points" id="d-points"></ul>
+            <pre class="snippet" id="d-code"><code></code></pre>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  /* ── 가이드 문서 데이터 ── */
+  var DOCS = {
+    intro:{g:"시작하기",t:"소개",d:"react-app-scaffold는 React · Vite · TypeScript 기반의 표준 프로젝트 골격입니다. 반복되는 셋업을 걷어내고 업무 개발에 바로 집중할 수 있습니다.",
+      p:["도메인 단위로 나뉜 일관된 폴더 구조","디자인 토큰 · 테마 시스템 내장","@axiom/* 공통 모듈로 import 단일화"]},
+    install:{g:"시작하기",t:"설치 & 실행",d:"패키지 설치 후 개발 서버를 실행합니다.",
+      code:"pnpm install      # 의존성 설치\npnpm dev          # 개발 서버 (Vite)\npnpm build        # 프로덕션 빌드\npnpm storybook    # 컴포넌트 문서"},
+    structure:{g:"시작하기",t:"프로젝트 구조",d:"역할에 따라 폴더가 분리되어 있어 어디에 무엇을 둘지 명확합니다.",
+      p:["src/core — 공통 코어 (api · hooks · query · router)","src/domains — 업무 도메인 (pages · components)","src/publishing — 퍼블리셔 작업 폴더","src/shared — 전역 공유 (layout · ui · router)"]},
+    tokens:{g:"스타일",t:"디자인 토큰",d:"Style Dictionary로 토큰 JSON에서 CSS 변수를 자동 생성합니다.",
+      p:["design-tokens/*.json 을 편집","tokens/*.css 는 자동 생성 (직접 편집 금지)","var(--color-...) 형태로 어디서나 사용"]},
+    theme:{g:"스타일",t:"테마 (라이트/다크)",d:"라이트·다크 모드와 프로젝트별 브랜드 테마를 지원합니다.",
+      p:["theme-light.css · theme-dark.css","themes/theme-{project}.css 로 브랜드 적용","data-theme 속성으로 런타임 전환"]},
+    ui:{g:"컴포넌트",t:"UI 컴포넌트",d:"shadcn/ui를 래핑한 컴포넌트를 @axiom/components/ui 한 곳에서 import 합니다.",
+      code:"import { Button, Accordion } from '@axiom/components/ui';\n\n<Button variant=\"default\">확인</Button>"},
+    layout:{g:"컴포넌트",t:"레이아웃",d:"기본 레이아웃과 반응형 사이드바를 제공합니다.",
+      p:["shared/components/layout — 레이아웃 셸","useSidebar() — 펼침 · 모바일 · 서브메뉴 상태","도메인 페이지는 레이아웃 안에 자동 배치"]},
+    util:{g:"개발",t:"공통 유틸리티",d:"import 없이 전역 window.$util 로 날짜·숫자·문자열을 처리합니다.",
+      code:"$util.number.comma(1234567)   // → 1,234,567\n$util.date.format(new Date())  // → 2026-06-09\n$util.string.mask('01012345678', 3, 7) // → 010****5678"},
+    hooks:{g:"개발",t:"커스텀 훅",d:"@axiom/hooks 의 useApi 하나로 조회·변경·캐시 무효화를 처리합니다.",
+      code:"const { data, isLoading } = useApi('/users');\nconst { mutate } = useApi('/users', { method: 'POST' });"},
+    routing:{g:"개발",t:"라우팅",d:"도메인별 라우터를 전역 라우터로 통합합니다.",
+      p:["domains/{domain}/router — 도메인 라우트","shared/router — 전체 라우트 통합","$router 로 전역 네비게이션"]},
+    data:{g:"개발",t:"데이터 통신",d:"TanStack Query + Axios 기반 공통 API 클라이언트를 사용합니다.",
+      p:["useApi — query / mutation 자동 분기","invalidateQueries 로 캐시 무효화","core/api — 공통 인터셉터 · 에러 처리"]},
+    publishing:{g:"협업",t:"퍼블리싱 가이드",d:"퍼블리셔가 작업물을 제공하는 규칙을 정의합니다.",
+      p:["src/publishing/{domain} 에 업무별 폴더 생성","pages · components · common 구조 유지","개발자가 도메인으로 연결"]},
+    convention:{g:"협업",t:"코딩 컨벤션",d:"ESLint · Prettier 로 코드 스타일을 자동 통일합니다.",
+      p:["Format on Save 적용 (.vscode/settings.json)","@/ · @axiom/ import alias 사용","컴포넌트 · 파일 네이밍 규칙"]},
+  };
+
+  (function(){
+    var items = Array.prototype.slice.call(document.querySelectorAll('.nav-item'));
+    var elG = document.getElementById('c-group'), elCT = document.getElementById('c-title');
+    var elT = document.getElementById('d-title'), elD = document.getElementById('d-desc');
+    var elP = document.getElementById('d-points'), elC = document.getElementById('d-code');
+
+    function show(key){
+      var data = DOCS[key]; if(!data) return;
+      items.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-key')===key); });
+      elG.textContent = data.g; elCT.textContent = data.t;
+      elT.textContent = data.t; elD.textContent = data.d;
+      // points
+      elP.innerHTML = '';
+      if(data.p){ elP.style.display='';
+        data.p.forEach(function(txt){ var li=document.createElement('li'); li.textContent=txt; elP.appendChild(li); });
+      } else { elP.style.display='none'; }
+      // code
+      if(data.code){ elC.style.display=''; elC.firstChild.textContent = data.code; }
+      else { elC.style.display='none'; }
+      document.querySelector('.content').scrollTop = 0;
+    }
+    items.forEach(function(b){ b.addEventListener('click', function(){ show(b.getAttribute('data-key')); }); });
+    show('intro');
+  })();
+
+  /* ── 진입 애니메이션 / 덱 연동 ── */
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>

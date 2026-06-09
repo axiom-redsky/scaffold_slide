@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>react-app-scaffold — 커스텀 훅</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/04-3-scaffold-hooks.css">
+</head>
+<body>
+  <div class="stage">
+    <div class="eyebrow">react-app-scaffold · 커스텀 훅</div>
+    <h2>React 기본 훅 위에,<br>데이터 통신을 <span class="em">useApi</span> 하나로</h2>
+    <p class="lead"><b>TanStack Query</b>를 감싼 단일 훅으로 조회·변경·캐시 무효화까지. 레이아웃 상태는 <b>useSidebar</b>로.</p>
+    <div class="usage"><span class="kw">import</span> { <span class="fn">useApi</span> } <span class="kw">from</span> <span class="st">'@axiom/hooks'</span></div>
+
+    <div class="groups">
+      <section class="grp g-api">
+        <h3 class="gh"><span class="gd"></span><span class="gns">useApi()</span>데이터 통신 · TanStack Query</h3>
+        <div class="tiles">
+          <div class="tile" style="--i:0">
+            <div class="thead"><span class="tag t-get">GET</span><span class="lbl">목록 조회</span></div>
+            <code class="code"><span class="fn">useApi</span>&lt;<span class="ty">User[]</span>&gt;(<span class="st">'/users'</span>)</code></div>
+
+          <div class="tile" style="--i:1">
+            <div class="thead"><span class="tag t-get">GET</span><span class="lbl">파라미터</span></div>
+            <code class="code"><span class="fn">useApi</span>(<span class="st">'/users'</span>, { params:{ id } })</code></div>
+
+          <div class="tile" style="--i:2">
+            <div class="thead"><span class="tag t-post">POST</span><span class="lbl">검색 조회</span></div>
+            <code class="code"><span class="fn">useApi</span>(<span class="st">'/search'</span>, { method:<span class="st">'POST'</span>, type:<span class="st">'query'</span> })</code></div>
+
+          <div class="tile" style="--i:3">
+            <div class="thead"><span class="tag t-post">POST</span><span class="lbl">생성</span></div>
+            <code class="code"><span class="kw">const</span> { mutate } = <span class="fn">useApi</span>(<span class="st">'/users'</span>, { method:<span class="st">'POST'</span> })</code></div>
+
+          <div class="tile" style="--i:4">
+            <div class="thead"><span class="tag t-put">PUT</span><span class="lbl">수정</span></div>
+            <code class="code"><span class="fn">useApi</span>(<span class="st">'/users/1'</span>, { method:<span class="st">'PUT'</span> })</code></div>
+
+          <div class="tile" style="--i:5">
+            <div class="thead"><span class="tag t-del">DELETE</span><span class="lbl">삭제</span></div>
+            <code class="code"><span class="fn">useApi</span>(<span class="st">'/users/1'</span>, { method:<span class="st">'DELETE'</span> })</code></div>
+
+          <div class="tile" style="--i:6">
+            <div class="thead"><span class="tag t-cache">CACHE</span><span class="lbl">캐시 무효화</span></div>
+            <code class="code"><span class="fn">invalidateQueries</span>(<span class="st">'/users'</span>)</code></div>
+
+          <div class="tile" style="--i:7">
+            <div class="thead"><span class="tag t-return">RETURN</span><span class="lbl">반환값 · 자동</span></div>
+            <code class="code">{ data, isLoading, mutate, isPending }</code></div>
+        </div>
+      </section>
+
+      <section class="grp g-sidebar">
+        <h3 class="gh"><span class="gd"></span><span class="gns">useSidebar()</span>레이아웃 상태</h3>
+        <div class="tiles">
+          <div class="tile" style="--i:8">
+            <div class="thead"><span class="tag t-state">STATE</span><span class="lbl">펼침 여부</span></div>
+            <code class="code">isExpanded</code></div>
+
+          <div class="tile" style="--i:9">
+            <div class="thead"><span class="tag t-action">ACTION</span><span class="lbl">접기 · 펼치기</span></div>
+            <code class="code"><span class="fn">toggleSidebar</span>()</code></div>
+
+          <div class="tile" style="--i:10">
+            <div class="thead"><span class="tag t-state">STATE</span><span class="lbl">모바일 열림</span></div>
+            <code class="code">isMobileOpen</code></div>
+
+          <div class="tile" style="--i:11">
+            <div class="thead"><span class="tag t-action">ACTION</span><span class="lbl">모바일 토글</span></div>
+            <code class="code"><span class="fn">toggleMobileSidebar</span>()</code></div>
+
+          <div class="tile" style="--i:12">
+            <div class="thead"><span class="tag t-state">STATE</span><span class="lbl">활성 메뉴</span></div>
+            <code class="code">activeItem · <span class="fn">setActiveItem</span>()</code></div>
+
+          <div class="tile" style="--i:13">
+            <div class="thead"><span class="tag t-action">ACTION</span><span class="lbl">서브메뉴</span></div>
+            <code class="code">openSubmenu · <span class="fn">toggleSubmenu</span>()</code></div>
+        </div>
+      </section>
+    </div>
+  </div>
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>
