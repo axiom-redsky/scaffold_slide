@@ -147,7 +147,7 @@ body.in .be:nth-of-type(2){animation-delay:2.22s}
 body.in .be:nth-of-type(3){animation-delay:2.34s}
 
 /* ── server node: clickable + 운영 이슈 popover ── */
-.node.server{cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.node.server{position:relative;cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
 .node.server:hover{transform:translateY(-3px);border-color:rgba(126,224,166,.7);
   box-shadow:0 10px 30px rgba(0,0,0,.4),0 0 22px rgba(126,224,166,.25)}
 .node.server:focus-visible{outline:2px solid var(--grn);outline-offset:3px}
@@ -181,6 +181,9 @@ body.in .info-dot{animation:dotPulse 2.2s ease-out infinite 1.4s}
   box-shadow:0 22px 60px rgba(0,0,0,.6),0 0 28px rgba(126,224,166,.12);
   opacity:0;visibility:hidden;pointer-events:none;
   transition:opacity .22s ease,transform .22s cubic-bezier(.2,.8,.2,1),visibility .22s}
+/* hover bridge: covers the 16px gap so the cursor can move into the popover without losing hover */
+.issue-pop::before{content:"";position:absolute;left:0;right:0;top:100%;height:20px}
+.node.server:hover .issue-pop,
 .node.server.open .issue-pop{opacity:1;visibility:visible;pointer-events:auto;
   transform:translateX(-68%) translateY(0) scale(1)}
 /* down arrow */

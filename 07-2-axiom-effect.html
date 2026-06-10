@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axiom AI — 도입 효과 기대</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/07-1-axiom-effect.css">
+</head>
+<body>
+  <div class="stage">
+    <header class="head">
+      <div class="eyebrow">The Axiom · 도입 효과 기대</div>
+      <h2>같은 화면을 만들어도, <span class="em">도달점이 다릅니다</span></h2>
+      <p class="lede">
+        속도 · 일관성 · 표준 준수 · 온보딩 · 재사용을 하나로 묶은
+        <b>종합 개발 효율 지수</b>로, 세 방식이 어디까지 도달하는지 한 축에서 비교했습니다.
+      </p>
+    </header>
+
+    <!-- 종합 효율 게이지 (bullet chart) -->
+    <div class="panel">
+      <span class="cn tl"></span><span class="cn tr"></span><span class="cn bl"></span><span class="cn br"></span>
+
+      <div class="p-head">
+        <div class="p-title">종합 개발 효율 지수 <span>OVERALL&nbsp;DEV&nbsp;EFFICIENCY</span></div>
+        <div class="zlegend">
+          <span class="zk red"><i></i>비효율</span>
+          <span class="zk amber"><i></i>표준</span>
+          <span class="zk green"><i></i>최적</span>
+        </div>
+      </div>
+
+      <!-- 구간 라벨 (트랙 영역에 정렬) -->
+      <div class="scalehead">
+        <span class="zl z1">LOW · 비효율</span>
+        <span class="zl z2">STANDARD · 표준</span>
+        <span class="zl z3">PEAK · 최적</span>
+      </div>
+
+      <!-- 3 레인: 같은 구간 배경 위에 측정 게이지 -->
+      <div class="lanes">
+        <div class="lane plain" style="--lv:30%;--d:.65s">
+          <span class="ln">일반 개발</span>
+          <span class="track"><i class="fill"><span class="wave"></span></i></span>
+          <span class="sc"><b class="gv" data-to="30" data-delay=".65"></b><em>/100</em></span>
+        </div>
+
+        <div class="lane scaf" style="--lv:70%;--d:.9s">
+          <span class="ln">+ Scaffold</span>
+          <span class="track"><i class="fill"><span class="wave"></span></i></span>
+          <span class="sc"><b class="gv" data-to="70" data-delay=".9"></b><em>/100</em></span>
+        </div>
+
+        <div class="lane axiom" style="--lv:96%;--d:1.15s">
+          <span class="ln"><span class="logo">✦</span> + Axiom</span>
+          <span class="track"><i class="fill"><span class="wave"></span></i><span class="best">BEST</span></span>
+          <span class="sc"><b class="gv" data-to="96" data-delay="1.15"></b><em>/100</em></span>
+        </div>
+      </div>
+
+      <!-- 0-100 축 -->
+      <div class="axis"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></div>
+    </div>
+
+    <div class="takeaway">
+      <span class="dot"></span>
+      Scaffold가 <b>표준 구간</b>까지 끌어올리고, Axiom이 그 위에서 <b>최적 구간</b>으로 밀어 올립니다.
+    </div>
+  </div>
+
+<script>
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var runId = 0;
+
+  function countUp(el, gen){
+    var to = +el.getAttribute('data-to'),
+        suf = el.getAttribute('data-suf') || '',
+        delay = (parseFloat(el.getAttribute('data-delay')) || 0) * 1000,
+        dur = 1100;
+    if(reduce){ el.textContent = to + suf; return; }
+    el.textContent = '0' + suf;
+    setTimeout(function(){
+      if(gen !== runId) return;
+      var t0 = null;
+      function step(ts){
+        if(gen !== runId) return;
+        if(t0 === null) t0 = ts;
+        var p = Math.min((ts - t0) / dur, 1);
+        var e = 1 - Math.pow(1 - p, 3);          // easeOutCubic
+        el.textContent = Math.round(to * e) + suf;
+        if(p < 1) requestAnimationFrame(step);
+        else el.textContent = to + suf;
+      }
+      requestAnimationFrame(step);
+    }, delay);
+  }
+
+  function counters(){
+    var gen = runId;
+    document.querySelectorAll('.gv').forEach(function(el){ countUp(el, gen); });
+  }
+
+  function play(){ runId++; document.body.classList.add('in'); counters(); }
+  function reset(){
+    runId++;
+    document.body.classList.remove('in');
+    void document.body.offsetWidth;
+    requestAnimationFrame(play);
+  }
+  if(document.readyState === 'complete') requestAnimationFrame(play);
+  else window.addEventListener('load', function(){ requestAnimationFrame(play); });
+  window.addEventListener('message', function(e){ if(e && e.data && e.data.type === 'slide:enter') reset(); });
+  window.addEventListener('keydown', function(e){ var k=e.key, nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F']; if(nav.indexOf(k)>-1){ e.preventDefault(); if(parent!==window) parent.postMessage({type:'slide:key',key:k},'*'); } });
+</script>
+</body>
+</html>

@@ -49,6 +49,18 @@ body.in .box.s1{animation:rise .65s cubic-bezier(.2,.7,.2,1) forwards .55s}
 body.in .box.s2{animation:rise .65s cubic-bezier(.2,.7,.2,1) forwards .8s}
 body.in .box.s3{animation:rise .65s cubic-bezier(.2,.7,.2,1) forwards 1.45s}
 
+/* hover — 각 영역 강조 */
+.box{transition:border-color .22s ease,box-shadow .22s ease,background .22s ease,transform .22s ease}
+.box.s1:hover{border-color:var(--vio);
+  box-shadow:0 0 0 1px var(--vio),0 0 26px rgba(167,139,250,.4);
+  background:rgba(167,139,250,.1);transform:translateY(-3px)}
+.box.s2:hover{border-color:var(--cyan);
+  box-shadow:0 0 0 1px var(--cyan),0 0 26px rgba(94,211,240,.4);
+  background:rgba(94,211,240,.08);transform:translateY(-3px)}
+.box.s3:hover{border-color:var(--grn);
+  box-shadow:0 0 0 1px var(--grn),0 0 26px rgba(126,224,166,.4);
+  background:rgba(126,224,166,.08);transform:translateY(-3px)}
+
 .sbadge{display:flex;align-items:center;gap:9px;
   font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--vio2)}

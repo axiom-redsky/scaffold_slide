@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>react-app-scaffold — 설계 철학과 장점</title>
+<title>react-app-scaffold — 종합 정리</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,208 +12,132 @@
 </head>
 <body>
   <div class="stage">
-    <div class="eyebrow">react-app-scaffold · 설계 철학</div>
-    <h2>완성된 UI를 강제하지 않는다 — <span class="em">'바꾸기 쉬운' 토대</span></h2>
-    <p class="lead">MUI·AntD처럼 정해진 UI Framework를 떠안기지 않습니다. <b>로직·상태만 제공</b>하고 UI·스타일·구조·상태는 프로젝트에 맞춰 갈아끼웁니다.
-      <b>헤드리스 · 도메인 기반 · 타입 안정성 · 접근성</b> — 네 축이 '쉬운 변경'을 떠받칩니다.</p>
+    <div class="eyebrow">react-app-scaffold · 종합 정리</div>
+    <h2>그래서, 이 모든 걸 갖춘 <span class="em">하나의 React 패키지</span></h2>
+    <div class="techline"><span>React</span><i></i><span>TypeScript</span><i></i><span>Vite</span></div>
 
-    <div class="cards">
-      <!-- 1. 헤드리스 -->
-      <div class="card c-cyan">
-        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3 21 8l-9 5-9-5 9-5Z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/></svg></div>
-        <span class="ix">01</span>
-        <h3>헤드리스 컴포넌트</h3>
-        <p>완성형 UI를 강제하지 않고 <b>로직·상태만</b> 제공 — UI는 자유롭게 입혀 상황에 맞춰 수정·확장이 쉽습니다.</p>
-        <div class="tags"><span>Tailwind</span><span>Sass</span><span>Emotion</span><span>CSS Modules</span></div>
+    <div class="cols">
+      <!-- ── 왼쪽: 제공 기능 ── -->
+      <div class="col col-feat">
+        <span class="col-label">제공 기능 · what's inside</span>
+        <div class="grid">
+          <!-- 1. UI 컴포넌트 -->
+          <div class="feat p-cyan" style="--i:0">
+            <span class="ic"><svg class="vis v-ui" viewBox="0 0 48 36">
+              <circle class="ripple" cx="24" cy="18" r="3"/>
+              <rect class="btn fillac" x="10" y="11" width="28" height="14" rx="7"/>
+              <rect class="fillink" x="17" y="16.8" width="14" height="2.4" rx="1.2"/>
+            </svg></span>
+            <span class="nm">UI 컴포넌트</span>
+          </div>
+          <!-- 2. 공통 유틸리티 -->
+          <div class="feat p-violet" style="--i:1">
+            <span class="ic"><svg class="vis v-util" viewBox="0 0 48 36">
+              <g class="gear">
+                <line class="ac" x1="33" y1="18" x2="36.5" y2="18"/>
+                <line class="ac" x1="30.4" y1="24.4" x2="32.8" y2="26.8"/>
+                <line class="ac" x1="24" y1="27" x2="24" y2="30.5"/>
+                <line class="ac" x1="17.6" y1="24.4" x2="15.2" y2="26.8"/>
+                <line class="ac" x1="15" y1="18" x2="11.5" y2="18"/>
+                <line class="ac" x1="17.6" y1="11.6" x2="15.2" y2="9.2"/>
+                <line class="ac" x1="24" y1="9" x2="24" y2="5.5"/>
+                <line class="ac" x1="30.4" y1="11.6" x2="32.8" y2="9.2"/>
+                <circle class="ac" cx="24" cy="18" r="6.5"/>
+                <circle class="fillac" cx="24" cy="18" r="2.2"/>
+              </g>
+            </svg></span>
+            <span class="nm">공통 유틸리티</span>
+          </div>
+          <!-- 3. 커스텀 훅 -->
+          <div class="feat p-gold" style="--i:2">
+            <span class="ic"><svg class="vis v-hook" viewBox="0 0 48 36">
+              <line class="ln" x1="13" y1="18" x2="35" y2="18"/>
+              <circle class="ring" cx="13" cy="18" r="3.4"/>
+              <circle class="ring" cx="35" cy="18" r="3.4"/>
+              <circle class="flow fillac" cx="13" cy="18" r="2.2"/>
+            </svg></span>
+            <span class="nm">커스텀 훅</span>
+          </div>
+          <!-- 4. 인터랙티브 데모 -->
+          <div class="feat p-pink" style="--i:3">
+            <span class="ic"><svg class="vis v-demo" viewBox="0 0 48 36">
+              <circle class="ripple2" cx="21" cy="22" r="3"/>
+              <path class="cursor" d="M16 9 L16 28 L20.8 23.4 L24 30 L26.6 28.8 L23.3 22.4 L29.5 22.4 Z"/>
+            </svg></span>
+            <span class="nm">인터랙티브 데모</span>
+          </div>
+          <!-- 5. 개발 가이드 -->
+          <div class="feat p-green" style="--i:4">
+            <span class="ic"><svg class="vis v-guide" viewBox="0 0 48 36">
+              <rect class="ln" x="14" y="5" width="20" height="26" rx="2.5"/>
+              <rect class="scan fillac" x="16" y="9" width="16" height="4.4" rx="1.5"/>
+              <line class="ln" x1="18" y1="11" x2="30" y2="11"/>
+              <line class="ln" x1="18" y1="16.5" x2="30" y2="16.5"/>
+              <line class="ln" x1="18" y1="22" x2="26" y2="22"/>
+              <line class="ln" x1="18" y1="27" x2="29" y2="27"/>
+            </svg></span>
+            <span class="nm">개발 가이드</span>
+          </div>
+          <!-- 6. 디자인 토큰 -->
+          <div class="feat p-cyan" style="--i:5">
+            <span class="ic"><svg class="vis v-token" viewBox="0 0 48 36">
+              <rect class="sw sw1" x="8"  y="10" width="9" height="16" rx="2.5"/>
+              <rect class="sw sw2" x="19.5" y="10" width="9" height="16" rx="2.5"/>
+              <rect class="sw sw3" x="31" y="10" width="9" height="16" rx="2.5"/>
+            </svg></span>
+            <span class="nm">디자인 토큰</span>
+          </div>
+          <!-- 7. 협업 워크플로우 -->
+          <div class="feat p-violet" style="--i:6">
+            <span class="ic"><svg class="vis v-collab" viewBox="0 0 48 36">
+              <rect class="ln" x="9"  y="8" width="9" height="20" rx="2.5"/>
+              <rect class="ln" x="20" y="8" width="9" height="20" rx="2.5"/>
+              <rect class="ln" x="31" y="8" width="9" height="20" rx="2.5"/>
+              <rect class="bar b1 fillac" x="9"  y="8" width="9" height="20" rx="2.5"/>
+              <rect class="bar b2 fillac" x="20" y="8" width="9" height="20" rx="2.5"/>
+              <rect class="bar b3 fillac" x="31" y="8" width="9" height="20" rx="2.5"/>
+            </svg></span>
+            <span class="nm">협업 워크플로우</span>
+          </div>
+        </div>
       </div>
 
-      <!-- 2. 도메인 기반 -->
-      <div class="card c-violet">
-        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
-        <span class="ix">02</span>
-        <h3>도메인 기반 구조</h3>
-        <p>기능·업무별로 도메인을 분리(<b>DDD</b>) — 복잡도와 충돌을 줄여 유지보수성·확장성을 높입니다.</p>
-        <div class="tags"><span>src/domains</span><span>모듈화</span><span>낮은 결합</span></div>
-      </div>
-
-      <!-- 3. 타입 안정성 -->
-      <div class="card c-gold">
-        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z"/><path d="M9 12l2 2 4-4"/></svg></div>
-        <span class="ix">03</span>
-        <h3>타입 안정성</h3>
-        <p>모든 컴포넌트가 <b>TypeScript</b>. props·반환 타입이 명확해 자동완성·타입체크가 정확합니다.</p>
-        <div class="tags"><span>TypeScript</span><span>IntelliSense</span><span>타입 체크</span></div>
-      </div>
-
-      <!-- 4. 접근성 -->
-      <div class="card c-green">
-        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M5 9h14"/><path d="M12 8v6"/><path d="M9 20l3-6 3 6"/></svg></div>
-        <span class="ix">04</span>
-        <h3>접근성 (A11y)</h3>
-        <p><b>shadcn/ui(Radix)</b> 기반 — 키보드 조작과 스크린리더(<b>ARIA</b>)를 기본으로 지원합니다.</p>
-        <div class="tags"><span>Radix</span><span>ARIA</span><span>키보드</span></div>
-      </div>
-
-      <!-- 5. 상태관리·성능 -->
-      <div class="card c-pink">
-        <div class="ic"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg></div>
-        <span class="ix">05</span>
-        <h3>상태관리 · 성능</h3>
-        <p>서버상태 <b>TanStack Query</b>, 클라이언트 <b>Zustand</b>, 통신 <b>Axios</b>로 표준화. 코드 스플리팅·HMR로 빠릅니다.</p>
-        <div class="tags"><span>TanStack Query</span><span>Zustand</span><span>Axios</span><span>Vite HMR</span></div>
+      <!-- ── 오른쪽: 도입 효과 ── -->
+      <div class="col col-philo">
+        <span class="col-label">도입 효과 · what you get</span>
+        <div class="philo-list">
+          <div class="ph ph-cyan" style="--j:0">
+            <span class="phk">빠른 개발 시작</span>
+            <span class="pht">초기 세팅·반복 구현 없이 바로 착수 — 개발 생산성↑</span>
+          </div>
+          <div class="ph ph-violet" style="--j:1">
+            <span class="phk">쉬운 개발</span>
+            <span class="pht">함수·유틸·훅·가이드·예제를 미리 제공해 진입장벽↓</span>
+          </div>
+          <div class="ph ph-gold" style="--j:2">
+            <span class="phk">일관된 코드 품질</span>
+            <span class="pht">팀 전체가 같은 표준·패턴으로 균일한 품질 유지</span>
+          </div>
+          <div class="ph ph-green" style="--j:3">
+            <span class="phk">손쉬운 확장 (DDD 설계)</span>
+            <span class="pht">도메인 기반 구조로 새 기능·업무 추가 용이</span>
+          </div>
+          <div class="ph ph-pink" style="--j:4">
+            <span class="phk">프로젝트 리스크↓</span>
+            <span class="pht">기간·설정·협업 이슈를 사전에 줄여 프로젝트 안정화</span>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
-  <!-- ── 팝오버 (카드 클릭 시) ── -->
-  <div class="pop-overlay" id="popOverlay"></div>
-
-  <!-- 1. 헤드리스 -->
-  <div class="popover c-cyan" data-pop="1">
-    <div class="pop-arrow"></div>
-    <button class="pop-x" aria-label="닫기">×</button>
-    <div class="pop-head"><span class="pop-dot"></span><h4>같은 컴포넌트, 다른 옷</h4></div>
-    <div class="demo">
-      <div class="d1-stage">
-        <button class="d1-btn">Button</button>
-        <div class="d1-chip"></div>
-      </div>
-      <div class="d1-themes">
-        <span class="th th1">Ocean</span><span class="th th2">Grape</span><span class="th th3">Amber</span><span class="th th4">Mint</span>
-      </div>
-    </div>
-    <p class="pop-note">완성형 UI를 강제하지 않습니다 — <b>토큰만 바꿔</b> 테마·모양을 즉시 교체.</p>
-  </div>
-
-  <!-- 2. 도메인 기반 -->
-  <div class="popover c-violet" data-pop="2">
-    <div class="pop-arrow"></div>
-    <button class="pop-x" aria-label="닫기">×</button>
-    <div class="pop-head"><span class="pop-dot"></span><h4>각자 자기 도메인만 작업</h4></div>
-    <div class="demo">
-      <div class="d2">
-        <div class="d2-folder f-a"><div class="fh">📁 order</div><div class="dev">개발자 A</div><div class="d2-line l1"></div><div class="d2-line l2"></div></div>
-        <div class="d2-folder f-b"><div class="fh">📁 payment</div><div class="dev">개발자 B</div><div class="d2-line l1"></div><div class="d2-line l2"></div></div>
-        <div class="d2-folder f-c"><div class="fh">📁 member</div><div class="dev">개발자 C</div><div class="d2-line l1"></div><div class="d2-line l2"></div></div>
-      </div>
-      <div class="d2-badge">✓ 동시 작업 · 충돌 0</div>
-    </div>
-    <p class="pop-note"><b>src/domains/</b> 아래 업무별 폴더로 격리 — 남의 코드는 건드리지 않습니다.</p>
-  </div>
-
-  <!-- 3. 타입 안정성 -->
-  <div class="popover c-gold" data-pop="3">
-    <div class="pop-arrow"></div>
-    <button class="pop-x" aria-label="닫기">×</button>
-    <div class="pop-head"><span class="pop-dot"></span><h4>오류를 빌드 전에 잡는다</h4></div>
-    <div class="demo">
-      <div class="d3-code">
-        <div class="cl"><span class="kw">const</span> price<span class="op">: </span><span class="ty">number</span> <span class="op">= </span><span class="bad"><span class="v-bad">"3000"</span><span class="v-fix">3000</span><span class="squig"></span></span></div>
-        <div class="cl"><span class="kw">return</span> price <span class="op">*</span> qty<span class="op">;</span></div>
-      </div>
-      <div class="d3-tip">⚠ Type 'string' is not assignable to type 'number'.</div>
-      <div class="d3-ok">✓ 타입 일치 · 빌드 오류 0</div>
-    </div>
-    <p class="pop-note">작성 중 에디터가 <b>즉시 타입 오류</b>를 표시 — 빌드 단계 오류율을 떨어뜨립니다.</p>
-  </div>
-
-  <!-- 4. 접근성 -->
-  <div class="popover c-green" data-pop="4">
-    <div class="pop-arrow"></div>
-    <button class="pop-x" aria-label="닫기">×</button>
-    <div class="pop-head"><span class="pop-dot"></span><h4>키보드 · 스크린리더 기본 지원</h4></div>
-    <div class="demo">
-      <div class="d4-ui">
-        <button class="d4c f1">저장</button>
-        <span class="d4c f2">이름</span>
-        <a class="d4c f3">도움말</a>
-        <span class="ring"></span>
-      </div>
-      <div class="d4-sr"><span class="srico">🔊</span><span class="sr1">"저장, 버튼"</span><span class="sr2">"이름, 입력란"</span><span class="sr3">"도움말, 링크"</span></div>
-      <div class="d4-tab">⇥ Tab</div>
-    </div>
-    <p class="pop-note"><b>Radix(shadcn/ui)</b> 기반 — 포커스 이동과 <b>ARIA</b> 안내가 처음부터 동작.</p>
-  </div>
-
-  <!-- 5. 상태관리·성능 -->
-  <div class="popover c-pink" data-pop="5">
-    <div class="pop-arrow"></div>
-    <button class="pop-x" aria-label="닫기">×</button>
-    <div class="pop-head"><span class="pop-dot"></span><h4>캐시로 빠르게 · 표준화된 상태</h4></div>
-    <div class="demo">
-      <div class="d5-row"><span class="lbl">최초 요청</span><div class="track"><span class="fill slow"></span></div><span class="ms slowms">1200ms</span></div>
-      <div class="d5-row"><span class="lbl">캐시 적중</span><div class="track"><span class="fill fast"></span></div><span class="ms fastms">0ms ⚡</span></div>
-      <div class="d5-stores"><span class="chip">TanStack Query</span><span class="chip">Zustand</span><span class="chip">Axios</span></div>
-      <div class="d5-hmr">⚡ HMR rebuilt in 42ms</div>
-    </div>
-    <p class="pop-note">서버상태는 <b>캐시</b>로 즉시 응답, 코드 스플리팅·<b>Vite HMR</b>로 개발도 빠릅니다.</p>
   </div>
 
 <script>
   function play(){document.body.classList.add('in');}
-  function reset(){closePop();document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
   if(document.readyState==='complete')requestAnimationFrame(play);
   else window.addEventListener('load',()=>requestAnimationFrame(play));
   window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
-
-  /* ── 카드 클릭 → 팝오버 데모 ── */
-  var overlay = document.getElementById('popOverlay');
-  var cards   = Array.prototype.slice.call(document.querySelectorAll('.card'));
-  var pops    = {};
-  Array.prototype.slice.call(document.querySelectorAll('.popover')).forEach(function(p){ pops[p.getAttribute('data-pop')] = p; });
-  var openIdx = null;
-
-  cards.forEach(function(card, i){
-    var n = String(i + 1);
-    card.setAttribute('data-card', n);
-    var hint = document.createElement('span');
-    hint.className = 'more';
-    hint.innerHTML = '자세히 보기 <b>▸</b>';
-    card.appendChild(hint);
-    card.addEventListener('click', function(){ togglePop(n, card); });
-  });
-
-  function place(pop, card){
-    var r = card.getBoundingClientRect();
-    var pw = pop.offsetWidth, ph = pop.offsetHeight;
-    var vw = innerWidth, vh = innerHeight, m = 12, gap = 14;
-    var left = Math.min(Math.max(r.left + r.width/2 - pw/2, m), vw - pw - m);
-    var top = r.top - ph - gap;
-    var below = false;
-    if(top < m){ top = Math.min(r.bottom + gap, vh - ph - m); below = true; }
-    pop.style.left = left + 'px';
-    pop.style.top  = top + 'px';
-    pop.classList.toggle('below', below);
-    var arrow = pop.querySelector('.pop-arrow');
-    var ax = Math.min(Math.max(r.left + r.width/2 - left, 22), pw - 22);
-    arrow.style.left = ax + 'px';
-  }
-
-  function openPop(n, card){
-    closePop();
-    var pop = pops[n]; if(!pop) return;
-    place(pop, card);
-    overlay.classList.add('show');
-    pop.classList.add('open');
-    card.classList.add('active');
-    openIdx = n;
-  }
-  function closePop(){
-    if(openIdx == null) return;
-    var pop = pops[openIdx];
-    if(pop) pop.classList.remove('open');
-    overlay.classList.remove('show');
-    cards.forEach(function(c){ c.classList.remove('active'); });
-    openIdx = null;
-  }
-  function togglePop(n, card){ if(openIdx === n) closePop(); else openPop(n, card); }
-
-  overlay.addEventListener('click', closePop);
-  Array.prototype.slice.call(document.querySelectorAll('.pop-x')).forEach(function(x){
-    x.addEventListener('click', function(e){ e.stopPropagation(); closePop(); });
-  });
-  addEventListener('resize', function(){ if(openIdx != null) place(pops[openIdx], document.querySelector('.card[data-card="'+openIdx+'"]')); });
-  window.addEventListener('keydown',function(e){var k=e.key;if(k==='Escape'){if(openIdx!=null){e.preventDefault();closePop();return;}}var nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
 </script>
 </body>
 </html>

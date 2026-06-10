@@ -1,0 +1,211 @@
+:root{
+  --line:rgba(167,139,250,.13);--line2:rgba(167,139,250,.32);
+  --vio:#A78BFA;--vio2:#C4B5FD;--cyan:#5ED3F0;
+  --z-red:#FF6B6B;--z-amber:#F5B14C;--z-green:#5BE5A6;
+  /* qualitative zone stops */
+  --s1:40%;--s2:72%;
+  /* track grid columns */
+  --label-w:clamp(92px,11vw,140px);
+  --val-w:clamp(66px,8vw,96px);
+  --gap:clamp(12px,1.5vw,18px);
+}
+body{
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(167,139,250,.10), transparent 55%),
+    radial-gradient(90% 90% at 0% 100%, rgba(94,211,240,.06), transparent 55%),
+    linear-gradient(var(--line) 1px,transparent 1px) 0 0/46px 46px,
+    linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/46px 46px,
+    var(--ink);
+}
+.stage{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;
+  gap:clamp(16px,2.4vw,30px);padding:clamp(28px,4vw,64px) clamp(36px,6vw,96px)}
+
+/* ── header ───────────────────────────── */
+.head{max-width:1100px}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.34em;
+  color:var(--vio);text-transform:uppercase;margin-bottom:12px;
+  display:flex;align-items:center;gap:12px;opacity:0;transform:translateX(-12px)}
+.eyebrow::before{content:"07";color:var(--gold);font-weight:500}
+body.in .eyebrow{animation:slin .6s ease forwards .1s}
+
+h2{font-family:"Space Grotesk",sans-serif;font-weight:600;
+  font-size:clamp(26px,3.6vw,46px);letter-spacing:-.02em;line-height:1.06;
+  opacity:0;transform:translateY(18px)}
+body.in h2{animation:rise .7s ease forwards .2s}
+h2 .em{color:var(--vio);text-shadow:0 0 38px rgba(167,139,250,.4)}
+
+.lede{margin-top:12px;max-width:62em;color:var(--muted);
+  font-size:clamp(12.5px,1.3vw,15.5px);line-height:1.6;
+  opacity:0;transform:translateY(14px)}
+body.in .lede{animation:rise .7s ease forwards .34s}
+.lede b{color:var(--text);font-weight:600}
+
+/* ── panel (cyber frame) ──────────────── */
+.panel{position:relative;
+  padding:clamp(20px,2.6vw,34px) clamp(22px,3vw,40px);
+  border-radius:16px;border:1px solid var(--line2);
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.022) 0 1px, transparent 1px 4px),
+    linear-gradient(180deg, rgba(16,22,40,.72), rgba(10,14,26,.82));
+  box-shadow:0 30px 80px rgba(0,0,0,.5), inset 0 0 60px rgba(94,211,240,.04),
+             0 0 0 1px rgba(94,211,240,.05);
+  backdrop-filter:blur(4px);
+  opacity:0;transform:translateY(22px) scale(.985)}
+body.in .panel{animation:panel-in .8s cubic-bezier(.2,.7,.2,1) forwards .46s}
+@keyframes panel-in{to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* corner brackets */
+.cn{position:absolute;width:16px;height:16px;border:2px solid var(--cyan);
+  opacity:.55;filter:drop-shadow(0 0 6px rgba(94,211,240,.6))}
+.cn.tl{top:9px;left:9px;border-right:0;border-bottom:0;border-radius:5px 0 0 0}
+.cn.tr{top:9px;right:9px;border-left:0;border-bottom:0;border-radius:0 5px 0 0}
+.cn.bl{bottom:9px;left:9px;border-right:0;border-top:0;border-radius:0 0 0 5px}
+.cn.br{bottom:9px;right:9px;border-left:0;border-top:0;border-radius:0 0 5px 0}
+
+/* panel head */
+.p-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;
+  flex-wrap:wrap;margin-bottom:clamp(16px,2vw,26px)}
+.p-title{font-family:"Space Grotesk",sans-serif;font-weight:600;
+  font-size:clamp(15px,1.7vw,21px);color:var(--text);letter-spacing:-.01em;
+  display:flex;align-items:baseline;gap:12px}
+.p-title span{font-family:"JetBrains Mono",monospace;font-weight:400;
+  font-size:clamp(8.5px,.95vw,10.5px);letter-spacing:.28em;color:var(--cyan);
+  opacity:.7}
+.zlegend{display:flex;gap:14px;font-family:"JetBrains Mono",monospace;
+  font-size:clamp(9.5px,1vw,11.5px);color:var(--muted)}
+.zk{display:inline-flex;align-items:center;gap:7px}
+.zk i{width:11px;height:11px;border-radius:3px}
+.zk.red i{background:var(--z-red);box-shadow:0 0 9px rgba(255,107,107,.6)}
+.zk.amber i{background:var(--z-amber);box-shadow:0 0 9px rgba(245,177,76,.6)}
+.zk.green i{background:var(--z-green);box-shadow:0 0 9px rgba(91,229,166,.6)}
+
+/* ── scale head (zone labels over track) ─ */
+.scalehead{position:relative;height:16px;margin-bottom:9px;
+  margin-left:calc(var(--label-w) + var(--gap));
+  margin-right:calc(var(--val-w) + var(--gap));
+  font-family:"JetBrains Mono",monospace;font-size:clamp(8.5px,.92vw,10.5px);
+  letter-spacing:.06em;opacity:0}
+body.in .scalehead{animation:rise .6s ease forwards 1.0s}
+.zl{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
+.zl.z1{left:20%;color:var(--z-red)}
+.zl.z2{left:56%;color:var(--z-amber)}
+.zl.z3{left:86%;color:var(--z-green)}
+
+/* ── lanes ────────────────────────────── */
+.lanes{display:flex;flex-direction:column;gap:clamp(10px,1.3vw,16px);
+  position:relative}
+.lane{display:grid;grid-template-columns:var(--label-w) 1fr var(--val-w);
+  align-items:center;gap:var(--gap);font-family:"JetBrains Mono",monospace;
+  opacity:0;transform:translateX(-10px)}
+body.in .lane{animation:slin .6s ease forwards var(--d)}
+.ln{font-size:clamp(11px,1.2vw,14px);color:var(--text);text-align:right;
+  white-space:nowrap;letter-spacing:.01em}
+.lane.axiom .ln{color:var(--vio2);font-weight:600}
+.ln .logo{color:var(--vio2);text-shadow:0 0 12px rgba(167,139,250,.7)}
+
+/* qualitative band track */
+.track{position:relative;height:clamp(20px,2.3vw,28px);border-radius:7px;
+  overflow:hidden;
+  background:
+    /* zone dividers */
+    linear-gradient(90deg,transparent calc(var(--s1) - 1px),rgba(255,255,255,.30) var(--s1),transparent calc(var(--s1) + 1px)),
+    linear-gradient(90deg,transparent calc(var(--s2) - 1px),rgba(255,255,255,.30) var(--s2),transparent calc(var(--s2) + 1px)),
+    /* qualitative zones (low-opacity context) */
+    linear-gradient(90deg,
+      color-mix(in srgb,var(--z-red) 22%,transparent) 0 var(--s1),
+      color-mix(in srgb,var(--z-amber) 22%,transparent) var(--s1) var(--s2),
+      color-mix(in srgb,var(--z-green) 22%,transparent) var(--s2) 100%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05), inset 0 1px 3px rgba(0,0,0,.4)}
+
+/* measure fill — neon, fills left→right */
+.fill{position:absolute;left:0;top:0;height:100%;width:0;border-radius:7px 5px 5px 7px;
+  --col:var(--cyan);
+  background:linear-gradient(90deg,
+    color-mix(in srgb,var(--col) 35%,transparent),
+    color-mix(in srgb,var(--col) 80%,transparent) 60%,
+    color-mix(in srgb,var(--col) 92%,white));
+  box-shadow:0 0 18px color-mix(in srgb,var(--col) 55%,transparent),
+             inset 0 1px 1px rgba(255,255,255,.4);}
+body.in .fill{animation:fillgauge 1.2s cubic-bezier(.25,.9,.25,1) forwards var(--d)}
+@keyframes fillgauge{from{width:0}to{width:var(--lv)}}
+
+/* very faint sheen drifting through the water body */
+.fill::before{content:"";position:absolute;inset:0;border-radius:inherit;
+  background:repeating-linear-gradient(115deg,
+    rgba(255,255,255,.05) 0 14px, transparent 14px 40px);
+  background-size:64px 100%}
+body.in .fill::before{animation:flow 2.2s linear infinite}
+@keyframes flow{to{background-position:64px 0}}
+
+/* water surface — two asymmetric discs spin in opposite directions,
+   so the leading edge gently sloshes like a rising water level (rotate 기법) */
+.wave{position:absolute;top:50%;right:2px;width:0;height:0;pointer-events:none;
+  --ws:clamp(34px,3.9vw,50px)}
+.wave::before,.wave::after{content:"";position:absolute;left:0;top:0;
+  width:var(--ws);height:var(--ws);
+  margin-left:calc(var(--ws) * -.5);margin-top:calc(var(--ws) * -.5);
+  background:color-mix(in srgb,var(--col) 88%,white)}
+.wave::before{border-radius:38% 52% 41% 49% / 53% 39% 51% 42%;opacity:.85}
+.wave::after{border-radius:51% 37% 50% 40% / 38% 52% 41% 53%;opacity:.42;
+  background:color-mix(in srgb,var(--col) 74%,white)}
+body.in .wave::before{animation:swirl 1.9s linear infinite}
+body.in .wave::after{animation:swirl 2.9s linear infinite reverse}
+@keyframes swirl{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+/* per-lane neon color */
+.lane.plain .fill{--col:#FF8C8C}
+.lane.scaf  .fill{--col:var(--cyan)}
+.lane.axiom .fill{--col:var(--vio)}
+.lane.axiom .track{box-shadow:inset 0 0 0 1px rgba(167,139,250,.30),inset 0 1px 3px rgba(0,0,0,.4),0 0 0 1px rgba(167,139,250,.10)}
+
+/* BEST tag riding the axiom fill */
+.best{position:absolute;top:50%;right:8px;transform:translateY(-50%);
+  font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;
+  letter-spacing:.14em;color:#0c0f1e;padding:2px 8px;border-radius:5px;
+  background:linear-gradient(90deg,var(--vio2),#9fe7d0);
+  box-shadow:0 3px 12px rgba(167,139,250,.5);opacity:0}
+body.in .lane.axiom .best{animation:rise .5s ease forwards 2.3s}
+
+/* score */
+.sc{display:flex;align-items:baseline;justify-content:flex-end;gap:3px}
+.gv{font-family:"Space Grotesk",sans-serif;font-weight:700;
+  font-size:clamp(18px,2.1vw,28px);line-height:1;font-variant-numeric:tabular-nums}
+.sc em{font-style:normal;font-family:"JetBrains Mono",monospace;
+  font-size:clamp(9px,.95vw,11px);color:var(--muted)}
+.lane.plain .gv{color:#FF8C8C}
+.lane.scaf  .gv{color:var(--cyan)}
+.lane.axiom .gv{color:var(--vio2);text-shadow:0 0 18px rgba(167,139,250,.5)}
+
+/* ── axis ─────────────────────────────── */
+.axis{display:flex;justify-content:space-between;margin-top:10px;
+  margin-left:calc(var(--label-w) + var(--gap));
+  margin-right:calc(var(--val-w) + var(--gap));
+  font-family:"JetBrains Mono",monospace;font-size:clamp(8.5px,.92vw,10.5px);
+  color:#4d5a82;letter-spacing:.05em;opacity:0}
+body.in .axis{animation:rise .5s ease forwards 1.9s}
+
+/* ── takeaway ─────────────────────────── */
+.takeaway{align-self:center;display:inline-flex;align-items:center;gap:11px;
+  text-align:center;padding:11px 22px;border-radius:999px;
+  border:1px solid var(--line2);background:rgba(167,139,250,.06);
+  font-size:clamp(12px,1.3vw,15px);color:var(--text);letter-spacing:.005em;
+  opacity:0;transform:translateY(12px)}
+body.in .takeaway{animation:rise .6s ease forwards 2.5s}
+.takeaway b{color:var(--vio2);font-weight:600}
+.takeaway .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto;
+  background:var(--vio);box-shadow:0 0 12px var(--vio)}
+
+/* ── responsive ───────────────────────── */
+@media (max-width:680px){
+  :root{--label-w:64px;--val-w:54px;--gap:8px}
+  .zlegend{display:none}
+  .zl{font-size:8px}
+}
+@media (prefers-reduced-motion:reduce){
+  .eyebrow,h2,.lede,.panel,.scalehead,.lane,.axis,.takeaway,.best{
+    opacity:1!important;transform:none!important}
+  .lane.axiom .best{transform:translateY(-50%)!important}
+  .fill{width:var(--lv)!important;animation:none!important}
+  .fill::before{animation:none!important}
+  .wave{display:none!important}
+}
