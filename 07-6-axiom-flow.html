@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axiom AI — 사용 흐름</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/07-6-axiom-flow.css">
+</head>
+<body>
+  <div class="stage">
+    <header class="head">
+      <div class="eyebrow">The Axiom · 사용 흐름</div>
+      <h2>사이드바에서 <span class="em">대화하면 끝</span> — 자연스러운 개발 흐름 안으로</h2>
+      <p class="lede">
+        오른쪽 <b>Axiom AI Chat</b>에 의도 한 줄 → <b>diff로 제안</b> → <b>적용 시 바뀐 부분만 안전하게 반영</b>됩니다.
+      </p>
+    </header>
+
+    <!-- ── VSCode 창 목업 ─────────────────────────────── -->
+    <div class="ide">
+      <!-- 메뉴 + 타이틀 바 -->
+      <div class="menubar">
+        <span class="mlogo">⧉</span>
+        <nav class="menu">
+          <span>File</span><span>Edit</span><span>Selection</span><span>View</span>
+          <span>Go</span><span>Run</span><span>Terminal</span><span>Help</span>
+        </nav>
+        <div class="mtitle">
+          <span class="mnav">‹ ›</span>
+          <span class="mhost">[Extension Development Host]</span> react-app-peoplify
+        </div>
+        <span class="mupdate">Update</span>
+        <span class="mwin"><i></i><i></i><i></i></span>
+      </div>
+
+      <div class="ibody">
+        <!-- 액티비티 바 -->
+        <div class="abar">
+          <span class="aitem">▤</span>
+          <span class="aitem">⌕</span>
+          <span class="aitem">⎇</span>
+          <span class="aitem">▷</span>
+          <span class="aitem">▦</span>
+          <span class="aitem axiom on">✦</span>
+          <span class="aspace"></span>
+          <span class="aitem">◯</span>
+          <span class="aitem">⚙</span>
+        </div>
+
+        <!-- 탐색기 (파일 트리) -->
+        <div class="explorer">
+          <div class="exp-head">EXPLORER</div>
+          <div class="exp-proj">▾ REACT-APP-PEOPLIFY</div>
+          <div class="tree">
+            <div class="tr dir l1">▸ <span class="fdir">.claude</span></div>
+            <div class="tr dir l1">▸ <span class="fdir">.github</span></div>
+            <div class="tr dir l1">▸ <span class="fdir">.storybook</span></div>
+            <div class="tr dir l1">▸ <span class="fdir">.vscode</span></div>
+            <div class="tr dir l1">▸ <span class="fdir">node_modules</span></div>
+            <div class="tr dir l1">▸ <span class="fdir">public</span></div>
+            <div class="tr dir l1 open">▾ <span class="fdir">src</span></div>
+            <div class="tr dir l2">▸ <span class="fdir">assets</span></div>
+            <div class="tr dir l2">▸ <span class="fdir">core</span></div>
+            <div class="tr dir l2 open">▾ <span class="fdir">domains</span></div>
+            <div class="tr dir l3">▸ <span class="fdir">attendance</span></div>
+            <div class="tr dir l3">▸ <span class="fdir">auth</span></div>
+            <div class="tr dir l3 open">▾ <span class="fdir">employee</span></div>
+            <div class="tr dir l4 open">▾ <span class="fdir">pages</span></div>
+            <div class="tr file l5"><span class="fi tsx">⌘</span> EmployeeDetailPage.tsx</div>
+            <div class="tr file l5"><span class="fi tsx">⌘</span> EmployeeEditPage.tsx</div>
+            <div class="tr file l5 active"><span class="fi tsx">⌘</span> EmployeeFormPage.tsx</div>
+            <div class="tr file l5"><span class="fi tsx">⌘</span> EmployeeListPage.tsx</div>
+            <div class="tr dir l3">▸ <span class="fdir">example</span></div>
+            <div class="tr dir l3">▸ <span class="fdir">main</span></div>
+            <div class="tr dir l2">▸ <span class="fdir">publishing</span></div>
+            <div class="tr dir l2">▸ <span class="fdir">shared</span></div>
+            <div class="tr file l2"><span class="fi tsx">⌘</span> App.tsx</div>
+            <div class="tr file l2"><span class="fi tsx">⌘</span> main.tsx</div>
+            <div class="tr file l1"><span class="fi md">≡</span> claude.md</div>
+          </div>
+        </div>
+
+        <!-- 에디터 -->
+        <div class="editor">
+          <div class="tabs">
+            <span class="tab on"><span class="ti tsx">⌘</span> EmployeeFormPage.tsx <i class="tx">×</i></span>
+            <span class="tab"><span class="ti svg">◆</span> design-system-architecture.svg</span>
+            <span class="tab"><span class="ti md">≡</span> design-system-guide.md</span>
+            <span class="tab"><span class="ti tsx">⌘</span> main.tsx</span>
+            <span class="tab"><span class="ti ts">T</span> global.d.ts</span>
+            <span class="tab pre"><span class="ti css">#</span> theme-peoplify.css</span>
+            <span class="tab"><span class="ti md">≡</span> api-spec.md</span>
+          </div>
+
+          <div class="crumb">
+            <span>src</span><i>›</i><span>domains</span><i>›</i><span>employee</span><i>›</i>
+            <span>pages</span><i>›</i><span class="cf">EmployeeFormPage.tsx</span><i>›</i>
+            <span class="csym">{} TCreateEmployee</span>
+          </div>
+
+          <div class="codearea">
+            <div class="cl ctx"><span class="gut">144</span><span class="ln">  <span class="cm">// EmployeeFormPage.tsx — 이름 입력 필드</span></span></div>
+            <div class="cl ctx"><span class="gut">145</span><span class="ln">  <span class="pun">&lt;</span><span class="tag">div</span><span class="pun">&gt;</span></span></div>
+            <div class="cl ctx"><span class="gut">146</span><span class="ln">    <span class="pun">&lt;</span><span class="tag">label</span> <span class="attr">className</span>=<span class="str">"block text-sm mb-1"</span><span class="pun">&gt;</span>이름 *<span class="pun">&lt;/</span><span class="tag">label</span><span class="pun">&gt;</span></span></div>
+            <div class="cl ctx"><span class="gut">147</span><span class="ln">    <span class="pun">&lt;</span><span class="cmp">Input</span></span></div>
+            <div class="cl ctx"><span class="gut">148</span><span class="ln">      <span class="attr">value</span>={name}</span></div>
+            <div class="cl ctx"><span class="gut">149</span><span class="ln">      <span class="attr">onChange</span>={(e) =&gt; <span class="fn">setName</span>(e.target.value)}</span></div>
+            <div class="cl add a1"><span class="gut">150</span><span class="ln">      <span class="attr">className</span>=<span class="str">"h-9 rounded-lg bg-muted/60 shadow-sm</span></span></div>
+            <div class="cl add a2"><span class="gut">151</span><span class="ln">        <span class="str">focus-visible:ring-brand-500/30 transition"</span></span></div>
+            <div class="cl add a3"><span class="gut">152</span><span class="ln">      <span class="attr">placeholder</span>=<span class="str">"홍길동"</span></span></div>
+            <div class="cl ctx"><span class="gut">153</span><span class="ln">    <span class="pun">/&gt;</span></span></div>
+            <div class="cl ctx"><span class="gut">154</span><span class="ln">  <span class="pun">&lt;/</span><span class="tag">div</span><span class="pun">&gt;</span></span></div>
+
+            <div class="applied"><span class="achk">✓</span> 바뀐 부분만 안전하게 반영됨</div>
+          </div>
+
+          <!-- 채팅 → 코드로 흐르는 패킷 -->
+          <div class="flow"><span class="pkt"></span><span class="pkt"></span><span class="pkt"></span></div>
+        </div>
+
+        <!-- ── Axiom AI Chat 패널 (오른쪽) ── -->
+        <div class="side">
+          <div class="ctabs">
+            <span>CHAT</span><span>CONTINUE</span><span>CLINE</span><span>CLAUDE CODE</span>
+            <span class="on">AXIOM AI CHAT</span>
+          </div>
+
+          <div class="side-head">
+            <span class="sh-ico">✦</span> Axiom AI
+            <span class="sh-state">영역 편집 시도 중…</span>
+          </div>
+
+          <div class="chat">
+            <!-- ① 사용자 의도 입력 -->
+            <div class="msg user">
+              <div class="bubble u"><span class="typed">input 스타일을 변경해줘</span></div>
+              <div class="mrole">나</div>
+            </div>
+
+            <!-- 분석(thinking) 표시 -->
+            <div class="msg ai think">
+              <div class="mrole ax">✦</div>
+              <div class="bubble a"><span class="dots3"><i></i><i></i><i></i></span>편집 영역만 모델에 보내는 중…</div>
+            </div>
+
+            <!-- ② Axiom 응답 -->
+            <div class="msg ai answer">
+              <div class="mrole ax">✦</div>
+              <div class="bubble a">
+                <div class="note">
+                  <b>⚙ 영역 편집(실험)</b> · 편집 영역만 모델에 보내 재작성했습니다.<br>
+                  적용: JSX 영역 <code>splice 289~307줄</code> / 중복 선언 드롭(이미 존재): <code>handleAddSkill</code> / import skip: <code>@axiom/components/ui</code>
+                </div>
+
+                <!-- diff 제안 카드 -->
+                <div class="patch">
+                  <div class="patch-head">
+                    <span class="pf">📝 수정 대기</span>
+                    <span class="pp">src/domains/employee/pages/EmployeeFormPage.tsx</span>
+                  </div>
+                  <div class="diff">
+                    <div class="dl ctx"><span class="dg">147</span><span class="dm"> </span><span class="dc">&lt;Input</span></div>
+                    <div class="dl ctx"><span class="dg">148</span><span class="dm"> </span><span class="dc">  value={name}</span></div>
+                    <div class="dl del d1"><span class="dg">150</span><span class="dm">-</span><span class="dc">  className="h-9 bg-muted/60 border-slate-300…</span></div>
+                    <div class="dl add a1"><span class="dg">150</span><span class="dm">+</span><span class="dc">  className="h-9 rounded-lg bg-muted/60 shadow-sm</span></div>
+                    <div class="dl add a2"><span class="dg">151</span><span class="dm">+</span><span class="dc">    focus-visible:ring-brand-500/30 transition"</span></div>
+                    <div class="dl ctx"><span class="dg">152</span><span class="dm"> </span><span class="dc">  placeholder="홍길동"</span></div>
+                    <div class="dl ctx"><span class="dg">153</span><span class="dm"> </span><span class="dc">/&gt;</span></div>
+                  </div>
+                  <div class="patch-actions">
+                    <span class="apply">✓ 적용</span>
+                    <span class="reject">취소</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="inputbar">
+            <div class="ib-row">
+              <span class="ib-ph">내용을 입력하세요…  <i>Enter 전송 · Ctrl+Enter 줄바꿈 · / 명령창</i></span>
+              <span class="ib-stop">■ 중단</span>
+            </div>
+            <div class="ib-foot">
+              <span>Enter 전송 · Shift+Enter 줄바꿈</span>
+              <span>0% · 전송 ~33K 토큰</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 상태바 -->
+      <div class="statusbar">
+        <span class="st-l"><span class="st-br">⎇ main</span><span>✓ 0 ⚠ 0</span><span class="st-ax">✦ Axiom AI</span></span>
+        <span class="st-r"><span>TSX</span><span>UTF-8</span><span>LF</span><span>Ln 151, Col 18</span></span>
+      </div>
+    </div>
+
+    <!-- ── 3단계 흐름 요약 ─────────────────────────────── -->
+    <div class="steps">
+      <div class="step"><b>1</b> 오른쪽 <em>Axiom AI Chat</em>에 의도 한 줄</div>
+      <span class="sarr">▶</span>
+      <div class="step"><b>2</b> 편집 영역만 보내 <em>diff로 제안</em></div>
+      <span class="sarr">▶</span>
+      <div class="step"><b>3</b> 적용하면 <em>바뀐 부분만 반영</em></div>
+    </div>
+  </div>
+
+<script>
+  var B=document.body;
+  function clearManual(){B.classList.remove('manual','st1','st2','st3');}
+  function play(){B.classList.add('in');}
+  function reset(){clearManual();B.classList.remove('in');void B.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  // ①/②/③ 클릭 → 해당 단계까지 진행된 상태로 에디터 표시 (자동 타임라인 중단)
+  document.querySelectorAll('.steps .step').forEach(function(s,i){
+    s.addEventListener('click',function(){
+      clearManual();B.classList.add('manual','st'+(i+1));
+    });
+  });
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>
