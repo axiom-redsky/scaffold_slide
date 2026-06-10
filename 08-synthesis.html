@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scaffold × Axiom — 하나의 흐름</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/08-synthesis.css">
+</head>
+<body>
+  <div class="stage">
+    <header class="head">
+      <div class="eyebrow">Scaffold × Axiom · 하나의 흐름</div>
+      <h2>토대가 좋아질수록, <span class="em">AI도 똑똑해집니다</span></h2>
+      <p class="lede">
+        두 도구는 결국 하나의 흐름입니다. <b>scaffold</b>가 표준(컴포넌트·유틸·규칙)을 코드와 문서로 제공하고,
+        <b>Axiom</b>이 그 표준을 RAG로 읽어 개발자의 의도 한 줄을 표준에 맞는 코드로, 안전한 diff로 적용합니다.
+      </p>
+    </header>
+
+    <!-- ── 선순환 루프 ───────────────────────────── -->
+    <div class="loop">
+      <div class="lnode scaf">
+        <div class="lhead"><span class="lico">▤</span> react-app-scaffold</div>
+        <div class="lrole">토대 · 표준 제공</div>
+        <ul class="lpts">
+          <li>UI 컴포넌트 · <code>$util</code></li>
+          <li>디자인 토큰 · DDD 구조</li>
+          <li>규칙·가이드 <b>(.md 문서)</b></li>
+        </ul>
+      </div>
+
+      <div class="larrows">
+        <div class="larrow top">
+          <span class="ltag">표준·문서를 <b>RAG corpus</b>로 공급</span>
+          <span class="rail"></span>
+          <span class="pkt"></span><span class="pkt"></span><span class="pkt"></span>
+          <span class="ar">▶</span>
+        </div>
+        <div class="cycle"><span class="cyc-ico">↻</span><span class="cyc-tx">선순환<br><em>VIRTUOUS&nbsp;LOOP</em></span></div>
+        <div class="larrow bottom">
+          <span class="ltag">표준대로 코드 양산 → <b>자산·문서 축적</b></span>
+          <span class="rail"></span>
+          <span class="pkt"></span><span class="pkt"></span><span class="pkt"></span>
+          <span class="ar">◀</span>
+        </div>
+      </div>
+
+      <div class="lnode axi">
+        <div class="lhead"><span class="lico">✦</span> Axiom AI</div>
+        <div class="lrole">RAG로 읽어 생성</div>
+        <ul class="lpts">
+          <li>의도 → 표준 검색</li>
+          <li>근거 기반 코드 생성</li>
+          <li>검토 가능한 <b>안전한 diff</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── 한 줄 파이프라인 ──────────────────────── -->
+    <div class="pipe">
+      <span class="pl">의도 한 줄</span>
+      <span class="pa">▶</span>
+      <span class="pl hot">RAG 검색</span>
+      <span class="pa">▶</span>
+      <span class="pl hot">근거 기반 생성</span>
+      <span class="pa">▶</span>
+      <span class="pl hot">안전한 diff</span>
+      <span class="pa">▶</span>
+      <span class="pl end">표준에 맞는 코드</span>
+    </div>
+
+    <div class="takeaway">
+      <span class="dot"></span>
+      scaffold가 좋아질수록 Axiom의 답이 좋아지고, Axiom이 만든 코드가 다시 표준을 두텁게 합니다 —
+      <b>서로를 키우는 구조</b>입니다.
+    </div>
+  </div>
+
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>
