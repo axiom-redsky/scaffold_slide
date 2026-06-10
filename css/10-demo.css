@@ -1,0 +1,85 @@
+:root{
+  --line:rgba(94,211,240,.12);--line2:rgba(94,211,240,.28);
+  --cyan:#5ED3F0;--cyan2:#A6E9FB;--vio:#A78BFA;--vio2:#C4B5FD;--grn:#7EE0A6;
+}
+body{
+  background:
+    radial-gradient(120% 90% at 50% -20%, rgba(167,139,250,.12), transparent 55%),
+    radial-gradient(90% 80% at 100% 120%, rgba(94,211,240,.08), transparent 55%),
+    linear-gradient(var(--line) 1px,transparent 1px) 0 0/46px 46px,
+    linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/46px 46px,
+    var(--ink);
+}
+.stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  padding:clamp(18px,2.6vw,38px) clamp(36px,5vw,84px)}
+.wrap{width:100%;max-width:1160px;display:flex;flex-direction:column;
+  align-items:center;text-align:center;gap:clamp(8px,1.2vw,16px)}
+
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.34em;
+  color:var(--vio2);text-transform:uppercase;
+  display:flex;align-items:center;gap:12px;opacity:0;transform:translateY(-8px)}
+.eyebrow::before{content:"12";color:var(--gold);font-weight:500}
+body.in .eyebrow{animation:rise .6s ease forwards .1s}
+
+h2{font-family:"Space Grotesk",sans-serif;font-weight:700;
+  font-size:clamp(28px,4.2vw,52px);letter-spacing:-.02em;line-height:1.05;
+  opacity:0;transform:translateY(18px)}
+body.in h2{animation:rise .75s ease forwards .22s}
+h2 .em{color:var(--gold);text-shadow:0 0 44px rgba(245,177,76,.45)}
+
+.lede{max-width:62em;color:var(--muted);
+  font-size:clamp(11.5px,1.15vw,14px);line-height:1.55;
+  opacity:0;transform:translateY(14px)}
+body.in .lede{animation:rise .7s ease forwards .36s}
+
+/* ── two-column step timeline ── */
+.steps{width:100%;margin-top:6px;
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.4vw,40px)}
+.col{list-style:none;position:relative;
+  display:flex;flex-direction:column;gap:clamp(7px,.9vw,11px)}
+/* connecting line behind the number badges (per column) */
+.col::before{content:"";position:absolute;
+  left:calc(clamp(13px,1.4vw,18px) + clamp(15px,1.8vw,21px));
+  top:clamp(15px,1.8vw,21px);bottom:clamp(15px,1.8vw,21px);width:2px;
+  background:linear-gradient(var(--cyan),var(--vio),var(--grn));opacity:.32}
+
+.step{position:relative;display:flex;align-items:center;gap:clamp(10px,1.2vw,16px);
+  border-radius:11px;padding:clamp(8px,1vw,12px) clamp(11px,1.3vw,16px);
+  border:1px solid var(--line2);background:rgba(94,211,240,.04);
+  opacity:0;transform:translateX(-18px);
+  transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+.step:hover{border-color:var(--cyan);transform:translateX(2px);
+  box-shadow:0 0 0 1px var(--cyan),0 0 22px rgba(94,211,240,.22)}
+
+.sk{flex:0 0 auto;display:grid;place-items:center;
+  width:clamp(30px,3.6vw,42px);height:clamp(30px,3.6vw,42px);border-radius:50%;
+  font-family:"JetBrains Mono",monospace;font-weight:500;
+  font-size:clamp(12px,1.4vw,17px);color:var(--ink);
+  background:var(--cyan2);box-shadow:0 0 18px rgba(94,211,240,.32);
+  position:relative;z-index:1}
+
+.sbody{flex:1 1 auto;min-width:0}
+.sbody h3{font-family:"Space Grotesk",sans-serif;font-weight:600;
+  font-size:clamp(13px,1.4vw,18px);color:var(--cyan2);margin-bottom:2px}
+.sbody p{color:var(--muted);font-size:clamp(10.5px,1.05vw,12.5px);line-height:1.4}
+.sbody p b{color:var(--text);font-weight:600}
+
+body.in .s1{animation:slin .5s cubic-bezier(.2,.7,.2,1) forwards .46s}
+body.in .s2{animation:slin .5s cubic-bezier(.2,.7,.2,1) forwards .56s}
+body.in .s3{animation:slin .5s cubic-bezier(.2,.7,.2,1) forwards .66s}
+body.in .s4{animation:slin .5s cubic-bezier(.2,.7,.2,1) forwards .76s}
+body.in .s5{animation:slin .5s cubic-bezier(.2,.7,.2,1) forwards .86s}
+body.in .s6{animation:slin .5s cubic-bezier(.2,.7,.2,1) forwards .56s}
+body.in .s7{animation:slin .5s cubic-bezier(.2,.7,.2,1) forwards .66s}
+body.in .s8{animation:slin .5s cubic-bezier(.2,.7,.2,1) forwards .76s}
+body.in .s9{animation:slin .5s cubic-bezier(.2,.7,.2,1) forwards .86s}
+body.in .s10{animation:slin .5s cubic-bezier(.2,.7,.2,1) forwards .96s}
+
+@media (max-width:760px){
+  .steps{grid-template-columns:1fr;gap:0}
+  .col:last-child{margin-top:clamp(7px,.9vw,11px)}
+  .col::before{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .eyebrow,h2,.lede,.step{opacity:1!important;transform:none!important}
+}
