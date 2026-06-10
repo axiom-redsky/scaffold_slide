@@ -29,8 +29,11 @@ body.in .lead{animation:rise .7s ease forwards .34s}
   padding:9px 16px;border:1px solid var(--line2);border-radius:8px;
   background:rgba(94,211,240,.05);font-family:"JetBrains Mono",monospace;
   font-size:clamp(12px,1.3vw,14px);letter-spacing:.01em;color:var(--text);
-  opacity:0;transform:translateY(14px)}
+  opacity:0;transform:translateY(14px);cursor:default;
+  transition:border-color .25s ease,background .25s ease,box-shadow .25s ease}
 body.in .usage{animation:rise .7s ease forwards .42s}
+.usage:hover{border-color:var(--cyan);background:rgba(94,211,240,.12);
+  box-shadow:0 0 0 1px rgba(94,211,240,.35),0 0 22px rgba(94,211,240,.4)}
 .usage .gl{color:var(--cyan)}
 .usage .ns{color:var(--text)}
 .usage .fn{color:var(--violet)}

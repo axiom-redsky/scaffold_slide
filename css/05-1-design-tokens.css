@@ -32,9 +32,15 @@ body.in .lead{animation:rise .7s ease forwards .34s}
 .pipeline{display:flex;align-items:stretch;gap:0;margin-bottom:26px}
 .node{flex:1;display:flex;flex-direction:column;gap:9px;
   border:1px solid var(--line2);border-radius:13px;padding:14px 15px;
-  background:rgba(255,255,255,.022);
+  background:rgba(255,255,255,.022);cursor:default;
+  transition:border-color .25s ease,background .25s ease,box-shadow .25s ease,transform .25s ease;
   opacity:0;transform:translateY(18px) scale(.96)}
 body.in .node{animation:pop .6s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:var(--d)}
+body.in .node:hover{transform:translateY(-3px)}
+.n-json:hover{border-color:var(--gold);box-shadow:0 0 0 1px rgba(245,177,76,.35),0 0 22px rgba(245,177,76,.4)}
+.n-sd:hover{border-color:var(--violet);box-shadow:0 0 0 1px rgba(167,139,250,.35),0 0 22px rgba(167,139,250,.4)}
+.n-css:hover{border-color:var(--cyan);box-shadow:0 0 0 1px rgba(94,211,240,.35),0 0 22px rgba(94,211,240,.4)}
+.n-comp:hover{border-color:#7ee0c4;box-shadow:0 0 0 1px rgba(126,224,196,.4),0 0 22px rgba(126,224,196,.42)}
 .node .ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;
   font-family:"JetBrains Mono",monospace;font-weight:700;font-size:14px;flex:none}
 .n-json .ico{background:rgba(245,177,76,.14);color:var(--gold)}
@@ -66,10 +72,16 @@ body.in .conn .spark{animation:sparkMove 2.2s ease-in-out infinite;animation-del
 /* ── 2계층 ── */
 .layers{display:flex;flex-direction:column;gap:9px}
 .layer{border:1px solid var(--line);border-radius:13px;padding:13px 16px;
-  background:rgba(255,255,255,.018);opacity:0;transform:translateY(16px)}
+  background:rgba(255,255,255,.018);cursor:default;
+  transition:border-color .25s ease,background .25s ease,box-shadow .25s ease;
+  opacity:0;transform:translateY(16px)}
 body.in .layer{animation:rise .6s ease forwards;animation-delay:var(--d)}
 .layer.prim{border-color:rgba(245,177,76,.28)}
 .layer.sem{border-color:rgba(167,139,250,.3)}
+.layer.prim:hover{border-color:var(--gold);background:rgba(245,177,76,.06);
+  box-shadow:0 0 0 1px rgba(245,177,76,.35),0 0 24px rgba(245,177,76,.4)}
+.layer.sem:hover{border-color:var(--violet);background:rgba(167,139,250,.06);
+  box-shadow:0 0 0 1px rgba(167,139,250,.35),0 0 24px rgba(167,139,250,.4)}
 .lhead{font-family:"Space Grotesk",sans-serif;font-size:13.5px;font-weight:600;color:var(--text);
   margin-bottom:11px;display:flex;align-items:center;gap:8px}
 .lhead em{font-style:normal;font-weight:400;font-size:11.5px;color:var(--muted)}

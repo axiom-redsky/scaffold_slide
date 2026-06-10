@@ -32,12 +32,20 @@ body.in .lead{animation:rise .7s ease forwards .34s}
 .flow{display:flex;align-items:stretch;margin-bottom:20px}
 .card{flex:1;display:flex;flex-direction:column;gap:10px;
   border:1px solid var(--line2);border-radius:14px;padding:15px 16px;
-  background:rgba(255,255,255,.022);
+  background:rgba(255,255,255,.022);cursor:default;
+  transition:border-color .25s ease,background .25s ease,box-shadow .25s ease,transform .25s ease;
   opacity:0;transform:translateY(20px) scale(.96)}
 body.in .card{animation:pop .62s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:var(--d)}
 .card.pub{border-color:rgba(245,177,76,.3)}
 .card.book{border-color:rgba(167,139,250,.32)}
 .card.dev{border-color:rgba(94,211,240,.32)}
+body.in .card:hover{transform:translateY(-3px)}
+.card.pub:hover{border-color:var(--gold);background:rgba(245,177,76,.06);
+  box-shadow:0 0 0 1px rgba(245,177,76,.35),0 0 24px rgba(245,177,76,.4)}
+.card.book:hover{border-color:var(--violet);background:rgba(167,139,250,.06);
+  box-shadow:0 0 0 1px rgba(167,139,250,.35),0 0 24px rgba(167,139,250,.4)}
+.card.dev:hover{border-color:var(--cyan);background:rgba(94,211,240,.06);
+  box-shadow:0 0 0 1px rgba(94,211,240,.35),0 0 24px rgba(94,211,240,.4)}
 
 .chead{display:flex;align-items:center;justify-content:space-between}
 .chead .role{font-family:"Space Grotesk",sans-serif;font-size:15px;font-weight:600;color:var(--text)}
