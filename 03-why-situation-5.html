@@ -3,129 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>왜 만들었나 — 개선 후 ③ · Domain 작업 단축</title>
+<title>왜 만들었나 — 개선 방향 ③ · Domain 작업 단축</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/03-why-situation.css">
-<style>
-  /* ── Scaffold accent (reference 이미지의 주황 톤) ── */
-  body.after{ --scaf:#F5763B; --scaf-line:rgba(245,118,59,.55); }
-
-  /* diagram shell */
-  .dom{position:relative;flex:1;min-height:0;width:100%;
-    display:flex;flex-direction:column;justify-content:center;gap:26px}
-
-  /* legend row */
-  .legend{display:flex;justify-content:center;flex-wrap:wrap;gap:22px;
-    font-family:"Noto Sans KR",sans-serif;font-size:13px;color:var(--muted);
-    opacity:0;transform:translateY(8px)}
-  body.in .legend{animation:rise .6s ease forwards .2s}
-  .legend .lg{display:inline-flex;align-items:center;gap:8px;letter-spacing:.01em}
-  .legend .lg i{width:13px;height:13px;border-radius:4px;display:inline-block}
-  .legend .build i{background:rgba(147,164,204,.28);border:1px solid rgba(147,164,204,.5)}
-  .legend .scaf  i{background:var(--scaf);border:1px solid var(--scaf-line)}
-  .legend .biz   i{background:linear-gradient(135deg,#3FA9F5,var(--cyan))}
-
-  /* comparison rows */
-  .rows{display:flex;flex-direction:column;gap:30px}
-  .drow{display:grid;grid-template-columns:148px 1fr 104px;align-items:center;gap:20px}
-  .dlabel{text-align:right;opacity:0;transform:translateX(-12px)}
-  body.in .drow.asis .dlabel{animation:slin .6s ease forwards .35s}
-  body.in .drow.tobe .dlabel{animation:slin .6s ease forwards .85s}
-  .dlabel b{display:block;font-family:"JetBrains Mono",monospace;font-weight:500;
-    font-size:18px;letter-spacing:.14em;color:var(--text)}
-  .dlabel span{display:block;margin-top:3px;font-family:"Noto Sans KR",sans-serif;
-    font-size:12px;color:var(--muted)}
-  .drow.tobe .dlabel b{color:var(--scaf)}
-
-  /* the bar track */
-  .track{position:relative}
-  .dbar{position:relative;display:flex;height:78px;width:100%;
-    border-radius:10px;overflow:hidden}
-  .seg{position:relative;height:100%;width:0;overflow:hidden;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-    font-family:"Noto Sans KR",sans-serif;white-space:nowrap;
-    transition:width 1s cubic-bezier(.2,.7,.2,1)}
-  .seg em{font-style:normal;font-weight:700;font-size:15px}
-  .seg i{font-style:normal;font-size:11px;letter-spacing:.02em;opacity:.85}
-
-  .seg.build{background:linear-gradient(180deg,rgba(147,164,204,.20),rgba(147,164,204,.10));
-    color:var(--muted);border-right:1px solid rgba(10,15,30,.6)}
-  .seg.scaf{background:linear-gradient(180deg,#F5763B,#E3631F);color:#241006;
-    border-right:1px solid rgba(10,15,30,.5);box-shadow:0 0 22px rgba(245,118,59,.35)}
-  .seg.scaf em{font-size:13px}
-  .seg.biz{background:linear-gradient(180deg,#3FA9F5,#2E8FE0);color:#03121f;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
-
-  /* eliminated region (TO-BE 의 빈 영역) */
-  .saved{position:relative;height:100%;width:0;overflow:hidden;
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    border:1px dashed var(--scaf-line);border-left:0;border-radius:0 10px 10px 0;
-    background:repeating-linear-gradient(135deg,rgba(245,118,59,.10) 0 12px,transparent 12px 24px);
-    font-family:"Noto Sans KR",sans-serif;font-size:12.5px;color:var(--scaf);letter-spacing:.01em;
-    transition:width 1s cubic-bezier(.2,.7,.2,1)}
-  .saved b{font-weight:700}
-
-  /* round outer corners of the live bar */
-  .drow.asis .seg.build{border-radius:10px 0 0 10px}
-  .drow.asis .seg.biz{border-radius:0 10px 10px 0}
-  .drow.tobe .seg.scaf{border-radius:10px 0 0 10px}
-
-  /* grow on enter */
-  body.in .drow.asis .seg{transition-delay:.5s}
-  body.in .drow.tobe .seg.scaf{transition-delay:1.0s}
-  body.in .drow.tobe .seg.biz{transition-delay:1.18s}
-  body.in .drow.tobe .saved{transition-delay:1.55s}
-  body.in .dbar .seg,body.in .dbar .saved{width:var(--w)}
-
-  /* time figure on the right */
-  .dtime{font-family:"JetBrains Mono",monospace;font-weight:500;text-align:left;
-    opacity:0;transform:translateX(10px)}
-  .dtime .big{display:block;font-size:26px;color:var(--text);letter-spacing:.02em}
-  .dtime small{display:block;margin-top:2px;font-size:12px;color:var(--muted);
-    font-family:"Noto Sans KR",sans-serif}
-  .drow.tobe .dtime .big{color:var(--scaf)}
-  .drow.tobe .dtime small{color:var(--scaf);font-weight:700}
-  body.in .drow.asis .dtime{animation:slin .6s ease forwards 1.3s}
-  body.in .drow.tobe .dtime{animation:slin .6s ease forwards 2.0s}
-
-  /* connector note: AS-IS 직접구현 영역 → "Scaffold가 대체" */
-  .bridge{position:absolute;left:0;top:78px;width:55%;
-    display:flex;justify-content:center;pointer-events:none;
-    opacity:0}
-  body.in .bridge{animation:rise .6s ease forwards 1.7s}
-  .bridge .note{margin-top:7px;font-family:"Noto Sans KR",sans-serif;font-size:12px;
-    color:var(--scaf);text-align:center;line-height:1.5}
-  .bridge .note b{font-weight:700}
-  .bridge::before{content:"";position:absolute;left:50%;top:0;width:1px;height:22px;
-    background:linear-gradient(var(--scaf-line),transparent);transform:translateX(-.5px)}
-
-  /* provided chips */
-  .provided{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:10px}
-  .pcap{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.22em;
-    text-transform:uppercase;color:var(--muted);margin-right:6px;
-    opacity:0;transform:translateY(8px)}
-  body.in .pcap{animation:rise .5s ease forwards 1.9s}
-  .chip{font-family:"Noto Sans KR",sans-serif;font-size:13px;font-weight:500;color:var(--text);
-    padding:6px 14px;border-radius:999px;border:1px solid var(--scaf-line);
-    background:rgba(245,118,59,.08);
-    opacity:0;transform:translateY(10px) scale(.94)}
-  body.in .chip{animation:chippop .55s cubic-bezier(.2,.8,.3,1.2) forwards}
-  body.in .chip:nth-child(2){animation-delay:2.0s}
-  body.in .chip:nth-child(3){animation-delay:2.1s}
-  body.in .chip:nth-child(4){animation-delay:2.2s}
-  body.in .chip:nth-child(5){animation-delay:2.3s}
-  body.in .chip:nth-child(6){animation-delay:2.4s}
-  body.in .chip:nth-child(7){animation-delay:2.5s}
-  @keyframes chippop{to{opacity:1;transform:translateY(0) scale(1)}}
-
-  @media (prefers-reduced-motion:reduce){
-    .legend,.dlabel,.dtime,.bridge,.pcap,.chip{opacity:1!important;transform:none!important}
-    .seg,.saved{transition:none!important}
-  }
-</style>
+<link rel="stylesheet" href="css/03-why-situation-5.css">
 </head>
 <body class="after">
   <span class="reg tl"></span><span class="reg tr"></span>
@@ -134,67 +18,104 @@
     <div class="wrap">
       <div class="head">
         <div class="eyebrow">
-          <span class="tag">After · 개선 후</span>
+          <span class="tag">After · 개선 방향</span>
           <span class="sep"></span>
           <span class="step"><b>Domain</b> · 심화</span>
         </div>
-        <h2>비즈니스 로직 작업<span class="em">조차</span>, 직접 구현은 절반으로</h2>
-        <!-- <p class="lead">공통 함수·라우터·금융 유틸이 Scaffold에 <b>이미 내장</b>되어, Domain 작업에서 직접 짜야 할 코드가 줄어듭니다.</p> -->
+        <h2>업무 개발 영역에서, <span class="em">비즈니스 로직</span>에만 집중하도록</h2>
+        <!-- <p class="lead">공통 함수·포맷팅·Hook이 Scaffold에 이미 내장되어, 개발자는 업무 로직에 더 충실할 수 있습니다.</p> -->
       </div>
 
       <div class="dom">
-        <div class="legend">
-          <span class="lg build"><i></i>직접 구현 (공통·인프라 코드)</span>
-          <span class="lg scaf"><i></i>Scaffold 내장 · 연결만</span>
-          <span class="lg biz"><i></i>순수 비즈니스 로직</span>
+        <!-- 담당 업무 영역 선택: 한 명의 개발자가 한 영역을 맡는다 -->
+        <div class="domain-bar">
+          <span class="dcap">담당 업무 영역</span>
+          <span class="dchip active">개인뱅킹</span>
+          <span class="dchip">기업뱅킹</span>
+          <span class="dchip">금융상품</span>
+          <span class="dchip">금융서비스</span>
+          <span class="dnote">한 개발자가 맡은 한 영역</span>
         </div>
 
-        <div class="rows">
-          <div class="drow asis">
-            <div class="dlabel"><b>AS-IS</b><span>직접 구현 기반</span></div>
-            <div class="track">
-              <div class="dbar">
-                <span class="seg build" style="--w:55%"><em>직접 구현</em><i>공통함수 · 라우터 · 금융유틸 · 기타유틸</i></span>
-                <span class="seg biz" style="--w:45%"><em>순수 비즈니스 로직</em></span>
+        <div class="compare">
+          <!-- AS-IS : Scaffold 없음 — 전부 직접 -->
+          <div class="panel asis">
+            <div class="ptag"><b>AS-IS</b><span>Scaffold 없음</span></div>
+            <div class="stack">
+              <div class="row biz" style="--d:.5s">
+                <span class="rlabel">순수 비즈니스 로직</span><span class="rby self">직접</span>
+              </div>
+              <div class="row plumb" style="--d:.62s">
+                <span class="rlabel">공통 함수</span><span class="rby self">직접</span>
+              </div>
+              <div class="row plumb" style="--d:.74s">
+                <span class="rlabel">금액·금융 포맷팅</span><span class="rby self">직접</span>
+              </div>
+              <div class="row plumb" style="--d:.86s">
+                <span class="rlabel">커스텀 Hook</span><span class="rby self">직접</span>
+              </div>
+              <div class="row plumb" style="--d:.98s">
+                <span class="rlabel">화면전환 라우터</span><span class="rby self">직접</span>
+              </div>
+              <div class="row plumb" style="--d:1.1s">
+                <span class="rlabel">API · 상태관리</span><span class="rby self">직접</span>
               </div>
             </div>
-            <div class="dtime"><span class="big">100%</span><small>Domain 작업 시간</small></div>
+            <div class="pfoot"><b>전부 직접 구현</b><span>본질 작업까지 시간이 걸림</span></div>
           </div>
 
-          <div class="drow tobe">
-            <div class="dlabel"><b>TO-BE</b><span>Scaffold 기반</span></div>
-            <div class="track">
-              <div class="dbar">
-                <span class="seg scaf" style="--w:10%"><em>연결</em></span>
-                <span class="seg biz" style="--w:45%"><em>순수 비즈니스 로직</em></span>
-                <span class="saved" style="--w:45%">Scaffold 내장으로 <b>직접 구현 불필요</b></span>
+          <!-- 전환 -->
+          <div class="bridge2">
+            <div class="arrow">›››</div>
+            <div class="blabel">Scaffold<br>도입</div>
+          </div>
+
+          <!-- TO-BE : 공통 영역은 Scaffold가 제공 -->
+          <div class="panel tobe">
+            <div class="ptag good"><b>TO-BE</b><span>Scaffold 도입</span></div>
+            <div class="stack">
+              <div class="row biz focus" style="--d:1.3s">
+                <span class="rlabel">순수 비즈니스 로직</span><span class="rby focusby">여기 집중</span>
               </div>
-              <div class="bridge">
-                <div class="note">이 영역을 <b>Scaffold가 이미 제공</b><br>→ 새로 짤 필요 없음</div>
+              <div class="row plumb done" style="--d:1.55s">
+                <span class="rlabel">공통 함수</span><span class="rby scafby">✓ Scaffold</span>
+              </div>
+              <div class="row plumb done" style="--d:1.72s">
+                <span class="rlabel">금액·금융 포맷팅</span><span class="rby scafby">✓ Scaffold</span>
+              </div>
+              <div class="row plumb done" style="--d:1.89s">
+                <span class="rlabel">커스텀 Hook</span><span class="rby scafby">✓ Scaffold</span>
+              </div>
+              <div class="row plumb done" style="--d:2.06s">
+                <span class="rlabel">화면전환 라우터</span><span class="rby scafby">✓ Scaffold</span>
+              </div>
+              <div class="row plumb done" style="--d:2.23s">
+                <span class="rlabel">API · 상태관리</span><span class="rby scafby">✓ Scaffold</span>
               </div>
             </div>
-            <div class="dtime"><span class="big">55%</span><small>≈ 45% 단축 ↓</small></div>
+            <div class="pfoot good"><b>비즈니스 로직에 집중</b><span>공통 영역은 Scaffold가 제공</span></div>
           </div>
         </div>
 
-        <div class="provided">
-          <span class="pcap">Scaffold에 이미 갖춰진 것</span>
-          <span class="chip">공통 함수</span>
-          <span class="chip">화면전환 라우터</span>
-          <span class="chip">금융권 유틸</span>
-          <span class="chip">기타 유틸</span>
-          <span class="chip">API 클라이언트</span>
-          <span class="chip">상태관리</span>
+        <!-- 결과 요약 -->
+        <div class="result">
+          <span class="rmetric"><em>6 <s>→</s> 1</em><i>직접 만들 영역</i></span>
+          <span class="rdot"></span>
+          <span class="rmetric up"><em>↑ 집중</em><i>비즈니스 로직</i></span>
+          <span class="rdot"></span>
+          <span class="rmetric down"><em>↓ 약 절반</em><i>직접 구현 시간</i></span>
         </div>
       </div>
     </div>
   </div>
 
 <script>
+  var ENTER_DELAY=500; // 슬라이드 전환 시간을 고려해 애니메이션 시작을 살짝 늦춤
   function play(){document.body.classList.add('in');}
-  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
-  if(document.readyState==='complete')requestAnimationFrame(play);
-  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  function start(){requestAnimationFrame(function(){setTimeout(play,ENTER_DELAY);});}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;start();}
+  if(document.readyState==='complete')start();
+  else window.addEventListener('load',start);
   window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
   window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
 </script>

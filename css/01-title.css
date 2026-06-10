@@ -75,3 +75,21 @@ body.in .meta{animation:rise .7s ease forwards 1.1s}
   .reg,.eyebrow,.word,.sub,.meta{opacity:1!important;transform:none!important}
   .frame line{stroke-dashoffset:0!important}.node{opacity:1!important}
 }
+
+/* ── 소개 영상 오버레이 ───────────────────────────────── */
+.vmodal{position:fixed;inset:0;z-index:50;display:none;
+  place-items:center;padding:clamp(20px,4vw,60px);
+  background:rgba(5,8,16,.86);backdrop-filter:blur(6px)}
+.vmodal.open{display:grid;animation:vfade .25s ease}
+@keyframes vfade{from{opacity:0}to{opacity:1}}
+.vplayer{width:min(1100px,92vw);max-height:84vh;border-radius:12px;
+  background:#000;border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 40px 120px rgba(0,0,0,.6);outline:none}
+.vmodal.open .vplayer{animation:vpop .3s cubic-bezier(.2,.7,.2,1)}
+@keyframes vpop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.vclose{position:fixed;top:clamp(16px,3vw,30px);right:clamp(16px,3vw,30px);
+  width:40px;height:40px;border-radius:50%;cursor:pointer;
+  display:grid;place-items:center;font-size:16px;line-height:1;
+  color:var(--text);background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);transition:background .2s ease,border-color .2s ease}
+.vclose:hover{background:rgba(245,177,76,.18);border-color:rgba(245,177,76,.55)}
