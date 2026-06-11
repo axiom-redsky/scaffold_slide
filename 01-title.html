@@ -41,6 +41,16 @@
 
   <!-- 소개 영상 오버레이 -->
   <div class="vmodal" id="vmodal" aria-hidden="true">
+    <button class="vfull" id="vfull" aria-label="전체화면 보기" title="전체화면 보기">
+      <svg class="i-expand" viewBox="0 0 24 24" width="20" height="20" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"/>
+      </svg>
+      <svg class="i-compress" viewBox="0 0 24 24" width="20" height="20" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 9h5V4M20 9h-5V4M4 15h5v5M20 15h-5v5"/>
+      </svg>
+    </button>
     <button class="vclose" id="vclose" aria-label="닫기">✕</button>
     <video id="vplayer" class="vplayer" controls playsinline preload="metadata"
            src="../scaffold_axiom.mp4"></video>
@@ -61,11 +71,24 @@
   var vmodal=document.getElementById('vmodal'),vplayer=document.getElementById('vplayer');
   function openVideo(){vmodal.classList.add('open');vmodal.setAttribute('aria-hidden','false');
     var p=vplayer.play();if(p&&p.catch)p.catch(function(){});}
-  function closeVideo(){vmodal.classList.remove('open');vmodal.setAttribute('aria-hidden','true');
+  function closeVideo(){if(document.fullscreenElement||document.webkitFullscreenElement){(document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);}
+    vmodal.classList.remove('open');vmodal.setAttribute('aria-hidden','true');
     vplayer.pause();}
   document.getElementById('vbtn').addEventListener('click',function(e){e.preventDefault();openVideo();});
   document.getElementById('vclose').addEventListener('click',closeVideo);
   vmodal.addEventListener('click',function(e){if(e.target===vmodal)closeVideo();}); // 바깥 클릭 시 닫기
+
+  /* 전체화면 보기 ↔ 작게 보기 토글 */
+  var vfull=document.getElementById('vfull');
+  function isFs(){return document.fullscreenElement===vmodal||document.webkitFullscreenElement===vmodal;}
+  function reqFs(){var el=vmodal;(el.requestFullscreen||el.webkitRequestFullscreen||function(){}).call(el);}
+  function exitFs(){(document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);}
+  function syncFull(){var on=isFs();vmodal.classList.toggle('fs',on);
+    vfull.setAttribute('aria-label',on?'작게 보기':'전체화면 보기');
+    vfull.setAttribute('title',on?'작게 보기':'전체화면 보기');}
+  vfull.addEventListener('click',function(e){e.stopPropagation();isFs()?exitFs():reqFs();});
+  document.addEventListener('fullscreenchange',syncFull);
+  document.addEventListener('webkitfullscreenchange',syncFull);
 
   window.addEventListener('keydown',function(e){
     if(vmodal.classList.contains('open')){ // 영상 재생 중에는 슬라이드 이동 막고 ESC로만 닫기

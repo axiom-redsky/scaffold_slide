@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>react-app-scaffold — DDD 도메인 폴더구조</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/04-6-scaffold-ddd.css">
+</head>
+<body>
+  <div class="stage">
+    <div class="eyebrow">react-app-scaffold · DDD 폴더구조</div>
+    <h2>업무별로 <span class="em">격리된</span> 도메인 구조</h2>
+    <p class="lead"><b>DDD(Domain Driven Design)</b> 방법론을 따라 <code>src/domains</code> 아래 업무를 독립 단위로 분리합니다.
+      각 개발자는 <b>자신의 도메인에서만</b> 작업해 — 여러 도메인을 <b>동시에 개발해도 코드 충돌을 최소화</b>하고 <b>확장성</b>을 높입니다.</p>
+
+    <div class="board">
+      <!-- ── 도메인 레인 (격리된 병렬 작업 영역) ── -->
+      <div class="lanes">
+        <div class="lane" style="--i:0;--ac:var(--cyan)" data-dom="order">
+          <div class="lane-top">
+            <span class="dev">👩‍💻 개발자 A</span>
+            <span class="lock" title="격리">🔒</span>
+          </div>
+          <div class="lane-name">domains/<b>order</b></div>
+          <div class="chips">
+            <span>api</span><span>components</span><span>pages</span>
+            <span>router</span><span>store</span><span>types</span>
+          </div>
+          <span class="peek">🔍 클릭하여 폴더 구조 보기</span>
+        </div>
+
+        <div class="lane" style="--i:1;--ac:var(--gold)" data-dom="payment">
+          <div class="lane-top">
+            <span class="dev">🧑‍💻 개발자 B</span>
+            <span class="lock" title="격리">🔒</span>
+          </div>
+          <div class="lane-name">domains/<b>payment</b></div>
+          <div class="chips">
+            <span>api</span><span>components</span><span>pages</span>
+            <span>router</span><span>store</span><span>types</span>
+          </div>
+          <span class="peek">🔍 클릭하여 폴더 구조 보기</span>
+        </div>
+
+        <div class="lane" style="--i:2;--ac:var(--violet)" data-dom="member">
+          <div class="lane-top">
+            <span class="dev">👨‍💻 개발자 C</span>
+            <span class="lock" title="격리">🔒</span>
+          </div>
+          <div class="lane-name">domains/<b>member</b></div>
+          <div class="chips">
+            <span>api</span><span>components</span><span>pages</span>
+            <span>router</span><span>store</span><span>types</span>
+          </div>
+          <span class="peek">🔍 클릭하여 폴더 구조 보기</span>
+        </div>
+
+        <div class="lane add" style="--i:3;--ac:var(--cyan)" data-dom="add">
+          <div class="plus">＋</div>
+          <div class="add-t">도메인 추가</div>
+          <div class="add-s">레인을 늘리듯 확장</div>
+          <span class="peek">🔍 클릭하여 확인</span>
+        </div>
+      </div>
+
+      <!-- ── 공통 토대 (shared / core) ── -->
+      <div class="foundation">
+        <span class="f-label">공통 토대</span>
+        <div class="f-cells">
+          <span><b>core</b><i>핵심 코어</i></span>
+          <span class="share-cell" id="shareCell"><b>shared</b><i>전역 공유</i><em class="share-hint">클릭 ▶ 소통 흐름 보기</em></span>
+          <span><b>assets</b><i>정적 리소스</i></span>
+        </div>
+        <span class="f-note">도메인 간 소통은 <b>shared</b>를 통해서만</span>
+      </div>
+
+      <!-- ── shared 소통 흐름 SVG 오버레이 ── -->
+      <svg class="flow" id="flow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="none" aria-hidden="true"></svg>
+    </div>
+
+    <!-- ── 핵심 이점 ── -->
+    <div class="benefits">
+      <div class="b" style="--d:0">
+        <span class="bi">🧩</span>
+        <div><h3>업무 영역 격리</h3><p>도메인마다 독립된 폴더 — 의존성·영향도 최소화</p></div>
+      </div>
+      <div class="b" style="--d:1">
+        <span class="bi">⚡</span>
+        <div><h3>동시 병렬 개발</h3><p>여러 도메인을 함께 작업해도 코드 충돌 최소화</p></div>
+      </div>
+      <div class="b" style="--d:2">
+        <span class="bi">📈</span>
+        <div><h3>손쉬운 확장성</h3><p>도메인 추가만으로 기능 확장 — 대형 프로젝트에 적합</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Hover Popover : 실제 폴더 구조 미리보기 ── -->
+  <div class="pop-overlay" id="pop">
+    <div class="pop-card">
+      <div class="pop-head">
+        <span class="pd"></span><span class="pd"></span><span class="pd"></span>
+        <span class="pop-path">react-app-scaffold / src</span>
+        <span class="pop-domain">domains/<b class="pop-name">order</b></span>
+        <button class="pop-close" id="popClose" aria-label="닫기">✕</button>
+      </div>
+      <div class="tree">
+        <div class="t-row lv0"><span class="ic">📂</span>src</div>
+        <div class="t-row lv1 muted"><span class="ic">📁</span>core <i>핵심 코어</i></div>
+        <div class="t-row lv1"><span class="ic">📂</span>domains</div>
+
+        <div class="dom" data-dom="order">
+          <div class="t-row lv2 dh"><span class="ic">📁</span><b>order</b><span class="tag">👩‍💻 개발자 A</span></div>
+          <div class="sub">
+            <div class="t-row lv3"><span class="ic">📁</span>api</div>
+            <div class="t-row lv3"><span class="ic">📁</span>components</div>
+            <div class="t-row lv3"><span class="ic">📁</span>pages</div>
+            <div class="t-row lv3"><span class="ic">📁</span>router</div>
+            <div class="t-row lv3"><span class="ic">📁</span>store</div>
+            <div class="t-row lv3"><span class="ic">📁</span>types</div>
+          </div>
+        </div>
+
+        <div class="dom" data-dom="payment">
+          <div class="t-row lv2 dh"><span class="ic">📁</span><b>payment</b><span class="tag">🧑‍💻 개발자 B</span></div>
+          <div class="sub">
+            <div class="t-row lv3"><span class="ic">📁</span>api</div>
+            <div class="t-row lv3"><span class="ic">📁</span>components</div>
+            <div class="t-row lv3"><span class="ic">📁</span>pages</div>
+            <div class="t-row lv3"><span class="ic">📁</span>router</div>
+            <div class="t-row lv3"><span class="ic">📁</span>store</div>
+            <div class="t-row lv3"><span class="ic">📁</span>types</div>
+          </div>
+        </div>
+
+        <div class="dom" data-dom="member">
+          <div class="t-row lv2 dh"><span class="ic">📁</span><b>member</b><span class="tag">👨‍💻 개발자 C</span></div>
+          <div class="sub">
+            <div class="t-row lv3"><span class="ic">📁</span>api</div>
+            <div class="t-row lv3"><span class="ic">📁</span>components</div>
+            <div class="t-row lv3"><span class="ic">📁</span>pages</div>
+            <div class="t-row lv3"><span class="ic">📁</span>router</div>
+            <div class="t-row lv3"><span class="ic">📁</span>store</div>
+            <div class="t-row lv3"><span class="ic">📁</span>types</div>
+          </div>
+        </div>
+
+        <div class="dom dom-new" data-dom="add">
+          <div class="t-row lv2 dh"><span class="ic">➕</span><b>새 도메인</b><span class="tag">예: product</span></div>
+          <div class="sub">
+            <div class="t-row lv3"><span class="ic">📁</span>api</div>
+            <div class="t-row lv3"><span class="ic">📁</span>components</div>
+            <div class="t-row lv3"><span class="ic">📁</span>pages</div>
+            <div class="t-row lv3"><span class="ic">📁</span>router</div>
+            <div class="t-row lv3"><span class="ic">📁</span>store</div>
+            <div class="t-row lv3"><span class="ic">📁</span>types</div>
+          </div>
+        </div>
+
+        <div class="t-row lv1 muted"><span class="ic">📁</span>shared <i>전역 공유</i></div>
+        <div class="t-row lv1 muted"><span class="ic">📁</span>assets <i>정적 리소스</i></div>
+      </div>
+      <div class="pop-foot"><span class="dot"></span>활성화된 도메인 폴더에서만 작업 — 다른 영역과 <b>격리</b>됩니다</div>
+    </div>
+  </div>
+
+<script>
+  /* ── Click → 폴더 구조 popover ── */
+  (function(){
+    var pop=document.getElementById('pop'),
+        card=pop.querySelector('.pop-card'),
+        nameEl=pop.querySelector('.pop-name'),
+        doms=pop.querySelectorAll('.dom');
+    function open(d){
+      card.setAttribute('data-active',d);
+      nameEl.textContent=(d==='add'?'새 도메인':d);
+      doms.forEach(function(x){x.classList.toggle('active',x.getAttribute('data-dom')===d);});
+      pop.classList.add('show');
+    }
+    function close(){pop.classList.remove('show');}
+    document.querySelectorAll('.lane[data-dom]').forEach(function(lane){
+      lane.addEventListener('click',function(){open(lane.getAttribute('data-dom'));});
+    });
+    document.getElementById('popClose').addEventListener('click',close);
+    pop.addEventListener('click',function(e){if(e.target===pop)close();});
+    window.addEventListener('keydown',function(e){if(e.key==='Escape'&&pop.classList.contains('show'))close();});
+  })();
+
+  /* ── shared 클릭 → 도메인 간 소통 흐름 애니메이션 ── */
+  (function(){
+    var flow=document.getElementById('flow'),
+        board=document.querySelector('.board'),
+        shareCell=document.getElementById('shareCell'),
+        active=false;
+    var SVGNS='http://www.w3.org/2000/svg';
+    function pt(el,br){var r=el.getBoundingClientRect();
+      return {x:r.left+r.width/2-br.left, top:r.top-br.top, bottom:r.bottom-br.top,
+              cy:r.top+r.height/2-br.top};}
+    function lane(d){return document.querySelector('.lane[data-dom="'+d+'"]');}
+    function path(s,sh,t){
+      return 'M '+s.x+','+s.bottom+
+             ' C '+s.x+','+((s.bottom+sh.cy)/2)+' '+sh.x+','+((s.bottom+sh.cy)/2)+' '+sh.x+','+sh.cy+
+             ' C '+sh.x+','+((t.bottom+sh.cy)/2)+' '+t.x+','+((t.bottom+sh.cy)/2)+' '+t.x+','+t.bottom;
+    }
+    var DUR=2.1, GAP=0.55;        // 한 라인 이동시간(s) + 다음 라인까지 간격(s)
+    var groups=[], idx=0, timer=null;
+    function render(){
+      var br=board.getBoundingClientRect();
+      flow.setAttribute('viewBox','0 0 '+br.width+' '+br.height);
+      var sh=pt(shareCell,br);
+      var flows=[
+        {id:'f1', s:pt(lane('member'),br),  t:pt(lane('order'),br),  sh:{x:sh.x-20,cy:sh.cy}, c1:'#A78BFA', c2:'#5ED3F0', label:'order 함수·API 호출'},
+        {id:'f2', s:pt(lane('payment'),br), t:pt(lane('member'),br), sh:{x:sh.x+20,cy:sh.cy}, c1:'#F5B14C', c2:'#A78BFA', label:'공통 컴포넌트 공유'}
+      ];
+      while(flow.firstChild)flow.removeChild(flow.firstChild);
+      groups=[];
+      var defs=document.createElementNS(SVGNS,'defs');
+      flow.appendChild(defs);
+      flows.forEach(function(f){
+        var d=path(f.s,f.sh,f.t);
+        // 그라데이션
+        var g=document.createElementNS(SVGNS,'linearGradient');
+        g.setAttribute('id',f.id+'g');g.setAttribute('gradientUnits','userSpaceOnUse');
+        g.setAttribute('x1',f.s.x);g.setAttribute('y1',f.s.bottom);
+        g.setAttribute('x2',f.t.x);g.setAttribute('y2',f.t.bottom);
+        [[0,f.c1],[1,f.c2]].forEach(function(st){var s=document.createElementNS(SVGNS,'stop');
+          s.setAttribute('offset',st[0]);s.setAttribute('stop-color',st[1]);g.appendChild(s);});
+        defs.appendChild(g);
+        // 화살표 마커
+        var mk=document.createElementNS(SVGNS,'marker');
+        mk.setAttribute('id',f.id+'a');mk.setAttribute('markerWidth','9');mk.setAttribute('markerHeight','9');
+        mk.setAttribute('refX','4.5');mk.setAttribute('refY','3');mk.setAttribute('orient','auto');
+        mk.setAttribute('markerUnits','userSpaceOnUse');
+        var mp=document.createElementNS(SVGNS,'path');
+        mp.setAttribute('d','M0,0 L6.5,3 L0,6 Z');mp.setAttribute('fill',f.c2);
+        mk.appendChild(mp);defs.appendChild(mk);
+        // 라인 하나당 그룹 — 시퀀서가 한번에 하나씩 활성화
+        var grp=document.createElementNS(SVGNS,'g');grp.setAttribute('class','flow-grp');
+        // 베이스 라인 + 화살표
+        var base=document.createElementNS(SVGNS,'path');
+        base.setAttribute('class','flow-base');base.setAttribute('d',d);
+        base.setAttribute('stroke','url(#'+f.id+'g)');base.setAttribute('marker-end','url(#'+f.id+'a)');
+        grp.appendChild(base);
+        // 흐르는 펄스(슉)
+        var pulse=document.createElementNS(SVGNS,'path');
+        pulse.setAttribute('class','flow-pulse');pulse.setAttribute('d',d);
+        pulse.setAttribute('pathLength','1');pulse.setAttribute('stroke',f.c2);
+        pulse.style.color=f.c2;pulse.style.animationDuration=DUR+'s';
+        grp.appendChild(pulse);
+        // 이동 패킷 (한 번만 — beginElement 로 재생)
+        var pkt=document.createElementNS(SVGNS,'circle');
+        pkt.setAttribute('class','flow-pkt');pkt.setAttribute('r','5');pkt.setAttribute('fill',f.c2);
+        pkt.style.color=f.c2;
+        var am=document.createElementNS(SVGNS,'animateMotion');
+        am.setAttribute('dur',DUR+'s');am.setAttribute('begin','indefinite');am.setAttribute('fill','freeze');
+        am.setAttribute('path',d);am.setAttribute('rotate','auto');pkt.appendChild(am);
+        grp.appendChild(pkt);
+        // 흐름 설명 라벨
+        var tx=document.createElementNS(SVGNS,'text');
+        tx.setAttribute('class','flow-label');
+        tx.setAttribute('x',f.s.x);tx.setAttribute('y',f.s.bottom+15);
+        tx.setAttribute('text-anchor','middle');tx.setAttribute('fill',f.c2);
+        tx.textContent=f.label;
+        grp.appendChild(tx);
+        flow.appendChild(grp);
+        groups.push({grp:grp, motion:am});
+      });
+    }
+    function step(){
+      if(!active||!groups.length)return;
+      groups.forEach(function(o,j){o.grp.classList.toggle('run', j===idx);});
+      var m=groups[idx].motion;
+      if(m&&m.beginElement){try{m.beginElement();}catch(e){}}
+      idx=(idx+1)%groups.length;
+      timer=setTimeout(step,(DUR+GAP)*1000);
+    }
+    function start(){active=true;render();flow.classList.add('on');shareCell.classList.add('active');
+      board.classList.add('flowing');idx=0;step();}
+    function stop(){active=false;clearTimeout(timer);flow.classList.remove('on');
+      shareCell.classList.remove('active');board.classList.remove('flowing');
+      while(flow.firstChild)flow.removeChild(flow.firstChild);groups=[];}
+    shareCell.addEventListener('click',function(){active?stop():start();});
+    var rt;window.addEventListener('resize',function(){if(active){clearTimeout(rt);clearTimeout(timer);
+      rt=setTimeout(function(){render();idx=0;step();},120);}});
+  })();
+
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>

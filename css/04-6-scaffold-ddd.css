@@ -1,0 +1,242 @@
+:root{--line:rgba(94,211,240,.12);--line2:rgba(94,211,240,.3)}
+body{
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(167,139,250,.08), transparent 55%),
+    radial-gradient(100% 80% at 0% 100%, rgba(94,211,240,.06), transparent 55%),
+    linear-gradient(var(--line) 1px,transparent 1px) 0 0/44px 44px,
+    linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/44px 44px,
+    var(--ink);}
+.stage{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(28px,4.6vw,64px)}
+
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.34em;
+  color:var(--cyan);text-transform:uppercase;margin-bottom:12px;
+  display:flex;align-items:center;gap:12px;opacity:0;transform:translateX(-12px)}
+.eyebrow::before{content:"04";color:var(--gold);font-weight:500}
+body.in .eyebrow{animation:slin .6s ease forwards .1s}
+
+h2{font-family:"Space Grotesk",sans-serif;font-weight:600;
+  font-size:clamp(24px,3.2vw,36px);letter-spacing:-.02em;line-height:1.08;
+  opacity:0;transform:translateY(18px)}
+body.in h2{animation:rise .7s ease forwards .2s}
+h2 .em{color:var(--cyan)}
+
+.lead{margin:12px 0 20px;color:var(--muted);font-size:clamp(12px,1.35vw,15px);
+  line-height:1.65;max-width:60em;opacity:0;transform:translateY(14px)}
+body.in .lead{animation:rise .7s ease forwards .34s}
+.lead b{color:var(--text);font-weight:600}
+.lead code{font-family:"JetBrains Mono",monospace;font-size:.92em;color:var(--cyan);
+  background:rgba(94,211,240,.08);border:1px solid var(--line2);border-radius:5px;padding:1px 6px}
+
+/* ── 보드 ── */
+.board{position:relative;display:flex;flex-direction:column;gap:14px;margin-bottom:18px}
+
+/* 도메인 레인 */
+.lanes{display:grid;grid-template-columns:repeat(3,1fr) .82fr;gap:14px}
+.lane{position:relative;border:1px solid var(--line2);border-radius:13px;
+  background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+  padding:14px 14px 13px;overflow:hidden;
+  opacity:0;transform:translateY(22px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.lane::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--ac);box-shadow:0 0 16px var(--ac)}
+body.in .lane{animation:rise .6s cubic-bezier(.2,.8,.2,1) forwards;
+  animation-delay:calc(.52s + var(--i) * .12s)}
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+
+.lane-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.dev{font-size:12.5px;color:var(--text);font-weight:500;display:flex;align-items:center;gap:6px}
+.lock{font-size:13px;filter:saturate(.4)}
+.lane-name{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);
+  margin-bottom:11px}
+.lane-name b{color:var(--ac);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chips span{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:#aab8da;
+  background:rgba(94,211,240,.05);border:1px solid var(--line);border-radius:6px;
+  padding:3px 7px;opacity:0;transform:translateY(6px)}
+body.in .chips span{animation:rise .4s ease forwards}
+.lane:nth-child(1) .chips span{animation-delay:calc(.85s + var(--ci,0) * .04s)}
+.chips span:nth-child(1){--ci:0}.chips span:nth-child(2){--ci:1}.chips span:nth-child(3){--ci:2}
+.chips span:nth-child(4){--ci:3}.chips span:nth-child(5){--ci:4}.chips span:nth-child(6){--ci:5}
+body.in .lane:nth-child(2) .chips span{animation-delay:calc(.97s + var(--ci,0) * .04s)}
+body.in .lane:nth-child(3) .chips span{animation-delay:calc(1.09s + var(--ci,0) * .04s)}
+
+/* 도메인 추가 레인 */
+.lane.add{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;gap:4px;border-style:dashed;border-color:rgba(94,211,240,.28);
+  background:rgba(94,211,240,.025)}
+.lane.add::before{display:none}
+.lane.add .plus{font-size:26px;color:var(--cyan);line-height:1;font-weight:300}
+.lane.add .add-t{font-size:12.5px;color:var(--text);font-weight:600}
+.lane.add .add-s{font-size:11px;color:var(--muted)}
+
+/* 공통 토대 */
+.foundation{position:relative;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  border:1px solid var(--line2);border-radius:13px;padding:12px 16px;
+  background:linear-gradient(180deg, rgba(245,177,76,.05), rgba(245,177,76,.015));
+  opacity:0;transform:translateY(16px)}
+body.in .foundation{animation:rise .6s ease forwards 1.2s}
+.f-label{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--gold);font-weight:600;flex:none}
+.f-cells{display:flex;gap:10px;flex:1;flex-wrap:wrap}
+.f-cells span{display:flex;flex-direction:column;gap:1px;
+  background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:8px;
+  padding:6px 13px;min-width:96px}
+.f-cells b{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--text);font-weight:600}
+.f-cells i{font-style:normal;font-size:10.5px;color:var(--muted)}
+.f-note{font-size:11.5px;color:var(--muted);flex:none}
+.f-note b{color:#ffd79a;font-weight:600}
+
+/* ── shared 클릭 affordance ── */
+.share-cell{position:relative;cursor:pointer;
+  transition:border-color .25s ease,box-shadow .25s ease,background .25s ease}
+.share-cell:hover{border-color:var(--gold);
+  box-shadow:0 0 0 1px var(--gold),0 8px 22px rgba(245,177,76,.18)}
+.share-hint{display:block;font-style:normal;font-family:"JetBrains Mono",monospace;
+  font-size:9px;letter-spacing:.02em;color:var(--gold);opacity:.6;margin-top:2px;
+  transition:opacity .25s ease}
+.share-cell:hover .share-hint{opacity:1}
+.share-cell.active{border-color:var(--gold);background:rgba(245,177,76,.1);
+  box-shadow:0 0 0 1px var(--gold),0 0 26px -4px var(--gold);
+  animation:sharePulse 1.6s ease-in-out infinite}
+@keyframes sharePulse{0%,100%{box-shadow:0 0 0 1px var(--gold),0 0 22px -6px var(--gold)}
+  50%{box-shadow:0 0 0 1px var(--gold),0 0 34px 0 rgba(245,177,76,.5)}}
+
+/* 흐름 중 나머지 공통 토대 셀은 살짝 흐리게 → shared에 집중 */
+.foundation .f-cells span{transition:opacity .3s ease}
+.board.flowing .f-cells span:not(.share-cell){opacity:.45}
+
+/* ── shared 소통 흐름 SVG ── */
+.flow{position:absolute;inset:0;width:100%;height:100%;z-index:6;
+  pointer-events:none;overflow:visible;opacity:0;transition:opacity .25s ease}
+.flow.on{opacity:1}
+/* 라인 그룹 — 시퀀서가 .run 으로 한번에 하나씩 노출 */
+.flow-grp{opacity:0;transition:opacity .35s ease}
+.flow-grp.run{opacity:1}
+.flow-base{fill:none;stroke-width:1.6;opacity:.45;stroke-linecap:round}
+.flow-pulse{fill:none;stroke-width:2.6;stroke-linecap:round;
+  stroke-dasharray:.14 .86;stroke-dashoffset:1;
+  filter:drop-shadow(0 0 5px currentColor)}
+.flow-grp.run .flow-pulse{animation-name:flowMove;animation-timing-function:linear;
+  animation-fill-mode:forwards}
+@keyframes flowMove{to{stroke-dashoffset:0}}
+.flow-pkt{filter:drop-shadow(0 0 7px currentColor)}
+.flow-label{font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:500;
+  letter-spacing:.01em;opacity:0}
+.flow-grp.run .flow-label{animation:rise .5s ease forwards}
+
+/* ── 이점 카드 ── */
+.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.b{display:flex;align-items:flex-start;gap:12px;
+  border:1px solid var(--line2);border-radius:13px;padding:14px 16px;
+  background:rgba(255,255,255,.02);
+  opacity:0;transform:translateY(16px)}
+body.in .b{animation:rise .6s ease forwards;animation-delay:calc(1.34s + var(--d) * .12s)}
+.b .bi{font-size:22px;line-height:1;flex:none;margin-top:1px}
+.b h3{font-family:"Space Grotesk",sans-serif;font-size:14.5px;font-weight:600;
+  color:var(--text);margin-bottom:3px}
+.b p{font-size:11.5px;line-height:1.5;color:var(--muted)}
+
+/* ── 레인 hover 인터랙션 ── */
+.lane[data-dom]{cursor:pointer;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.lane[data-dom]:hover{transform:translateY(-3px);border-color:var(--ac);
+  box-shadow:0 14px 34px rgba(0,0,0,.4),0 0 0 1px var(--ac),inset 0 1px 0 rgba(255,255,255,.05)}
+.lane[data-dom]:hover::before{box-shadow:0 0 26px var(--ac)}
+.peek{display:block;margin-top:10px;font-family:"JetBrains Mono",monospace;font-size:10px;
+  letter-spacing:.04em;color:var(--ac);opacity:.55;transition:opacity .25s ease}
+.lane[data-dom]:hover .peek{opacity:1}
+
+/* ── 폴더 구조 popover ── */
+.pop-overlay{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;
+  pointer-events:none;opacity:0;transition:opacity .22s ease;
+  background:radial-gradient(60% 60% at 50% 50%,rgba(5,9,20,.62),rgba(5,9,20,.86));
+  backdrop-filter:blur(3px)}
+.pop-overlay.show{opacity:1;pointer-events:auto}
+
+.pop-card{--pac:var(--cyan);width:min(560px,84vw);
+  border:1px solid var(--line2);border-radius:16px;overflow:hidden;
+  background:linear-gradient(180deg,#101830,#0b1124);
+  box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04),
+    0 0 60px -10px var(--pac);
+  transform:scale(.94) translateY(10px);transition:transform .26s cubic-bezier(.2,.9,.25,1)}
+.pop-overlay.show .pop-card{transform:scale(1) translateY(0)}
+.pop-card[data-active="order"]{--pac:var(--cyan)}
+.pop-card[data-active="payment"]{--pac:var(--gold)}
+.pop-card[data-active="member"]{--pac:var(--violet)}
+.pop-card[data-active="add"]{--pac:var(--cyan)}
+
+.pop-head{display:flex;align-items:center;gap:7px;padding:11px 16px;
+  border-bottom:1px solid var(--line);background:rgba(255,255,255,.02)}
+.pop-head .pd{width:10px;height:10px;border-radius:50%;background:#2c3754;flex:none}
+.pop-head .pd:nth-child(1){background:#ff5f57}.pop-head .pd:nth-child(2){background:#febc2e}
+.pop-head .pd:nth-child(3){background:#28c840}
+.pop-path{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);margin-left:6px}
+.pop-domain{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted)}
+.pop-domain b{color:var(--pac);font-weight:600}
+.pop-close{margin-left:12px;flex:none;width:24px;height:24px;border-radius:7px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1;
+  color:var(--muted);background:rgba(255,255,255,.05);border:1px solid var(--line);
+  transition:color .2s ease,background .2s ease,border-color .2s ease}
+.pop-close:hover{color:var(--text);background:rgba(255,95,87,.18);border-color:rgba(255,95,87,.5)}
+
+.tree{padding:12px 16px 6px;font-family:"JetBrains Mono",monospace}
+.t-row{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text);
+  padding:3px 8px;border-radius:7px;line-height:1.5}
+.t-row .ic{font-size:12px;flex:none;filter:saturate(.5)}
+.t-row i{font-style:normal;color:var(--muted);font-size:10.5px;margin-left:2px}
+.t-row.lv0{padding-left:8px;font-weight:600}
+.t-row.lv1{padding-left:26px}
+.t-row.lv2{padding-left:44px}
+.t-row.lv3{padding-left:64px;font-size:11.5px}
+.t-row.muted{color:var(--muted);opacity:.55}
+
+/* 도메인 블록 — 비활성은 흐리게, 활성은 강조 + 펼침 */
+.dom{transition:opacity .25s ease}
+.dom .dh b{font-weight:600}
+.dom .dh .tag{margin-left:8px;font-size:9.5px;letter-spacing:.02em;color:var(--muted);
+  background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:20px;
+  padding:1px 8px;opacity:0;transition:opacity .25s ease}
+.dom .sub{max-height:0;overflow:hidden;opacity:0;
+  transition:max-height .32s ease,opacity .25s ease}
+
+.dom:not(.active){opacity:.32}
+.dom:not(.active) .dh .ic{filter:saturate(0)}
+
+.dom.active{opacity:1}
+.dom.active .dh{background:linear-gradient(90deg,color-mix(in srgb,var(--pac) 22%,transparent),transparent);
+  box-shadow:inset 2px 0 0 var(--pac)}
+.dom.active .dh b{color:var(--pac)}
+.dom.active .dh .ic{filter:none}
+.dom.active .dh .tag{opacity:1;color:var(--pac);border-color:color-mix(in srgb,var(--pac) 45%,transparent);
+  background:color-mix(in srgb,var(--pac) 14%,transparent)}
+.dom.active .sub{max-height:220px;opacity:1}
+.dom.active .sub .t-row{color:var(--text)}
+.dom.active .sub .t-row .ic{filter:saturate(.7)}
+
+/* 새로 추가되는 도메인 — 점선 placeholder 로 "맨 아래 추가" 표시 */
+.dom-new .dh{border:1px dashed color-mix(in srgb,var(--pac) 50%,var(--line2));
+  border-radius:8px;padding-top:4px;padding-bottom:4px}
+.dom-new .dh .ic{color:var(--pac);filter:none!important}
+.dom-new .dh b{color:var(--muted);font-weight:600}
+.dom-new:not(.active){opacity:.5}
+.dom-new.active .dh{background:linear-gradient(90deg,color-mix(in srgb,var(--pac) 18%,transparent),transparent);
+  border-color:var(--pac);box-shadow:none}
+.dom-new.active .dh b{color:var(--pac)}
+.dom-new .dh::after{content:"맨 아래에 새 레인 추가";margin-left:auto;
+  font-size:9.5px;letter-spacing:.02em;color:var(--muted);
+  border:0;background:none;padding:0;opacity:.8}
+
+.pop-foot{display:flex;align-items:center;gap:8px;padding:10px 16px;
+  border-top:1px solid var(--line);font-size:11px;color:var(--muted);background:rgba(255,255,255,.02)}
+.pop-foot b{color:var(--text);font-weight:600}
+.pop-foot .dot{width:7px;height:7px;border-radius:50%;flex:none;background:var(--pac);
+  box-shadow:0 0 10px var(--pac)}
+
+@media (max-width:860px){
+  .lanes{grid-template-columns:1fr 1fr}
+  .benefits{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  .eyebrow,h2,.lead,.lane,.chips span,.foundation,.b{opacity:1!important;transform:none!important}
+  .pop-card{transition:opacity .15s ease}
+}

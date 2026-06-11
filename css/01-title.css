@@ -87,9 +87,27 @@ body.in .meta{animation:rise .7s ease forwards 1.1s}
   box-shadow:0 40px 120px rgba(0,0,0,.6);outline:none}
 .vmodal.open .vplayer{animation:vpop .3s cubic-bezier(.2,.7,.2,1)}
 @keyframes vpop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
-.vclose{position:fixed;top:clamp(16px,3vw,30px);right:clamp(16px,3vw,30px);
+.vclose{position:fixed;top:clamp(16px,3vw,30px);right:clamp(16px,3vw,30px);z-index:60;
   width:40px;height:40px;border-radius:50%;cursor:pointer;
   display:grid;place-items:center;font-size:16px;line-height:1;
   color:var(--text);background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.18);transition:background .2s ease,border-color .2s ease}
 .vclose:hover{background:rgba(245,177,76,.18);border-color:rgba(245,177,76,.55)}
+.vfull{position:fixed;top:clamp(16px,3vw,30px);right:calc(clamp(16px,3vw,30px) + 52px);z-index:60;
+  width:40px;height:40px;border-radius:50%;cursor:pointer;
+  display:grid;place-items:center;font-size:18px;line-height:1;
+  color:var(--text);background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);transition:background .2s ease,border-color .2s ease}
+.vfull:hover{background:rgba(245,177,76,.18);border-color:rgba(245,177,76,.55)}
+.vfull .i-compress{display:none}
+.vmodal.fs .vfull .i-expand{display:none}
+.vmodal.fs .vfull .i-compress{display:inline}
+/* 전체화면 시 영상 크게 */
+.vmodal:fullscreen{padding:0;place-items:center}
+.vmodal:fullscreen .vplayer{width:100vw;height:100vh;max-height:100vh;border-radius:0;border:none}
+/* 전체화면에서 버튼이 영상 위로 확실히 보이도록 대비 강화 */
+.vmodal.fs .vfull,.vmodal.fs .vclose{width:46px;height:46px;
+  color:#fff;background:rgba(10,14,22,.72);border-color:rgba(255,255,255,.5);
+  box-shadow:0 6px 20px rgba(0,0,0,.55)}
+.vmodal.fs .vfull:hover,.vmodal.fs .vclose:hover{background:rgba(245,177,76,.92);
+  border-color:#f5b14c;color:#0a0e16}
