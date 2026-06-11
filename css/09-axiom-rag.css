@@ -196,6 +196,57 @@ body.in .extend .exi{animation:exiPulse 2.6s ease-in-out infinite 3.4s}
 @keyframes exiPulse{0%,100%{box-shadow:0 0 0 rgba(167,139,250,0)}
   50%{box-shadow:0 0 22px rgba(167,139,250,.55)}}
 
+/* ── 비교 토글: 일반 AI vs Axiom ───────────── */
+.rag-general{display:none}
+body.mode-general .rag-axiom{display:none}
+body.mode-general .rag-general{display:flex}
+
+/* compare 항목 → 클릭 버튼 */
+.compare-hint{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.06em;
+  color:var(--muted);margin-bottom:2px;
+  opacity:0;transform:translateX(-12px)}
+body.in .compare-hint{animation:slin .5s ease forwards 2.6s}
+.cmp{appearance:none;width:100%;text-align:left;font:inherit;cursor:pointer;
+  position:relative;user-select:none}
+.cmp:focus-visible{outline:2px solid var(--vio2);outline-offset:2px}
+.cmp.bad:hover{border-color:rgba(255,107,107,.5);background:rgba(255,107,107,.08)}
+.cmp.good:hover{border-color:rgba(126,224,166,.55);background:rgba(126,224,166,.1)}
+.cmp.bad.active{border-color:var(--red);
+  box-shadow:0 0 0 1px var(--red),0 0 20px rgba(255,107,107,.25);background:rgba(255,107,107,.1)}
+.cmp.good.active{border-color:var(--grn);
+  box-shadow:0 0 0 1px var(--grn),0 0 20px rgba(126,224,166,.28);background:rgba(126,224,166,.13)}
+/* active 체크 표시 */
+.cmp::after{content:"";position:absolute;right:13px;top:50%;width:7px;height:7px;
+  border-right:2px solid currentColor;border-bottom:2px solid currentColor;
+  transform:translate(0,-65%) rotate(45deg);opacity:0;transition:opacity .2s ease}
+.cmp.active::after{opacity:.6}
+
+/* ── 일반 AI 파이프라인 (RAG 없음) ─────────── */
+.rag-general .box.gen{border-color:rgba(255,107,107,.28);background:rgba(255,107,107,.045)}
+.gen .sbadge{color:#f0a9a9}
+.gen .sbadge i{background:#b06a6a;box-shadow:0 0 16px rgba(255,107,107,.4)}
+.rag-general .box.s2.gen:hover,.rag-general .box.s3.gen:hover{
+  border-color:var(--red);box-shadow:0 0 0 1px var(--red),0 0 26px rgba(255,107,107,.3);
+  background:rgba(255,107,107,.09);transform:translateY(-3px)}
+
+.genknow{display:flex;align-items:center;gap:13px;padding:13px 14px;border-radius:11px;
+  border:1px solid rgba(255,107,107,.2);background:rgba(255,107,107,.05)}
+.genknow .brain{font-size:30px;line-height:1;color:#d98a8a}
+body.in .rag-general .brain{animation:brainPulse 2.4s ease-in-out infinite 1s}
+@keyframes brainPulse{0%,100%{filter:drop-shadow(0 0 8px rgba(255,107,107,.25))}
+  50%{filter:drop-shadow(0 0 20px rgba(255,107,107,.6))}}
+.genknow .gk-txt{font-size:12px;color:var(--muted);line-height:1.5}
+.genknow .gk-txt b{color:var(--text);font-weight:600}
+.nocorpus{display:flex;align-items:center;gap:8px;padding:6px 11px;border-radius:9px;
+  border:1px dashed rgba(255,107,107,.4);background:rgba(255,107,107,.05);
+  font-family:"JetBrains Mono",monospace;font-size:11px;color:#d98a8a}
+.nocorpus .xmark{color:var(--red);font-weight:700}
+
+.code-gen{border-color:rgba(255,107,107,.22)}
+.code-gen .hl{color:#ff9b9b;text-shadow:0 0 14px rgba(255,107,107,.35)}
+.verdict.warn{border-color:rgba(245,177,76,.45);background:rgba(245,177,76,.1)}
+.vchk.warn{background:var(--gold);color:var(--ink)}
+
 /* ── responsive ───────────────────────── */
 @media (max-width:980px){
   .rag{flex-direction:column}

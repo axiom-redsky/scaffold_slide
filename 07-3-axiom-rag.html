@@ -22,8 +22,8 @@
       </p>
     </header>
 
-    <!-- ── RAG 파이프라인 ────────────────────────────── -->
-    <div class="rag">
+    <!-- ── RAG 파이프라인 (Axiom) ─────────────────────── -->
+    <div class="rag rag-axiom">
 
       <!-- 01 · 의도 -->
       <section class="box s1">
@@ -44,7 +44,7 @@
 
       <!-- 02 · RAG 검색 -->
       <section class="box s2">
-        <div class="sbadge"><i>02</i> RAG 검색</div>
+        <div class="sbadge"><i>02</i> RAG 검색 (Retrieval(검색) Augmented(증강) Generation(생성))</div>
         <div class="corpus" aria-label="scaffold 지식 corpus">
           <div class="beam"></div>
           <div class="doc"><span class="dico">▤</span> reset-rules.md</div>
@@ -87,17 +87,79 @@
 
     </div>
 
+    <!-- ── 일반 AI 파이프라인 (RAG 없음) ───────────────── -->
+    <div class="rag rag-general">
+
+      <!-- 01 · 의도 -->
+      <section class="box s1">
+        <div class="sbadge"><i>01</i> 의도</div>
+        <div class="prompt">
+          <span class="caret">›</span>
+          <span class="typed">"회원 목록 화면 만들어줘"</span>
+        </div>
+        <div class="ssub">개발자의 한 줄</div>
+      </section>
+
+      <!-- connector -->
+      <div class="conn">
+        <span class="rail"></span>
+        <span class="pkt"></span><span class="pkt"></span><span class="pkt"></span>
+        <span class="ar">▶</span>
+      </div>
+
+      <!-- 02 · 일반 지식 (RAG 없음) -->
+      <section class="box s2 gen">
+        <div class="sbadge"><i>02</i> 일반 지식</div>
+        <div class="genknow">
+          <div class="brain">◍</div>
+          <div class="gk-txt">
+            <b>LLM 학습 데이터</b><br>
+            일반적인 React 지식만 사용
+          </div>
+        </div>
+        <div class="nocorpus">
+          <span class="xmark">✕</span> scaffold corpus 검색 없음
+        </div>
+        <div class="ssub">우리 팀 표준·규칙을 모름</div>
+      </section>
+
+      <!-- connector -->
+      <div class="conn">
+        <span class="rail"></span>
+        <span class="pkt"></span><span class="pkt"></span><span class="pkt"></span>
+        <span class="ar">▶</span>
+      </div>
+
+      <!-- 03 · 일반 코드 생성 -->
+      <section class="box s3 gen">
+        <div class="sbadge"><i>03</i> 일반 코드 생성</div>
+        <div class="code code-gen">
+          <div class="cl"><span class="kw">import</span> { useState, useEffect } <span class="kw">from</span> <span class="str">'react'</span></div>
+          <div class="cl"><span class="cm">// 임의의 테이블·패칭을 직접 작성</span></div>
+          <div class="cl"><span class="kw">const</span> res = <span class="kw">await</span> <span class="hl2">fetch</span>(<span class="str">'/members'</span>)</div>
+          <div class="cl">&lt;<span class="hl">table</span>&gt; … 직접 마크업 … &lt;/<span class="hl">table</span>&gt;</div>
+          <div class="cl"><span class="cm">// 우리 컴포넌트·유틸·DDD 구조 아님</span></div>
+        </div>
+        <div class="verdict warn">
+          <span class="vchk warn">!</span> 동작은 하지만 <b>우리 방식</b>은 아님
+        </div>
+        <div class="ssub">"Scaffold를 모르는" 일반 코드</div>
+      </section>
+
+    </div>
+
     <!-- ── 하단: 대조 + 확장 가능 ───────────────────── -->
     <div class="footrow">
       <div class="compare">
-        <div class="cmp bad">
+        <div class="compare-hint">▲ 클릭하면 위 다이어그램이 바뀝니다</div>
+        <button type="button" class="cmp bad" data-mode="general" onclick="setMode('general')">
           <span class="ct">일반 AI</span>
           <span class="cflow">일반 지식 → <s>그냥 동작하는 코드</s></span>
-        </div>
-        <div class="cmp good">
+        </button>
+        <button type="button" class="cmp good active" data-mode="axiom" onclick="setMode('axiom')">
           <span class="ct">Axiom</span>
           <span class="cflow">RAG · 우리 표준 → <b>우리 방식 코드</b></span>
-        </div>
+        </button>
       </div>
       <div class="extend">
         <span class="exi">⊕</span>
@@ -109,6 +171,11 @@
 <script>
   function play(){document.body.classList.add('in');}
   function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  function setMode(m){
+    document.body.classList.toggle('mode-general',m==='general');
+    var btns=document.querySelectorAll('.cmp');
+    for(var i=0;i<btns.length;i++)btns[i].classList.toggle('active',btns[i].getAttribute('data-mode')===m);
+  }
   if(document.readyState==='complete')requestAnimationFrame(play);
   else window.addEventListener('load',()=>requestAnimationFrame(play));
   window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
