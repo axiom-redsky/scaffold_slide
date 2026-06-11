@@ -170,12 +170,27 @@
 
 <script>
   function play(){document.body.classList.add('in');}
-  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  function reset(){
+    document.body.classList.remove('in');
+    var ts=document.querySelectorAll('.typed');
+    for(var i=0;i<ts.length;i++)ts[i].style.animation='';
+    void document.body.offsetWidth;requestAnimationFrame(play);
+  }
   function setMode(m){
     document.body.classList.toggle('mode-general',m==='general');
     var btns=document.querySelectorAll('.cmp');
     for(var i=0;i<btns.length;i++)btns[i].classList.toggle('active',btns[i].getAttribute('data-mode')===m);
   }
+  // 의도 영역에 마우스 오버 → 타이핑 애니메이션 다시 재생
+  function retype(box){
+    var t=box.querySelector('.typed');if(!t)return;
+    t.style.animation='none';void t.offsetWidth;
+    t.style.animation='type 1.1s steps(18) forwards, caret .7s step-end 4';
+  }
+  (function(){
+    var boxes=document.querySelectorAll('.box.s1');
+    for(var i=0;i<boxes.length;i++)(function(b){b.addEventListener('mouseenter',function(){retype(b);});})(boxes[i]);
+  })();
   if(document.readyState==='complete')requestAnimationFrame(play);
   else window.addEventListener('load',()=>requestAnimationFrame(play));
   window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
