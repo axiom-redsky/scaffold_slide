@@ -40,10 +40,25 @@ body.in .techline{animation:rise .6s ease forwards .4s}
   margin-top:clamp(26px,3.6vw,44px);max-width:1240px}
 @media (max-width:880px){.cols{grid-template-columns:1fr;gap:26px}}
 
-.col-label{display:block;font-family:"JetBrains Mono",monospace;font-size:11px;
-  letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
-  margin-bottom:clamp(14px,2vw,20px);padding-bottom:10px;border-bottom:1px solid var(--line);
+.col-feat{--clac:var(--cyan)}
+.col-philo{--clac:var(--gold)}
+.col-label{position:relative;display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;
+  margin-bottom:clamp(14px,2vw,20px);padding:1px 0 13px 17px;
+  border-bottom:1px solid var(--line);
   opacity:0;transform:translateY(8px)}
+/* 좌측 강조 바 */
+.col-label::before{content:"";position:absolute;left:0;top:2px;bottom:15px;width:5px;border-radius:4px;
+  background:linear-gradient(var(--clac),color-mix(in srgb,var(--clac) 18%,transparent));
+  box-shadow:0 0 15px color-mix(in srgb,var(--clac) 75%,transparent)}
+/* 하단 강조 밑줄 */
+.col-label::after{content:"";position:absolute;left:17px;bottom:-1px;width:78px;height:2.5px;border-radius:3px;
+  background:linear-gradient(90deg,var(--clac),transparent);
+  box-shadow:0 0 12px color-mix(in srgb,var(--clac) 55%,transparent)}
+.col-label b{font-family:"Space Grotesk",sans-serif;font-weight:700;
+  font-size:clamp(18px,1.85vw,24px);letter-spacing:-.01em;line-height:1.1;
+  color:var(--clac);text-shadow:0 0 22px color-mix(in srgb,var(--clac) 40%,transparent)}
+.col-label .cl-sub{font-style:normal;font-family:"JetBrains Mono",monospace;
+  font-size:clamp(10px,1vw,11.5px);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 body.in .col-feat .col-label{animation:rise .6s ease forwards .5s}
 body.in .col-philo .col-label{animation:rise .6s ease forwards .9s}
 
@@ -140,7 +155,6 @@ body.in .feat{animation:popIn .55s cubic-bezier(.25,1.3,.5,1) forwards;
 @keyframes grow{0%{transform:scaleY(.18)}42%{transform:scaleY(1)}78%{transform:scaleY(1)}100%{transform:scaleY(.18)}}
 
 /* ── 설계 철학 리스트 (강조) ── */
-.col-philo .col-label{color:var(--cyan)}
 .philo-list{display:flex;flex-direction:column;gap:clamp(7px,0.8vw,10px)}
 .ph{position:relative;padding:9px 18px 9px 22px;border-radius:13px;
   border:1px solid color-mix(in srgb,var(--ac) 26%,var(--line));overflow:hidden;
