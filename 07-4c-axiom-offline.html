@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axiom AI — 오프라인 폴백</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/07-4c-axiom-offline.css">
+</head>
+<body>
+  <div class="stage">
+    <header class="head">
+      <div class="eyebrow">The Axiom · 오프라인 폴백</div>
+      <h2>AI 서버가 없어도, <span class="em">최소한의 기능 제공</span></h2>
+      <p class="lede">
+        사내 LLM 서버가 아직 없거나 일시적으로 응답하지 않아도 Axiom은 멈추지 않습니다.
+        입력한 프롬프트를 <b>react-app-scaffold 지식 인덱스</b>에 매칭해
+        <b>예제 코드 · 사용법 · import 경로</b>를 즉시 돌려줍니다.
+        sLLM에 연결되면 더 정교해질 뿐, 제공량이 <b>0이 되지 않습니다.</b>
+      </p>
+    </header>
+
+    <div class="grid">
+      <!-- ── 좌: 무슨 일이 일어나나 (폴백 흐름) ───────────── -->
+      <div class="path">
+        <div class="pt-head">
+          <span class="pt-title">서버가 없을 때</span>
+          <span class="pt-sub">연결 실패를 감지하면 자동으로 폴백</span>
+        </div>
+
+        <!-- 1) 프롬프트 -->
+        <div class="node ask n1">
+          <span class="nd-ico">✦</span>
+          <div class="nd-text">
+            <div class="nd-name">개발자 프롬프트</div>
+            <div class="nd-quote">“Button 컴포넌트 어떻게 쓰지?”</div>
+          </div>
+        </div>
+
+        <div class="conn c1"><span class="rail"></span><span class="ar">▼</span></div>
+
+        <!-- 2) AI 서버 offline -->
+        <div class="node srv n2">
+          <span class="nd-ico">▦</span>
+          <div class="nd-text">
+            <div class="nd-name">사내 sLLM 서버</div>
+            <div class="nd-state">미구축 · 응답 없음</div>
+          </div>
+          <span class="srv-x">✕</span>
+          <span class="retry">연결 시도…</span>
+        </div>
+
+        <!-- 폴백 전환 배지 -->
+        <div class="fallback f1">
+          <span class="fb-ar">⤵</span> 오프라인 폴백 전환
+        </div>
+
+        <!-- 3) Axiom 로컬 엔진 -->
+        <div class="node engine n3">
+          <span class="nd-ico">◈</span>
+          <div class="nd-text">
+            <div class="nd-name">Axiom 오프라인 엔진</div>
+            <div class="nd-state ok">scaffold 지식 인덱스에서 검색</div>
+          </div>
+          <span class="idx-chip">react-app-scaffold · 로컬</span>
+        </div>
+      </div>
+
+      <!-- ── 우: 그래서 무엇을 받나 (오프라인 응답) ───────── -->
+      <div class="out">
+        <div class="card">
+          <div class="cd-head">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="cd-title">Axiom · 오프라인 응답</span>
+            <span class="cd-badge">scaffold 기반</span>
+          </div>
+          <pre class="code"><code><span class="ln l1"><span class="cm">// 1) 가져오기</span></span>
+<span class="ln l2"><span class="kw">import</span> { <span class="ty">Button</span> } <span class="kw">from</span></span>
+<span class="ln l3">  <span class="st">"@/shared/lib/shadcn/ui/button"</span>;</span>
+<span class="ln l4"> </span>
+<span class="ln l5"><span class="cm">// 2) 사용 예시</span></span>
+<span class="ln l6">&lt;<span class="ty">Button</span> <span class="at">variant</span>=<span class="st">"default"</span> <span class="at">size</span>=<span class="st">"sm"</span></span>
+<span class="ln l7">  <span class="at">onClick</span>={onSave}&gt;저장&lt;/<span class="ty">Button</span>&gt;<span class="caret"></span></span>
+</code></pre>
+        </div>
+
+        <div class="feats">
+          <div class="feat ft1">
+            <span class="ft-ico">▣</span>
+            <div class="ft-text"><b>코드 예제</b><span>바로 붙여 쓰는 스니펫</span></div>
+          </div>
+          <div class="feat ft2">
+            <span class="ft-ico">◎</span>
+            <div class="ft-text"><b>사용법 가이드</b><span>props · variant · 옵션 설명</span></div>
+          </div>
+          <div class="feat ft3">
+            <span class="ft-ico">⌖</span>
+            <div class="ft-text"><b>위치 안내</b><span>scaffold 내 정확한 import 경로</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <span class="dot"></span>
+      <b>서버가 없어도 0이 아닙니다</b> — scaffold 예제·사용법은 항상 제공되고,
+      sLLM에 연결되면 문맥 맞춤 생성으로 <b>한 단계 더</b> 정교해집니다.
+    </div>
+  </div>
+
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>
