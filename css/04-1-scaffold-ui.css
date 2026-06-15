@@ -26,6 +26,8 @@ h2 code{font-family:"JetBrains Mono",monospace;font-size:.6em;font-weight:500;
   line-height:1.6;max-width:40em;opacity:0;transform:translateY(14px)}
 body.in .lead{animation:rise .7s ease forwards .34s}
 .lead b{color:var(--text);font-weight:600}
+.lead code{font-family:"JetBrains Mono",monospace;font-size:.92em;font-weight:500;
+  color:var(--cyan);background:rgba(94,211,240,.1);padding:1px 6px;border-radius:5px}
 
 .usage{display:inline-flex;align-items:center;margin-bottom:24px;
   padding:9px 16px;border:1px solid var(--line2);border-radius:8px;
