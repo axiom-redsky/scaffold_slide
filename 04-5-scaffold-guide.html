@@ -57,10 +57,42 @@
           <!-- ── 본문 ── -->
           <section class="content">
             <div class="crumb"><span id="c-group">시작하기</span><span class="sep">/</span><span id="c-title">소개</span></div>
-            <h1 id="d-title">소개</h1>
-            <p class="desc" id="d-desc"></p>
-            <ul class="points" id="d-points"></ul>
-            <pre class="snippet" id="d-code"><code></code></pre>
+
+            <!-- 일반 문서 -->
+            <div id="generic-doc">
+              <h1 id="d-title">소개</h1>
+              <p class="desc" id="d-desc"></p>
+              <ul class="points" id="d-points"></ul>
+              <pre class="snippet" id="d-code"><code></code></pre>
+            </div>
+
+            <!-- UI 컴포넌트 상세 문서 -->
+            <div id="ui-doc">
+              <h1>UI 컴포넌트</h1>
+              <p class="desc">shadcn/ui를 래핑한 컴포넌트를 <code>@axiom/components/ui</code> 한 곳에서 import 합니다. 컴포넌트별 예시 · 코드 · Props를 확인하세요.</p>
+              <div class="comp-tabs" id="comp-tabs"></div>
+
+              <div class="comp-body">
+                <div class="comp-main">
+                  <div class="comp-head">
+                    <h3 id="ui-name"></h3>
+                    <span class="comp-import" id="ui-import"></span>
+                  </div>
+                  <p class="comp-desc" id="ui-desc"></p>
+
+                  <div class="pv-label-bar">미리보기 <span>Preview</span></div>
+                  <div class="preview" id="ui-preview"></div>
+
+                  <div class="pv-label-bar">사용 코드 <span>Usage</span></div>
+                  <pre class="snippet"><code id="ui-code"></code></pre>
+                </div>
+
+                <aside class="comp-props">
+                  <div class="props-title">Props</div>
+                  <table class="props-table"><tbody id="ui-props"></tbody></table>
+                </aside>
+              </div>
+            </div>
           </section>
         </div>
       </div>
@@ -98,15 +130,197 @@
       p:["Format on Save 적용 (.vscode/settings.json)","@/ · @axiom/ import alias 사용","컴포넌트 · 파일 네이밍 규칙"]},
   };
 
+  /* ── UI 컴포넌트 상세 데이터 ── */
+  var COMPONENTS = [
+    {
+      key:"button", name:"Button",
+      imp:"@axiom/components/ui",
+      desc:"클릭 가능한 액션 버튼. variant · size 로 시각 스타일과 크기를 조절합니다.",
+      preview:
+        '<div class="pv-row">'+
+          '<button class="pv-btn pv-default">확인</button>'+
+          '<button class="pv-btn pv-secondary">보조</button>'+
+          '<button class="pv-btn pv-outline">외곽선</button>'+
+          '<button class="pv-btn pv-ghost">고스트</button>'+
+          '<button class="pv-btn pv-destructive">삭제</button>'+
+        '</div>'+
+        '<div class="pv-row">'+
+          '<button class="pv-btn pv-default pv-sm">Small</button>'+
+          '<button class="pv-btn pv-default">Default</button>'+
+          '<button class="pv-btn pv-default pv-lg">Large</button>'+
+          '<button class="pv-btn pv-default" disabled>Disabled</button>'+
+        '</div>',
+      code:
+        "import { Button } from '@axiom/components/ui';\n\n"+
+        "<Button variant=\"default\" onClick={save}>확인</Button>\n"+
+        "<Button variant=\"outline\" size=\"sm\">외곽선</Button>\n"+
+        "<Button variant=\"destructive\">삭제</Button>",
+      props:[
+        ["variant",'"default" | "secondary" | "outline" | "ghost" | "destructive" | "link"','"default"',"버튼 시각 스타일"],
+        ["size",'"default" | "sm" | "lg" | "icon"','"default"',"버튼 크기"],
+        ["disabled","boolean","false","비활성화 여부"],
+        ["asChild","boolean","false","자식 요소를 버튼으로 렌더링"],
+      ]
+    },
+    {
+      key:"input", name:"Input",
+      imp:"@axiom/components/ui",
+      desc:"텍스트 입력 필드. Label · 에러 메시지와 함께 폼에서 사용합니다.",
+      preview:
+        '<div class="pv-field">'+
+          '<label class="pv-flabel">이메일</label>'+
+          '<input class="pv-input" placeholder="you@example.com" value="">'+
+        '</div>'+
+        '<div class="pv-field">'+
+          '<label class="pv-flabel">비밀번호</label>'+
+          '<input class="pv-input pv-err" type="password" value="1234">'+
+          '<span class="pv-help pv-helperr">8자 이상 입력하세요.</span>'+
+        '</div>',
+      code:
+        "import { Input, Label } from '@axiom/components/ui';\n\n"+
+        "<Label htmlFor=\"email\">이메일</Label>\n"+
+        "<Input id=\"email\" type=\"email\"\n"+
+        "  placeholder=\"you@example.com\" />",
+      props:[
+        ["type",'"text" | "email" | "password" | "number" …','"text"',"입력 타입"],
+        ["placeholder","string","—","플레이스홀더 텍스트"],
+        ["disabled","boolean","false","비활성화 여부"],
+        ["value / onChange","string / fn","—","제어 컴포넌트 값·핸들러"],
+      ]
+    },
+    {
+      key:"badge", name:"Badge",
+      imp:"@axiom/components/ui",
+      desc:"상태·카테고리를 표시하는 작은 라벨. 목록·테이블에서 상태 표기에 사용합니다.",
+      preview:
+        '<div class="pv-row">'+
+          '<span class="pv-badge pv-default">Default</span>'+
+          '<span class="pv-badge pv-secondary">진행중</span>'+
+          '<span class="pv-badge pv-outline">대기</span>'+
+          '<span class="pv-badge pv-destructive">오류</span>'+
+        '</div>',
+      code:
+        "import { Badge } from '@axiom/components/ui';\n\n"+
+        "<Badge>Default</Badge>\n"+
+        "<Badge variant=\"secondary\">진행중</Badge>\n"+
+        "<Badge variant=\"destructive\">오류</Badge>",
+      props:[
+        ["variant",'"default" | "secondary" | "outline" | "destructive"','"default"',"배지 시각 스타일"],
+        ["asChild","boolean","false","자식 요소로 렌더링"],
+      ]
+    },
+    {
+      key:"switch", name:"Switch",
+      imp:"@axiom/components/ui",
+      desc:"On/Off 토글 스위치. 설정 값의 즉시 전환에 사용합니다.",
+      preview:
+        '<div class="pv-row pv-rowv">'+
+          '<label class="pv-swrap"><span class="pv-switch on"><i></i></span> 알림 받기</label>'+
+          '<label class="pv-swrap"><span class="pv-switch"><i></i></span> 다크 모드</label>'+
+          '<label class="pv-swrap pv-dim"><span class="pv-switch"><i></i></span> 비활성화</label>'+
+        '</div>',
+      code:
+        "import { Switch, Label } from '@axiom/components/ui';\n\n"+
+        "<Label>알림 받기</Label>\n"+
+        "<Switch checked={on} onCheckedChange={setOn} />",
+      props:[
+        ["checked","boolean","false","현재 켜짐 상태(제어)"],
+        ["onCheckedChange","(v:boolean)=>void","—","상태 변경 핸들러"],
+        ["disabled","boolean","false","비활성화 여부"],
+      ]
+    },
+    {
+      key:"accordion", name:"Accordion",
+      imp:"@axiom/components/ui",
+      desc:"펼치고 접을 수 있는 콘텐츠 영역. FAQ·상세 정보 토글에 사용합니다.",
+      preview:
+        '<div class="pv-acc">'+
+          '<div class="pv-acc-item pv-open">'+
+            '<div class="pv-acc-head">반품은 가능한가요?<span>▾</span></div>'+
+            '<div class="pv-acc-body">수령 후 30일 이내 반품이 가능합니다.</div>'+
+          '</div>'+
+          '<div class="pv-acc-item">'+
+            '<div class="pv-acc-head">배송 기간은 얼마나 걸리나요?<span>›</span></div>'+
+          '</div>'+
+          '<div class="pv-acc-item">'+
+            '<div class="pv-acc-head">교환 절차가 궁금합니다.<span>›</span></div>'+
+          '</div>'+
+        '</div>',
+      code:
+        "import {\n  Accordion, AccordionItem,\n  AccordionTrigger, AccordionContent,\n} from '@axiom/components/ui';\n\n"+
+        "<Accordion type=\"single\" collapsible>\n"+
+        "  <AccordionItem value=\"q1\">\n"+
+        "    <AccordionTrigger>반품은 가능한가요?</AccordionTrigger>\n"+
+        "    <AccordionContent>30일 이내 가능합니다.</AccordionContent>\n"+
+        "  </AccordionItem>\n</Accordion>",
+      props:[
+        ["type",'"single" | "multiple"','"single"',"단일/다중 펼침 모드"],
+        ["collapsible","boolean","false","열린 항목을 다시 닫기 허용"],
+        ["defaultValue","string | string[]","—","초기 열림 항목"],
+      ]
+    },
+  ];
+
   (function(){
     var items = Array.prototype.slice.call(document.querySelectorAll('.nav-item'));
     var elG = document.getElementById('c-group'), elCT = document.getElementById('c-title');
     var elT = document.getElementById('d-title'), elD = document.getElementById('d-desc');
     var elP = document.getElementById('d-points'), elC = document.getElementById('d-code');
+    var elGeneric = document.getElementById('generic-doc'), elUi = document.getElementById('ui-doc');
+
+    /* UI 컴포넌트 상세 렌더링 */
+    var elTabs = document.getElementById('comp-tabs');
+    var elCName = document.getElementById('ui-name'), elCImp = document.getElementById('ui-import');
+    var elCDesc = document.getElementById('ui-desc'), elCPrev = document.getElementById('ui-preview');
+    var elCCode = document.getElementById('ui-code'), elCProps = document.getElementById('ui-props');
+    var tabBtns = [];
+
+    COMPONENTS.forEach(function(c){
+      var b = document.createElement('button');
+      b.className = 'comp-tab'; b.textContent = c.name;
+      b.addEventListener('click', function(){ showComp(c.key); });
+      elTabs.appendChild(b); tabBtns.push(b);
+    });
+
+    function showComp(key){
+      var c = null;
+      COMPONENTS.forEach(function(x){ if(x.key===key) c=x; });
+      if(!c) return;
+      tabBtns.forEach(function(b){ b.classList.toggle('active', b.textContent===c.name); });
+      elCName.textContent = c.name;
+      elCImp.textContent = "import { "+c.name+" } from '"+c.imp+"'";
+      elCDesc.textContent = c.desc;
+      elCPrev.innerHTML = c.preview;
+      elCCode.textContent = c.code;
+      elCProps.innerHTML =
+        '<tr class="props-th"><th>Prop</th><th>Type</th><th>Default</th></tr>';
+      c.props.forEach(function(p){
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td><code class="p-name">'+p[0]+'</code></td>'+
+          '<td><code class="p-type">'+p[1].replace(/</g,'&lt;')+'</code></td>'+
+          '<td><code class="p-def">'+p[2]+'</code></td>';
+        var trd = document.createElement('tr'); trd.className='props-doc';
+        trd.innerHTML = '<td colspan="3">'+p[3]+'</td>';
+        elCProps.appendChild(tr); elCProps.appendChild(trd);
+      });
+      document.querySelector('.content').scrollTop = 0;
+    }
 
     function show(key){
-      var data = DOCS[key]; if(!data) return;
+      var isUi = (key==='ui');
       items.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-key')===key); });
+
+      if(isUi){
+        elG.textContent = '컴포넌트'; elCT.textContent = 'UI 컴포넌트';
+        elGeneric.style.display='none'; elUi.style.display='block';
+        showComp(COMPONENTS[0].key);
+        document.querySelector('.content').scrollTop = 0;
+        return;
+      }
+
+      var data = DOCS[key]; if(!data) return;
+      elGeneric.style.display=''; elUi.style.display='none';
       elG.textContent = data.g; elCT.textContent = data.t;
       elT.textContent = data.t; elD.textContent = data.d;
       // points

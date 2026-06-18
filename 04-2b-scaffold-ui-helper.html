@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>react-app-scaffold — 전역 UI 헬퍼</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/04-2b-scaffold-ui-helper.css">
+</head>
+<body>
+  <div class="stage">
+    <div class="eyebrow">react-app-scaffold · 전역 UI 헬퍼</div>
+    <h2>알림·확인을 <span class="nb"><span class="em">window.$ui</span> 한 줄로</span> — import도 상태도 없이</h2>
+
+    <div class="cmp">
+      <!-- ============ LEFT : AS-IS ============ -->
+      <div class="col asis">
+        <button class="col-btn" type="button" onclick="replay('asis')">
+          <span class="badge">AS-IS</span>
+          <span class="cb-text">기존 방식 · 컴포넌트 직접 관리</span>
+          <span class="cb-replay">↻ 다시 재생</span>
+        </button>
+
+        <div class="code-card">
+          <div class="code-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="fname">SaveOrder.tsx</span>
+          </div>
+          <div class="code"><span class="al hl s1" style="--l:0"><span class="kw">import</span> { <span class="cm">AlertModal</span> } <span class="kw">from</span> <span class="st">'@/components'</span>;  <span class="cmt"><span class="stp s1">①</span> import</span></span><span class="al" style="--l:1"><span class="kw">export function</span> <span class="fn">SaveOrder</span>() {</span><span class="al hl s3" style="--l:2">  <span class="kw">const</span> [<span class="vr">open</span>, <span class="vr">setOpen</span>] = <span class="fn">useState</span>(<span class="kw">false</span>);  <span class="cmt"><span class="stp s3">③</span> 상태로 제어</span></span><span class="al" style="--l:3">  <span class="kw">return</span> (</span><span class="al" style="--l:4">    <span class="pn">&lt;&gt;</span></span><span class="al" style="--l:5">      <span class="pn">&lt;button</span> <span class="at">onClick</span>={() =&gt; <span class="fn">setOpen</span>(<span class="kw">true</span>)}<span class="pn">&gt;</span>저장<span class="pn">&lt;/button&gt;</span></span><span class="al hl s2 grp-top" style="--l:6">      <span class="pn">&lt;AlertModal</span>  <span class="cmt"><span class="stp s2">②</span> JSX에 직접 배치</span></span><span class="al hl s2" style="--l:7">        <span class="at">open</span>={<span class="vr">open</span>}</span><span class="al hl s2" style="--l:8">        <span class="at">message</span>=<span class="st">"저장되었습니다."</span></span><span class="al hl s2 grp-bot" style="--l:9">        <span class="at">onClose</span>={() =&gt; <span class="fn">setOpen</span>(<span class="kw">false</span>)} <span class="pn">/&gt;</span></span><span class="al" style="--l:10">    <span class="pn">&lt;/&gt;</span></span><span class="al" style="--l:11">  );</span><span class="al" style="--l:12">}</span></div>
+        </div>
+
+        <div class="col-foot">
+          <span class="step"><span class="sn s1">①</span> 컴포넌트 import</span>
+          <span class="sarr">→</span>
+          <span class="step"><span class="sn s2">②</span> JSX에 배치</span>
+          <span class="sarr">→</span>
+          <span class="step"><span class="sn s3">③</span> 상태로 열고/닫기</span>
+        </div>
+      </div>
+
+      <!-- divider -->
+      <div class="vs"><span class="vs-arrow">→</span></div>
+
+      <!-- ============ RIGHT : TO-BE ============ -->
+      <div class="col tobe">
+        <button class="col-btn" type="button" onclick="replay('tobe')">
+          <span class="badge">TO-BE</span>
+          <span class="cb-text">전역 <span class="gl">$ui</span> · 한 줄 호출</span>
+          <span class="cb-replay">↻ 다시 재생</span>
+        </button>
+
+        <div class="code-card hero">
+          <div class="code-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="fname">SaveOrder.tsx</span>
+          </div>
+          <div class="code"><span class="cl" style="--l:0"><span class="cmt">// 액션 안에서 한 줄 — import·상태·JSX 배치 모두 불필요</span></span><span class="cl" style="--l:1"><span class="kw">await</span> <span class="gl">$ui</span>.<span class="fn">alert</span>(<span class="st">'저장되었습니다.'</span>, { <span class="ns">type</span>: <span class="st">'success'</span> });</span><span class="cl blank" style="--l:2"> </span><span class="cl" style="--l:3"><span class="kw">const</span> <span class="vr">ok</span> = <span class="kw">await</span> <span class="gl">$ui</span>.<span class="fn">confirm</span>(<span class="st">'삭제하시겠습니까?'</span>);</span></div>
+        </div>
+
+        <!-- 실행 결과 — 한 줄로 alert이 떠오른다 -->
+        <div class="result">
+          <span class="result-cap">실행 결과 — $ui.alert</span>
+          <div class="dlg-stage">
+            <div class="backdrop"></div>
+            <div class="dialog">
+              <div class="dlg-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/><path class="tick" d="M8.5 12.5l2.5 2.5 4.5-5"/>
+                </svg>
+              </div>
+              <div class="dlg-body">
+                <div class="dlg-title">성공</div>
+                <div class="dlg-msg">저장되었습니다.</div>
+              </div>
+              <div class="dlg-footer">
+                <button class="dlg-btn" type="button">확인</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="note"><b>한 줄</b>이면 끝 — import도, JSX 배치도, 열림 상태 관리도 필요 없습니다.</p>
+      </div>
+    </div>
+  </div>
+<script>
+  function play(){document.body.classList.add('in');
+    document.querySelectorAll('.col').forEach(function(c){c.classList.add('play');});}
+  function reset(){document.body.classList.remove('in');
+    document.querySelectorAll('.col').forEach(function(c){c.classList.remove('play');});
+    void document.body.offsetWidth;requestAnimationFrame(play);}
+  function replay(which){var c=document.querySelector('.col.'+which);if(!c)return;
+    c.classList.remove('play');void c.offsetWidth;
+    requestAnimationFrame(function(){c.classList.add('play');});}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>

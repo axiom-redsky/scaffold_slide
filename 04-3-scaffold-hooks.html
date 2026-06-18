@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>react-app-scaffold — 커스텀 훅</title>
+<title>react-app-scaffold — 커스텀 훅 useApi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -13,81 +13,86 @@
 <body>
   <div class="stage">
     <div class="eyebrow">react-app-scaffold · 커스텀 훅</div>
-    <h2>데이터 통신을 <span class="em">useApi</span> 하나로<br/>필요에 따라 계속 추가</h2>
-    <p class="lead"><b>TanStack Query</b>를 감싼 단일 훅 하나로 <span class="hl">조회·변경·로딩·에러·상태관리·캐시 무효화</span>까지. <br/>그 외 필요한 커스텀 훅은 필요에 따라 계속 추가.</p>
-    <div class="usage"><span class="kw">import</span> { <span class="fn">useApi</span> } <span class="kw">from</span> <span class="st">'@axiom/hooks'</span></div>
+    <h2>데이터 통신을 <span class="nb"><span class="em">useApi</span> 한 줄로</span> — 로딩·에러·캐시까지 자동</h2>
 
-    <div class="groups">
-      <section class="grp g-api">
-        <h3 class="gh"><span class="gd"></span><span class="gns">useApi()</span>데이터 통신 · TanStack Query</h3>
-        <div class="tiles">
-          <div class="tile" style="--i:0">
-            <div class="thead"><span class="tag t-get">GET</span><span class="lbl">목록 조회</span></div>
-            <code class="code"><span class="fn">useApi</span>&lt;<span class="ty">User[]</span>&gt;(<span class="st">'/users'</span>)</code></div>
+    <div class="hookrail">
+      <span class="hr-label">scaffold 제공 커스텀 훅</span>
+      <span class="chip on"><span class="cd"></span>useApi</span>
+      <span class="chip">useSidebar</span>
+      <span class="chip more">+ 필요에 따라 계속 추가</span>
+    </div>
 
-          <div class="tile" style="--i:1">
-            <div class="thead"><span class="tag t-get">GET</span><span class="lbl">파라미터</span></div>
-            <code class="code"><span class="fn">useApi</span>(<span class="st">'/users'</span>, { params:{ id } })</code></div>
+    <div class="cmp">
+      <!-- ============ LEFT : AS-IS ============ -->
+      <div class="col asis">
+        <button class="col-btn" type="button" onclick="replay('asis')">
+          <span class="badge">AS-IS</span>
+          <span class="cb-text">기존 방식 · 통신 로직 직접 구현</span>
+          <span class="cb-replay">↻ 다시 재생</span>
+        </button>
 
-          <div class="tile" style="--i:2">
-            <div class="thead"><span class="tag t-post">POST</span><span class="lbl">검색 조회</span></div>
-            <code class="code"><span class="fn">useApi</span>(<span class="st">'/search'</span>, { method:<span class="st">'POST'</span>, type:<span class="st">'query'</span> })</code></div>
-
-          <div class="tile" style="--i:3">
-            <div class="thead"><span class="tag t-post">POST</span><span class="lbl">생성</span></div>
-            <code class="code"><span class="kw">const</span> { mutate } = <span class="fn">useApi</span>(<span class="st">'/users'</span>, { method:<span class="st">'POST'</span> })</code></div>
-
-          <div class="tile" style="--i:4">
-            <div class="thead"><span class="tag t-put">PUT</span><span class="lbl">수정</span></div>
-            <code class="code"><span class="fn">useApi</span>(<span class="st">'/users/1'</span>, { method:<span class="st">'PUT'</span> })</code></div>
-
-          <div class="tile" style="--i:5">
-            <div class="thead"><span class="tag t-del">DELETE</span><span class="lbl">삭제</span></div>
-            <code class="code"><span class="fn">useApi</span>(<span class="st">'/users/1'</span>, { method:<span class="st">'DELETE'</span> })</code></div>
-
-          <div class="tile" style="--i:6">
-            <div class="thead"><span class="tag t-cache">CACHE</span><span class="lbl">캐시 무효화</span></div>
-            <code class="code"><span class="fn">invalidateQueries</span>(<span class="st">'/users'</span>)</code></div>
-
-          <div class="tile" style="--i:7">
-            <div class="thead"><span class="tag t-return">RETURN</span><span class="lbl">반환값 · 자동</span></div>
-            <code class="code">{ data, isLoading, mutate, isPending }</code></div>
+        <div class="code-card">
+          <div class="code-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="fname">UserList.tsx</span>
+          </div>
+          <div class="code"><span class="al" style="--l:0"><span class="kw">import</span> { <span class="vr">useState</span>, <span class="vr">useEffect</span> } <span class="kw">from</span> <span class="st">'react'</span>;</span><span class="al" style="--l:1"><span class="kw">export function</span> <span class="fn">UserList</span>() {</span><span class="al hl s1 grp-top" style="--l:2">  <span class="kw">const</span> [<span class="vr">data</span>, <span class="vr">setData</span>] = <span class="fn">useState</span>([]);  <span class="cmt"><span class="stp s1">①</span> 상태 3종 수동 선언</span></span><span class="al hl s1 grp-mid" style="--l:3">  <span class="kw">const</span> [<span class="vr">loading</span>, <span class="vr">setLoading</span>] = <span class="fn">useState</span>(<span class="kw">true</span>);</span><span class="al hl s1 grp-bot" style="--l:4">  <span class="kw">const</span> [<span class="vr">error</span>, <span class="vr">setError</span>] = <span class="fn">useState</span>(<span class="kw">null</span>);</span><span class="al hl s2 grp-top" style="--l:5">  <span class="fn">useEffect</span>(() =&gt; {  <span class="cmt"><span class="stp s2">②</span> fetch·로딩·에러 직접 처리</span></span><span class="al hl s2 grp-mid" style="--l:6">    <span class="fn">fetch</span>(<span class="st">'/api/users'</span>)</span><span class="al hl s2 grp-mid" style="--l:7">      .<span class="fn">then</span>(<span class="vr">r</span> =&gt; { <span class="kw">if</span> (!<span class="vr">r</span>.ok) <span class="kw">throw</span> <span class="fn">Error</span>(<span class="vr">r</span>.status);  <span class="cmt">// 상태코드 에러</span></span><span class="al hl s2 grp-mid" style="--l:8">                   <span class="kw">return</span> <span class="vr">r</span>.<span class="fn">json</span>(); })</span><span class="al hl s2 grp-mid" style="--l:9">      .<span class="fn">then</span>(<span class="vr">setData</span>).<span class="fn">catch</span>(<span class="vr">setError</span>)</span><span class="al hl s2 grp-bot" style="--l:10">      .<span class="fn">finally</span>(() =&gt; <span class="fn">setLoading</span>(<span class="kw">false</span>));</span><span class="al hl s3" style="--l:11">  }, []);  <span class="cmt"><span class="stp s3">③</span> 캐시·갱신 직접 구현</span></span><span class="al" style="--l:12">  <span class="kw">if</span> (<span class="vr">loading</span>) <span class="kw">return</span> <span class="pn">&lt;Spinner/&gt;</span>;</span><span class="al" style="--l:13">  <span class="kw">return</span> <span class="pn">&lt;Table</span> <span class="at">rows</span>={<span class="vr">data</span>}<span class="pn">/&gt;</span>;</span><span class="al" style="--l:14">}</span></div>
         </div>
-      </section>
 
-      <section class="grp g-sidebar">
-        <h3 class="gh"><span class="gd"></span><span class="gns">useSidebar()</span>레이아웃 상태</h3>
-        <div class="tiles">
-          <div class="tile" style="--i:8">
-            <div class="thead"><span class="tag t-state">STATE</span><span class="lbl">펼침 여부</span></div>
-            <code class="code">isExpanded</code></div>
-
-          <div class="tile" style="--i:9">
-            <div class="thead"><span class="tag t-action">ACTION</span><span class="lbl">접기 · 펼치기</span></div>
-            <code class="code"><span class="fn">toggleSidebar</span>()</code></div>
-
-          <div class="tile" style="--i:10">
-            <div class="thead"><span class="tag t-state">STATE</span><span class="lbl">모바일 열림</span></div>
-            <code class="code">isMobileOpen</code></div>
-
-          <div class="tile" style="--i:11">
-            <div class="thead"><span class="tag t-action">ACTION</span><span class="lbl">모바일 토글</span></div>
-            <code class="code"><span class="fn">toggleMobileSidebar</span>()</code></div>
-
-          <div class="tile" style="--i:12">
-            <div class="thead"><span class="tag t-state">STATE</span><span class="lbl">활성 메뉴</span></div>
-            <code class="code">activeItem · <span class="fn">setActiveItem</span>()</code></div>
-
-          <div class="tile" style="--i:13">
-            <div class="thead"><span class="tag t-action">ACTION</span><span class="lbl">서브메뉴</span></div>
-            <code class="code">openSubmenu · <span class="fn">toggleSubmenu</span>()</code></div>
+        <div class="col-foot">
+          <span class="step"><span class="sn s1">①</span> 상태 3종 선언</span>
+          <span class="sarr">→</span>
+          <span class="step"><span class="sn s2">②</span> fetch·로딩·에러</span>
+          <span class="sarr">→</span>
+          <span class="step"><span class="sn s3">③</span> 캐시·갱신 수동</span>
         </div>
-      </section>
+      </div>
+
+      <!-- divider -->
+      <div class="vs"><span class="vs-arrow">→</span></div>
+
+      <!-- ============ RIGHT : TO-BE ============ -->
+      <div class="col tobe">
+        <button class="col-btn" type="button" onclick="replay('tobe')">
+          <span class="badge">TO-BE</span>
+          <span class="cb-text"><span class="gl">useApi</span> · @axiom/hooks 한 줄</span>
+          <span class="cb-replay">↻ 다시 재생</span>
+        </button>
+
+        <div class="code-card hero">
+          <div class="code-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="fname">UserList.tsx</span>
+          </div>
+          <div class="code"><span class="cl" style="--l:0"><span class="kw">import</span> { <span class="fn">useApi</span> } <span class="kw">from</span> <span class="st">'@axiom/hooks'</span>;</span><span class="cl blank" style="--l:1"> </span><span class="cl" style="--l:2"><span class="kw">const</span> { <span class="vr">data</span>, <span class="vr">isPending</span>, <span class="vr">error</span>, <span class="vr">refetch</span>, <span class="vr">isFetching</span> }</span><span class="cl" style="--l:3">  = <span class="fn">useApi</span>&lt;<span class="ty">User[]</span>&gt;(<span class="st">'/api/users'</span>);  <span class="cmt">// 조회 한 줄</span></span><span class="cl" style="--l:4"><span class="kw">if</span> (<span class="vr">isPending</span>) <span class="kw">return</span> <span class="pn">&lt;Spinner/&gt;</span>;</span><span class="cl" style="--l:5"><span class="kw">return</span> <span class="pn">&lt;Table</span> <span class="at">rows</span>={<span class="vr">data</span>}<span class="pn">/&gt;</span>;</span></div>
+        </div>
+
+        <!-- 실행 결과 — 데이터가 로딩→테이블로 자동 바인딩 -->
+        <div class="result">
+          <div class="screen">
+            <div class="spinner"></div>
+            <div class="mtable">
+              <div class="mrow h"><span>ID</span><span>NAME</span><span>ROLE</span></div>
+              <div class="mrow"><span>01</span><span>김지현</span><span class="role">Admin</span></div>
+              <div class="mrow"><span>02</span><span>이도윤</span><span class="role">Editor</span></div>
+              <div class="mrow"><span>03</span><span>박서연</span><span class="role">Viewer</span></div>
+            </div>
+          </div>
+        </div>
+
+        <p class="note"><b>같은 useApi</b>로 <b>변경</b> <code>useApi('/api/users', { method:'POST', type:'mutation' })</code> → <code>mutate(dto)</code>, 성공 시 <code>invalidateQueries('/api/users')</code>로 캐시 갱신까지.</p>
+      </div>
     </div>
   </div>
 <script>
-  function play(){document.body.classList.add('in');}
-  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  function play(){document.body.classList.add('in');
+    document.querySelectorAll('.col').forEach(function(c){c.classList.add('play');});}
+  function reset(){document.body.classList.remove('in');
+    document.querySelectorAll('.col').forEach(function(c){c.classList.remove('play');});
+    void document.body.offsetWidth;requestAnimationFrame(play);}
+  function replay(which){var c=document.querySelector('.col.'+which);if(!c)return;
+    c.classList.remove('play');void c.offsetWidth;
+    requestAnimationFrame(function(){c.classList.add('play');});}
   if(document.readyState==='complete')requestAnimationFrame(play);
   else window.addEventListener('load',()=>requestAnimationFrame(play));
   window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});

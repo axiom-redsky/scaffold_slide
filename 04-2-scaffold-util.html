@@ -13,64 +13,106 @@
 <body>
   <div class="stage">
     <div class="eyebrow">react-app-scaffold · 공통 유틸리티</div>
-    <h2>날짜·숫자·문자열 처리를<br><span class="em">window.$util</span> 전역으로 어디서나</h2>
-    <p class="lead">import 없이 간단하게 <b>한줄 코드</b>로 쉽게 사용.</p>
-    <div class="usage"><span class="gl">$util</span>.<span class="ns">number</span>.<span class="fn">comma</span>(<span class="num">1234567</span>) <span class="cmt">// → 1,234,567</span></div>
+    <h2>날짜·숫자·문자열 처리를 <span class="nb"><span class="em">window.$util</span> 한 줄로</span></h2>
 
-    <div class="groups">
-      <section class="grp g-date">
-        <h3 class="gh"><span class="gd"></span><span class="gns">$util.date</span>날짜</h3>
-        <div class="tiles">
-          <div class="tile" style="--i:0"><span class="fn">format</span>
-            <span class="demo"><span class="in">Date</span><span class="arr">→</span><span class="out">2026-06-09</span></span></div>
-          <div class="tile" style="--i:1"><span class="fn">now</span>
-            <span class="demo"><span class="in">( )</span><span class="arr">→</span><span class="out">…06-09 14:30</span></span></div>
-          <div class="tile" style="--i:2"><span class="fn">parse</span>
-            <span class="demo"><span class="in">'2026-06-09'</span><span class="arr">→</span><span class="out">Date</span></span></div>
-          <div class="tile" style="--i:3"><span class="fn">addDays</span>
-            <span class="demo"><span class="in">06-09, +7</span><span class="arr">→</span><span class="out">06-16</span></span></div>
-          <div class="tile" style="--i:4"><span class="fn">addMonths</span>
-            <span class="demo"><span class="in">06-09, +1</span><span class="arr">→</span><span class="out">07-09</span></span></div>
-          <div class="tile" style="--i:5"><span class="fn">diffDays</span>
-            <span class="demo"><span class="in">16, 09</span><span class="arr">→</span><span class="out">7</span></span></div>
-          <div class="tile" style="--i:6"><span class="fn">isValid</span>
-            <span class="demo"><span class="in">'x'</span><span class="arr">→</span><span class="out">false</span></span></div>
-        </div>
-      </section>
+    <div class="split">
+      <!-- ===================== LEFT : 사용법 ===================== -->
+      <div class="left">
+        <div class="ptag"><span class="pdot"></span>import 없이 · 한 줄 호출 · IDE 자동완성</div>
 
-      <section class="grp g-number">
-        <h3 class="gh"><span class="gd"></span><span class="gns">$util.number</span>숫자</h3>
-        <div class="tiles">
-          <div class="tile" style="--i:7"><span class="fn">comma</span>
-            <span class="demo"><span class="in">1234567</span><span class="arr">→</span><span class="out">1,234,567</span></span></div>
-          <div class="tile" style="--i:8"><span class="fn">round</span>
-            <span class="demo"><span class="in">3.14159, 2</span><span class="arr">→</span><span class="out">3.14</span></span></div>
-          <div class="tile" style="--i:9"><span class="fn">clamp</span>
-            <span class="demo"><span class="in">120, 0, 100</span><span class="arr">→</span><span class="out">100</span></span></div>
-          <div class="tile" style="--i:10"><span class="fn">toNumber</span>
-            <span class="demo"><span class="in">'₩1,200'</span><span class="arr">→</span><span class="out">1200</span></span></div>
-          <div class="tile" style="--i:11"><span class="fn">percent</span>
-            <span class="demo"><span class="in">0.1234</span><span class="arr">→</span><span class="out">12.3%</span></span></div>
+        <!-- 코드 카드 -->
+        <div class="code-card">
+          <div class="code-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="fname">OrderSummary.tsx</span>
+          </div>
+          <pre class="code"><span class="cmt">// import 불필요 — 어디서나 전역 $util 바로 호출</span>
+<span class="kw">const</span> <span class="vr">price</span> = <span class="gl">$util</span>.<span class="ns">number</span>.<span class="fn">comma</span>(<span class="num">1234567</span>);
+<span class="kw">const</span> <span class="vr">today</span> = <span class="gl">$util</span>.<span class="ns">date</span>.<span class="fn">format</span>(<span class="vr">now</span>);
+<span class="kw">const</span> <span class="vr">phone</span> = <span class="gl">$util</span>.<span class="ns">string</span>.<span class="fn">mask</span>(<span class="st">'01012345678'</span>);</pre>
         </div>
-      </section>
 
-      <section class="grp g-string">
-        <h3 class="gh"><span class="gd"></span><span class="gns">$util.string</span>문자열</h3>
-        <div class="tiles">
-          <div class="tile" style="--i:12"><span class="fn">isEmpty</span>
-            <span class="demo"><span class="in">'&nbsp;&nbsp;'</span><span class="arr">→</span><span class="out">true</span></span></div>
-          <div class="tile" style="--i:13"><span class="fn">capitalize</span>
-            <span class="demo"><span class="in">hello</span><span class="arr">→</span><span class="out">Hello</span></span></div>
-          <div class="tile" style="--i:14"><span class="fn">truncate</span>
-            <span class="demo"><span class="in">Hello World</span><span class="arr">→</span><span class="out">Hello…</span></span></div>
-          <div class="tile" style="--i:15"><span class="fn">padStart</span>
-            <span class="demo"><span class="in">7, 3</span><span class="arr">→</span><span class="out">007</span></span></div>
-          <div class="tile" style="--i:16"><span class="fn">removeWhitespace</span>
-            <span class="demo"><span class="in">a b c</span><span class="arr">→</span><span class="out">abc</span></span></div>
-          <div class="tile" style="--i:17"><span class="fn">mask</span>
-            <span class="demo"><span class="in">01012345678</span><span class="arr">→</span><span class="out">010****5678</span></span></div>
+        <!-- VSCode 자동완성(IntelliSense) -->
+        <div class="ide">
+          <span class="ide-cap">VSCode 자동완성 — 점(.) 하나면 끝</span>
+          <div class="ide-line"><span class="kw">const</span> <span class="vr">d</span> = <span class="gl">$util</span>.<span class="ns">date</span>.<span class="cur"></span></div>
+          <div class="ac-pop">
+            <div class="ac-list">
+              <div class="ac sel"><span class="ic"></span><span class="nm">addDays</span></div>
+              <div class="ac"><span class="ic"></span><span class="nm">addMonths</span></div>
+              <div class="ac"><span class="ic"></span><span class="nm">diffDays</span></div>
+              <div class="ac"><span class="ic"></span><span class="nm">format</span></div>
+              <div class="ac"><span class="ic"></span><span class="nm">isValid</span></div>
+              <div class="ac"><span class="ic"></span><span class="nm">now</span></div>
+              <div class="ac"><span class="ic"></span><span class="nm">parse</span></div>
+            </div>
+            <div class="ac-sig"><span class="sk">(method)</span> IDateUtil.<b>addDays</b>(date: DateInput, days: number): Date</div>
+          </div>
         </div>
-      </section>
+
+        <p class="note"><b>한 줄</b>이면 끝 — 게다가 점(.) 하나면 VSCode가 함수·타입까지 제안해 외울 필요가 없습니다.</p>
+      </div>
+
+      <!-- ===================== RIGHT : 제공 유틸 ===================== -->
+      <div class="right">
+        <div class="right-head">제공 유틸 <span class="count">18+</span> · 필요 시 계속 추가</div>
+
+        <div class="showcase">
+          <section class="grp g-date">
+            <h3 class="gh"><span class="gd"></span><span class="gns">$util.date</span>날짜</h3>
+            <div class="rows">
+              <div class="row" style="--i:0"><span class="fn">format</span>
+                <span class="demo"><span class="in">Date</span><span class="arr">→</span><span class="out">2026-06-09</span></span></div>
+              <div class="row" style="--i:1"><span class="fn">now</span>
+                <span class="demo"><span class="in">( )</span><span class="arr">→</span><span class="out">…06-09 14:30</span></span></div>
+              <div class="row" style="--i:2"><span class="fn">parse</span>
+                <span class="demo"><span class="in">'2026-06-09'</span><span class="arr">→</span><span class="out">Date</span></span></div>
+              <div class="row" style="--i:3"><span class="fn">addDays</span>
+                <span class="demo"><span class="in">06-09, +7</span><span class="arr">→</span><span class="out">06-16</span></span></div>
+              <div class="row" style="--i:4"><span class="fn">addMonths</span>
+                <span class="demo"><span class="in">06-09, +1</span><span class="arr">→</span><span class="out">07-09</span></span></div>
+              <div class="row" style="--i:5"><span class="fn">diffDays</span>
+                <span class="demo"><span class="in">16, 09</span><span class="arr">→</span><span class="out">7</span></span></div>
+              <div class="row" style="--i:6"><span class="fn">isValid</span>
+                <span class="demo"><span class="in">'x'</span><span class="arr">→</span><span class="out">false</span></span></div>
+            </div>
+          </section>
+
+          <section class="grp g-number">
+            <h3 class="gh"><span class="gd"></span><span class="gns">$util.number</span>숫자</h3>
+            <div class="rows">
+              <div class="row" style="--i:7"><span class="fn">comma</span>
+                <span class="demo"><span class="in">1234567</span><span class="arr">→</span><span class="out">1,234,567</span></span></div>
+              <div class="row" style="--i:8"><span class="fn">round</span>
+                <span class="demo"><span class="in">3.14159, 2</span><span class="arr">→</span><span class="out">3.14</span></span></div>
+              <div class="row" style="--i:9"><span class="fn">clamp</span>
+                <span class="demo"><span class="in">120, 0, 100</span><span class="arr">→</span><span class="out">100</span></span></div>
+              <div class="row" style="--i:10"><span class="fn">toNumber</span>
+                <span class="demo"><span class="in">'₩1,200'</span><span class="arr">→</span><span class="out">1200</span></span></div>
+              <div class="row" style="--i:11"><span class="fn">percent</span>
+                <span class="demo"><span class="in">0.1234</span><span class="arr">→</span><span class="out">12.3%</span></span></div>
+            </div>
+          </section>
+
+          <section class="grp g-string">
+            <h3 class="gh"><span class="gd"></span><span class="gns">$util.string</span>문자열</h3>
+            <div class="rows">
+              <div class="row" style="--i:12"><span class="fn">isEmpty</span>
+                <span class="demo"><span class="in">'&nbsp;&nbsp;'</span><span class="arr">→</span><span class="out">true</span></span></div>
+              <div class="row" style="--i:13"><span class="fn">capitalize</span>
+                <span class="demo"><span class="in">hello</span><span class="arr">→</span><span class="out">Hello</span></span></div>
+              <div class="row" style="--i:14"><span class="fn">truncate</span>
+                <span class="demo"><span class="in">Hello World</span><span class="arr">→</span><span class="out">Hello…</span></span></div>
+              <div class="row" style="--i:15"><span class="fn">padStart</span>
+                <span class="demo"><span class="in">7, 3</span><span class="arr">→</span><span class="out">007</span></span></div>
+              <div class="row" style="--i:16"><span class="fn">removeWhitespace</span>
+                <span class="demo"><span class="in">a b c</span><span class="arr">→</span><span class="out">abc</span></span></div>
+              <div class="row" style="--i:17"><span class="fn">mask</span>
+                <span class="demo"><span class="in">01012345678</span><span class="arr">→</span><span class="out">010****5678</span></span></div>
+            </div>
+          </section>
+        </div>
+      </div>
     </div>
   </div>
 <script>

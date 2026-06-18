@@ -20,11 +20,25 @@ h2{font-family:"Space Grotesk",sans-serif;font-weight:600;
 body.in h2{animation:rise .7s ease forwards .2s}
 h2 .em{color:var(--cyan)}
 
-.lead{margin:22px 0 38px;color:var(--muted);font-size:clamp(15px,1.7vw,18px);
-  line-height:1.65;max-width:42em;opacity:0;transform:translateY(14px)}
-body.in .lead{animation:rise .7s ease forwards .34s}
-.lead b{color:var(--text);font-weight:600}
-.lead code{font-family:"JetBrains Mono",monospace;font-size:.9em;color:var(--cyan)}
+/* ── scaffold 목표 강조 배너 ── */
+.goal{display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  margin:24px 0 5px;padding:16px 22px;
+  border:1px solid var(--line2);border-left:3px solid var(--gold);border-radius:12px;
+  background:linear-gradient(110deg,rgba(245,177,76,.08),rgba(94,211,240,.05) 60%,rgba(255,255,255,.012));
+  max-width:max-content;opacity:0;transform:translateY(14px)}
+body.in .goal{animation:rise .7s ease forwards .34s}
+
+.goal-label{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.22em;
+  color:var(--ink);background:var(--gold);font-weight:700;
+  padding:5px 10px;border-radius:6px;flex:none}
+
+.goal-items{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.goal-chip{font-family:"Space Grotesk",sans-serif;
+  font-size:clamp(18px,2.2vw,26px);font-weight:600;letter-spacing:-.01em;
+  color:var(--text)}
+.goal-dot{color:var(--cyan);font-size:clamp(16px,1.8vw,22px);opacity:.7}
+
+@media (max-width:920px){.goal{max-width:none}}
 
 .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:stretch;
   max-width:1180px}
@@ -85,4 +99,4 @@ body.in .ddd-note{animation:noteglow 2.6s ease 1.4s 2}
   50%{box-shadow:0 0 18px 1px rgba(245,177,76,.28)}}
 
 @media (prefers-reduced-motion:reduce){
-  .eyebrow,h2,.lead,.card,.ddd{opacity:1!important;transform:none!important}}
+  .eyebrow,h2,.goal,.card,.ddd{opacity:1!important;transform:none!important}}
