@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>scaffold 패키지 패밀리</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/04-0b-scaffold-family.css">
+</head>
+<body>
+  <div class="stage">
+    <div class="eyebrow">scaffold family</div>
+    <h2>하나의 표준, <span class="em">여러 기술 스택</span></h2>
+
+    <ul class="list">
+      <li class="row now">
+        <span class="stack">React · TS</span>
+        <span class="pkg">react-app-scaffold</span>
+        <span class="badge">NOW</span>
+      </li>
+      <li class="row">
+        <span class="stack vue">Vue 3</span>
+        <span class="pkg">vue-app-scaffold</span>
+      </li>
+      <li class="row">
+        <span class="stack next">Next.js</span>
+        <span class="pkg">next-app-scaffold</span>
+      </li>
+      <li class="row">
+        <span class="stack mfe">MFE · Monorepo</span>
+        <span class="pkg">monorepo-app-scaffold</span>
+      </li>
+      <li class="row">
+        <span class="stack mfe">MFE · Multirepo</span>
+        <span class="pkg">multirepo-app-scaffold</span>
+      </li>
+    </ul>
+  </div>
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>

@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/03-why-situation.css">
+<link rel="stylesheet" href="css/03-why-situation-4.css">
 </head>
 <body class="after">
   <span class="reg tl"></span><span class="reg tr"></span>
@@ -22,13 +23,91 @@
           <span class="step"><b>02</b> / 02</span>
         </div>
         <h2><span class="em">기반 코드(scaffold)작업</span>의 최소화</h2>
-        <!-- <p class="lead">토대를 만드는 시간이 사라진 만큼, <b>가치를 만들어내기까지의 시간</b>이 짧아집니다.</p> -->
+        <p class="lead">반입까지는 동일하지만, 그 다음부터가 다릅니다. <b>매번 반복하던 70% 세팅</b>이 <b>단 10%</b>로 줄고, 그 시간은 <b>비즈니스 로직</b>에 그대로 쌓입니다.</p>
       </div>
-      <figure class="shot" data-ph="AS-IS vs TO-BE · Time-to-value 비교 — img/why-after-2.png">
-        <img src="img/03_04.png" alt="AS-IS와 TO-BE의 Time-to-value 비교"
-             onload="this.closest('.shot').classList.add('has-img')"
-             onerror="this.style.display='none'">
-      </figure>
+
+      <div class="scene tbar">
+        <div class="bars">
+          <!-- AS-IS : 수작업 기반 환경 구축 -->
+          <div class="brow asis">
+            <div class="rlabel">
+              <span class="rk">AS-IS</span>
+              <span class="rs">수작업 기반<br>환경 구축</span>
+            </div>
+            <div class="track">
+              <div class="seg s-setup" style="--w:15%">
+                <span class="pc">15%</span>
+                <span class="sl">PC·방화벽 반입<em>공통 · 필수</em></span>
+              </div>
+              <div class="seg s-found" style="--w:70%">
+                <span class="pc">70%</span>
+                <span class="sl">공통 컴포넌트 · API · 상태관리 · 라우팅 · 디자인 세팅</span>
+              </div>
+              <div class="seg s-domain" style="--w:15%">
+                <span class="pc">15%</span>
+                <span class="sl">Domain<br>화면</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TO-BE : Scaffold 기반 자동화 구축 -->
+          <div class="brow tobe">
+            <div class="rlabel">
+              <span class="rk">TO-BE</span>
+              <span class="rs">Scaffold 기반<br>자동화 구축</span>
+            </div>
+            <div class="track">
+              <div class="seg s-setup" style="--w:15%">
+                <span class="pc">15%</span>
+                <span class="sl">PC·방화벽 반입<em>공통 · 필수</em></span>
+              </div>
+              <div class="seg s-scaffold" style="--w:10%">
+                <span class="pc">10%</span>
+                <span class="sl">Scaffold<br>자동 세팅</span>
+              </div>
+              <div class="seg s-domain big" style="--w:75%">
+                <span class="pc">75%</span>
+                <span class="sl">Domain 화면 작업 <em>비즈니스 로직에 집중</em></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 70% 기반작업 → 10% Scaffold 로 쭉 줄어드는 연결 -->
+          <div class="collapse">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#46597f" stop-opacity=".5"/>
+                  <stop offset="1" stop-color="#F79331" stop-opacity=".5"/>
+                </linearGradient>
+              </defs>
+              <polygon class="cfill" points="15,0 85,0 25,100 15,100" fill="url(#cg)"/>
+              <line class="cedge" x1="85" y1="0" x2="25" y2="100"/>
+              <line class="cedge cleft" x1="15" y1="0" x2="15" y2="100"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 효과 콜아웃 -->
+        <div class="effect">
+          <div class="ef ef-down">
+            <span class="ic">▼</span>
+            <span class="ef-text">
+              <span class="ef-label">반복되던 기반 코드 작업</span>
+              <span class="ef-val"><span class="from">70%</span><span class="arw">→</span><span class="to">10%</span><span class="x">약 1/7로</span></span>
+            </span>
+          </div>
+          <div class="ef ef-up">
+            <span class="ic">▲</span>
+            <span class="ef-text">
+              <span class="ef-label">비즈니스 로직 집중 시간</span>
+              <span class="ef-val"><span class="from">15%</span><span class="arw">→</span><span class="to">75%</span><span class="x">약 5배</span></span>
+            </span>
+          </div>
+        </div>
+
+        <div class="seal">매번 토대를 쌓던 시간이 사라진 만큼, <span class="hl">가치를 만드는 시간</span>은 그대로 늘어납니다.</div>
+      </div>
     </div>
   </div>
 

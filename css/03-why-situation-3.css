@@ -1,0 +1,102 @@
+/* ── 개선 방향 ① — 이미 완성된 기반 코드(scaffold) ── */
+/* 통이미지(분해 레이어 스택)를 SVG 아이소메트릭으로 재현 */
+/* 4단 레이어가 아래→위로 조립되고, 네 모서리 점선 기둥이 하나의 패키지로 결속 */
+
+.scene{position:relative;flex:1;min-height:0;width:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:clamp(14px,2.4vh,30px);
+  opacity:0;transform:translateY(14px)}
+body.in .scene{animation:rise .7s ease forwards .15s}
+
+.diagram{display:flex;align-items:center;justify-content:center;
+  gap:clamp(20px,3.6vw,64px);width:100%}
+
+/* ── SVG 스택 ─────────────────────────────────────── */
+.stack-svg{flex:none;height:clamp(300px,50vh,440px);width:auto;overflow:visible}
+body.in .stack-svg{animation:isobob 6s ease-in-out 2.6s infinite}
+@keyframes isobob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+
+/* 레이어 등장 — 아래(Core)부터 위(UI/UX)로 한 장씩 내려앉음 */
+.layer{opacity:0;transform:translateY(-34px)}
+body.in .layer{animation:lyrin .72s cubic-bezier(.18,.85,.25,1) forwards;
+  animation-delay:calc(.4s + var(--o) * .2s)}
+@keyframes lyrin{70%{opacity:1}100%{opacity:1;transform:translateY(0)}}
+
+/* 슬랩 면 — 윗면/옆면 */
+.topface{stroke-width:1.6;vector-effect:non-scaling-stroke}
+.side{stroke-width:1.4;vector-effect:non-scaling-stroke}
+/* 내부 와이어프레임 (레이어마다 다른 모양) */
+.fblock{fill:rgba(255,255,255,.18);stroke:rgba(255,255,255,.62);
+  stroke-width:1.2;vector-effect:non-scaling-stroke}
+.fline{fill:none;stroke:rgba(234,241,255,.7);
+  stroke-width:1.3;vector-effect:non-scaling-stroke;stroke-linecap:round}
+.fnode{fill:rgba(255,255,255,.28);stroke:rgba(255,255,255,.78);
+  stroke-width:1.2;vector-effect:non-scaling-stroke}
+
+/* 최상단(UI/UX) 글로우 펄스 */
+body.in .l1 .topface{animation:faceglow 2.8s ease-in-out 2.7s infinite}
+@keyframes faceglow{
+  0%,100%{filter:drop-shadow(0 0 2px rgba(94,211,240,.45))}
+  50%{filter:drop-shadow(0 0 12px rgba(94,211,240,.85))}}
+
+/* ── 결속 기둥 — 네 모서리를 관통하는 점선 ── */
+.strut{stroke:rgba(120,224,248,.75);stroke-width:1.7;
+  stroke-dasharray:4 6;stroke-linecap:round;opacity:0}
+body.in .strut{animation:strutin .7s ease forwards 1.45s}
+@keyframes strutin{to{opacity:.85}}
+.snode{fill:var(--cyan);opacity:0}
+body.in .snode{animation:snodein .5s ease forwards 1.75s}
+@keyframes snodein{to{opacity:1}}
+
+/* ── 우측 콜아웃 — 기반 코드 카드 ── */
+.legend2{flex:1;min-width:0;max-width:560px;
+  display:flex;flex-direction:column;gap:clamp(9px,1.5vh,16px)}
+.lg{position:relative;list-style:none;
+  padding:clamp(10px,1.5vh,14px) 16px clamp(11px,1.5vh,14px) 22px;border-radius:14px;
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  border:1px solid var(--line2);
+  opacity:0;transform:translateX(22px)}
+body.in .lg{animation:slin .6s cubic-bezier(.2,.7,.2,1) forwards;
+  animation-delay:calc(1.0s + var(--o) * .18s)}
+/* 좌측 레이어 색 악센트 바 */
+.lg::before{content:"";position:absolute;left:8px;top:11px;bottom:11px;width:4px;border-radius:4px;
+  background:rgb(var(--a));box-shadow:0 0 10px rgb(var(--a) / .6)}
+
+.lg-head b{font-family:"Noto Sans KR",sans-serif;font-weight:700;
+  font-size:clamp(13.5px,1.5vw,17.5px);color:var(--text);line-height:1.25}
+.lg-head b em{font-style:normal;font-family:"JetBrains Mono",monospace;font-weight:500;
+  color:rgb(var(--a));margin-right:7px;font-size:.9em}
+
+/* 키워드 토큰 칩 — 강조 + 순차 팝업 */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{font-family:"Noto Sans KR",sans-serif;font-weight:700;
+  font-size:clamp(12px,1.25vw,14.5px);line-height:1;color:#FFCE85;
+  padding:7px 13px;border-radius:9px;
+  background:linear-gradient(180deg,rgb(var(--a) / .30),rgb(var(--a) / .14));
+  border:1px solid rgb(var(--a) / .8);
+  box-shadow:0 0 0 1px rgb(var(--a) / .12),0 3px 12px rgb(var(--a) / .22);
+  text-shadow:0 0 10px rgba(245,177,76,.5);
+  opacity:0;transform:translateY(7px) scale(.9)}
+body.in .chip{animation:chippop .45s cubic-bezier(.2,.7,.2,1) forwards;
+  animation-delay:calc(1.25s + var(--o) * .18s + var(--cd) * .09s)}
+@keyframes chippop{to{opacity:1;transform:none}}
+
+/* ── 하단 Scaffold 메시지 ───────────────────────── */
+.seal{position:relative;
+  padding:clamp(11px,1.7vh,16px) clamp(20px,2.6vw,34px);border-radius:12px;
+  font-family:"Noto Sans KR",sans-serif;font-weight:500;text-align:center;
+  font-size:clamp(13px,1.45vw,16.5px);line-height:1.5;color:var(--text);
+  background:radial-gradient(120% 140% at 50% 0%,var(--accent-soft),rgba(255,255,255,.015));
+  border:1px solid var(--accent-line);
+  opacity:0;transform:translateY(10px)}
+body.in .seal{animation:rise .7s ease forwards 2.1s}
+.seal b{color:var(--cyan);font-weight:700}
+.seal::before,.seal::after{content:"";position:absolute;width:11px;height:11px;
+  border:1.5px solid var(--accent);opacity:.8}
+.seal::before{left:8px;top:8px;border-right:0;border-bottom:0;border-radius:4px 0 0 0}
+.seal::after{right:8px;bottom:8px;border-left:0;border-top:0;border-radius:0 0 4px 0}
+
+@media (prefers-reduced-motion:reduce){
+  .scene,.lg,.chip,.seal,.layer{opacity:1!important;transform:none!important}
+  .strut{opacity:.85!important}.snode{opacity:1!important}
+}

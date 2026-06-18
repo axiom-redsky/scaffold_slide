@@ -1,0 +1,142 @@
+/* 개선 방향 ② — Scaffold 적용 전/후 Time-to-value 비교 바 차트 */
+
+.scene.tbar{width:100%;display:flex;flex-direction:column;align-items:stretch;gap:26px}
+
+/* ── 비교 바 영역 ───────────────────────────── */
+.bars{position:relative;display:flex;flex-direction:column;gap:52px;width:100%}
+
+/* 70%→10% 수렴 연결 (두 트랙 사이 간격에 배치) */
+/* left = rlabel(132px) + gap(20px) = 152px, 트랙 폭에 정확히 정렬 */
+.collapse{position:absolute;left:152px;right:0;top:96px;height:52px;
+  z-index:3;pointer-events:none;
+  opacity:0;clip-path:inset(0 0 100% 0)}
+.collapse svg{display:block;width:100%;height:100%;overflow:visible}
+body.in .collapse{opacity:1;
+  animation:pourdown .7s cubic-bezier(.2,.7,.2,1) forwards 1.25s}
+@keyframes pourdown{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+.collapse .cfill{opacity:.85}
+.collapse .cedge{fill:none;stroke:rgba(245,147,49,.9);stroke-width:1.6;
+  stroke-dasharray:6 6;vector-effect:non-scaling-stroke}
+.collapse .cleft{stroke:rgba(150,170,210,.55)}
+
+.brow{display:flex;align-items:stretch;gap:20px;
+  opacity:0;transform:translateY(12px)}
+body.in .brow{animation:rise .6s ease forwards}
+body.in .brow.asis{animation-delay:.30s}
+body.in .brow.tobe{animation-delay:.55s}
+
+/* 좌측 라벨 */
+.rlabel{flex:0 0 132px;display:flex;flex-direction:column;justify-content:center;
+  text-align:right;padding-right:4px}
+.rk{font-family:"JetBrains Mono",monospace;font-size:13px;letter-spacing:.22em;
+  font-weight:500}
+.asis .rk{color:var(--muted)}
+.tobe .rk{color:var(--accent)}
+.rs{margin-top:5px;font-family:"Noto Sans KR",sans-serif;font-weight:500;
+  font-size:12.5px;line-height:1.45;color:var(--muted)}
+.tobe .rs{color:var(--text)}
+
+/* 트랙(전체 100%) */
+.track{flex:1;display:flex;height:96px;border-radius:12px;overflow:hidden;
+  border:1px solid var(--line2);
+  background:rgba(255,255,255,.02);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04), 0 18px 50px rgba(0,0,0,.35)}
+
+/* 세그먼트 공통 */
+.seg{flex:none;width:0;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:4px;padding:0 6px;text-align:center;
+  border-right:2px solid var(--ink);
+  transition:width .85s cubic-bezier(.2,.7,.2,1);will-change:width}
+.seg:last-child{border-right:0}
+body.in .seg{width:var(--w)}
+/* 등장 순서(좌→우) — 행 등장 직후 */
+body.in .asis .seg{transition-delay:.40s}
+body.in .asis .seg:nth-child(2){transition-delay:.52s}
+body.in .asis .seg:nth-child(3){transition-delay:.64s}
+body.in .tobe .seg{transition-delay:.85s}
+body.in .tobe .seg:nth-child(2){transition-delay:.97s}
+body.in .tobe .seg:nth-child(3){transition-delay:1.12s}
+
+.seg .pc{font-family:"JetBrains Mono",monospace;font-weight:500;
+  font-size:clamp(15px,1.7vw,21px);line-height:1;letter-spacing:.02em;
+  white-space:nowrap}
+.seg .sl{font-family:"Noto Sans KR",sans-serif;font-weight:700;
+  font-size:11.5px;line-height:1.35;letter-spacing:-.01em;
+  white-space:normal;opacity:0}
+body.in .seg .sl{transition:opacity .5s ease;opacity:1}
+body.in .asis .seg .sl{transition-delay:.85s}
+body.in .tobe .seg .sl{transition-delay:1.3s}
+.seg .sl em{display:block;font-style:normal;font-weight:500;font-size:10px;
+  letter-spacing:.04em;opacity:.7;margin-top:2px}
+
+/* 세그먼트 색상 ── */
+/* 반입(공통·필수) — 양쪽 동일 */
+.s-setup{background:linear-gradient(180deg,#243657,#1B2A47)}
+.s-setup .pc{color:#aebbd6}
+.s-setup .sl{color:#cdd8ef}
+/* 기반 코드 작업(AS-IS, 무거운 낭비 구간) */
+.s-found{background:linear-gradient(180deg,#46597f,#39496c)}
+.s-found .pc{color:#e7edfb}
+.s-found .sl{color:#dbe3f5}
+/* Scaffold 자동 세팅(TO-BE, 작지만 강렬) */
+.s-scaffold{background:linear-gradient(180deg,#F79331,#E56F16);
+  box-shadow:inset 0 0 0 1px rgba(255,200,140,.5),
+    0 0 26px rgba(245,131,43,.45)}
+.s-scaffold .pc{color:#3a2208}
+.s-scaffold .sl{color:#3a2208}
+/* Domain 화면(가치 구간, 시안) */
+.s-domain{background:linear-gradient(180deg,#3a93b4,#2a7390)}
+.s-domain .pc{color:#eafaff}
+.s-domain .sl{color:#dff6ff}
+/* TO-BE의 커진 Domain — 더 밝게 + 글로우 */
+.s-domain.big{background:linear-gradient(180deg,#7DE3F8,#3FB6DC);
+  box-shadow:inset 0 0 0 1px rgba(190,245,255,.55),
+    0 0 32px rgba(94,211,240,.4)}
+.s-domain.big .pc{color:#06303d;font-weight:500;
+  font-size:clamp(16px,1.85vw,23px)}
+.s-domain.big .sl{color:#06303d}
+
+/* ── 효과 콜아웃 ───────────────────────────── */
+.effect{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;
+  opacity:0;transform:translateY(10px)}
+body.in .effect{animation:rise .6s ease forwards 1.35s}
+
+.ef{position:relative;display:flex;align-items:center;gap:16px;
+  padding:16px 22px;border-radius:14px;border:1px solid var(--line2);
+  background:rgba(255,255,255,.025)}
+.ef .ic{flex:0 0 auto;width:42px;height:42px;border-radius:11px;
+  display:grid;place-items:center;font-size:20px;font-weight:700}
+.ef-down .ic{color:#F79331;background:rgba(245,131,43,.12);
+  border:1px solid rgba(245,131,43,.4)}
+.ef-up .ic{color:var(--accent);background:rgba(94,211,240,.1);
+  border:1px solid var(--accent-line)}
+.ef-text{display:flex;flex-direction:column;gap:3px;min-width:0}
+.ef-label{font-family:"Noto Sans KR",sans-serif;font-weight:500;
+  font-size:13px;color:var(--muted)}
+.ef-val{display:flex;align-items:baseline;gap:10px;
+  font-family:"JetBrains Mono",monospace;line-height:1}
+.ef-val .from{font-size:18px;color:var(--muted);text-decoration:line-through;
+  text-decoration-color:rgba(147,164,204,.5)}
+.ef-val .arw{font-size:15px;color:var(--muted)}
+.ef-val .to{font-size:30px;font-weight:500}
+.ef-down .ef-val .to{color:#F79331}
+.ef-up .ef-val .to{color:var(--accent)}
+.ef-val .x{font-size:13px;font-weight:500;margin-left:2px}
+.ef-up .ef-val .x{color:var(--accent)}
+.ef-down .ef-val .x{color:#F79331}
+
+/* ── 한 줄 결론 ───────────────────────────── */
+.seal{text-align:center;font-family:"Noto Sans KR",sans-serif;font-weight:500;
+  font-size:clamp(13px,1.5vw,16.5px);line-height:1.6;color:var(--muted);
+  opacity:0;transform:translateY(8px)}
+body.in .seal{animation:rise .6s ease forwards 1.6s}
+.seal b{color:var(--text);font-weight:700}
+.seal .hl{color:var(--accent);font-weight:700}
+
+@media (prefers-reduced-motion:reduce){
+  .brow,.effect,.seal{opacity:1!important;transform:none!important}
+  .seg{width:var(--w)!important}
+  .seg .sl{opacity:1!important}
+  .collapse{opacity:1!important;clip-path:none!important}
+}

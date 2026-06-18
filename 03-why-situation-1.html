@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/03-why-situation.css">
+<link rel="stylesheet" href="css/03-why-situation-1.css">
 </head>
 <body class="before">
   <span class="reg tl"></span><span class="reg tr"></span>
@@ -22,13 +23,45 @@
           <span class="step"><b>01</b> / 02</span>
         </div>
         <h2>SI 투입 시, 매번 똑같은 <span class="em">초기 설정</span> 작업을 반복합니다</h2>
-        <!-- <p class="lead">프로젝트가 바뀔 때마다 빌드·라우팅·환경 구성 같은 <b>동일한 세팅을 처음부터 다시</b> 합니다. 본질적인 일에 닿기까지 시간이 걸립니다.</p> -->
+        <p class="lead">프론트엔드 기준 <b>파일 반입부터 화면 개발까지</b> 매 프로젝트 반복됩니다. 이 중 <b>환경설정·구조·공통 모듈·디자인 적용</b>은 사전 표준화로 충분히 줄일 수 있습니다.</p>
       </div>
-      <figure class="shot" data-ph="개선 전 ① · 반복되는 초기 설정 — img/why-before-1.png">
-        <img src="img/03_01.png" alt="SI 투입 시 매번 반복되는 초기 설정 작업"
-             onload="this.closest('.shot').classList.add('has-img')"
-             onerror="this.style.display='none'">
-      </figure>
+
+      <div class="board">
+        <div class="track">
+          <!-- 매번 반복되는 초기 세팅 그룹 (9칸) -->
+          <div class="group">
+            <!-- 상단 치수선 : 초반 일정 소진 -->
+            <div class="dimtop"><span class="dl">실제 화면 개발 시작 전, 인프라·뼈대 세팅에 초반 일정의 상당 부분 소진</span></div>
+
+            <!-- 표준화 가능 영역 강조 사각형 -->
+            <div class="zone"></div>
+
+            <div class="crate infra" style="--i:0;grid-column:1"><span class="cn">01</span><b>관련 파일<br>반입</b></div>
+            <div class="crate reduce" style="--i:1;grid-column:2"><span class="cn">02</span><b>환경설정</b></div>
+            <div class="crate reduce" style="--i:2;grid-column:3"><span class="cn">03</span><b>폴더구조<br>세팅</b></div>
+            <div class="crate reduce" style="--i:3;grid-column:4"><span class="cn">04</span><b>공통 컴포넌트</b><span class="sub">UI · 커스텀</span></div>
+            <div class="crate reduce" style="--i:4;grid-column:5"><span class="cn">05</span><b>각종 모듈</b><span class="sub">API · 유틸 · 훅<br>라우터 · 상태관리</span></div>
+            <div class="crate reduce" style="--i:5;grid-column:6"><span class="cn">06</span><b>개발 가이드<br>작성</b></div>
+            <div class="crate reduce" style="--i:6;grid-column:7"><span class="cn">07</span><b>디자인 시스템<br>적용</b></div>
+            <div class="crate reduce" style="--i:7;grid-column:8"><span class="cn">08</span><b>레이아웃·<br>스타일 적용</b><span class="sub">고객 사이트 맞춤</span></div>
+            <div class="crate infra" style="--i:8;grid-column:9"><span class="cn">09</span><b>퍼블리싱<br>작업</b></div>
+
+            <!-- 하단 치수선 : 단축 가능 구간 -->
+            <div class="dimbot"><span class="dl2">환경설정 → 레이아웃·스타일 · 사전 표준화로 단축 가능</span></div>
+          </div>
+
+          <div class="gap"><span class="arrow">›››</span></div>
+
+          <!-- 실제 도달하려는 목표 -->
+          <div class="crate goal"><span class="cn">10</span><b>화면<br>개발</b><span class="gtag">본질 작업</span></div>
+        </div>
+
+        <div class="legend">
+          <span class="lg"><i class="sw infra"></i>매번 반복 · 필수</span>
+          <span class="lg"><i class="sw reduce"></i><b>사전 표준화로 단축 가능</b></span>
+          <span class="lg"><i class="sw goal"></i>실제 화면 개발 · 본질</span>
+        </div>
+      </div>
     </div>
   </div>
 

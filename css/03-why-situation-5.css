@@ -3,26 +3,8 @@ body.after{ --scaf:#F5763B; --scaf-line:rgba(245,118,59,.55); }
 
 /* diagram shell */
 .dom{position:relative;flex:1;min-height:0;width:100%;
-  display:flex;flex-direction:column;justify-content:center;
-  gap:clamp(16px,2.6vh,30px)}
-
-/* ── 담당 업무 영역 선택 바 ───────────────────────────── */
-.domain-bar{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:10px;
-  font-family:"Noto Sans KR",sans-serif;
-  opacity:0;transform:translateY(8px)}
-body.in .domain-bar{animation:rise .6s ease forwards .2s}
-.domain-bar .dcap{font-family:"JetBrains Mono",monospace;font-size:11px;
-  letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-right:4px}
-.dchip{font-size:13px;font-weight:500;color:var(--muted);
-  padding:5px 14px;border-radius:999px;border:1px solid var(--line2);
-  background:rgba(255,255,255,.02);transition:transform .3s ease}
-.dchip.active{color:#241006;font-weight:700;border-color:var(--scaf-line);
-  background:linear-gradient(180deg,#F5763B,#E3631F);
-  box-shadow:0 0 18px rgba(245,118,59,.35)}
-body.in .dchip.active{animation:chipfocus .7s cubic-bezier(.2,.8,.3,1.2) .55s both}
-@keyframes chipfocus{0%{transform:scale(1)}45%{transform:scale(1.14)}100%{transform:scale(1)}}
-.domain-bar .dnote{font-size:12px;color:var(--muted);margin-left:6px;opacity:.85}
-.domain-bar .dnote::before{content:"—";margin-right:6px;opacity:.6}
+  display:flex;flex-direction:column;justify-content:flex-start;
+  gap:clamp(20px,3.4vh,40px);padding-top:clamp(6px,1.6vh,18px)}
 
 /* ── 비교 그리드 : AS-IS | 전환 | TO-BE ───────────────── */
 .compare{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;
@@ -79,6 +61,13 @@ body.in .panel.asis .row{animation:stackin .5s cubic-bezier(.2,.7,.2,1) var(--d)
   border:1px solid var(--scaf-line)}
 /* 흡수 애니메이션 : gray 부담 → 주황 플래시 → Scaffold 제공 */
 body.in .row.plumb.done{animation:absorb 1.05s cubic-bezier(.2,.7,.2,1) var(--d) both}
+/* 마지막 강조 단계 : 비즈니스 로직이 커질 때 함께 줄어들며 뒤로 물러남 */
+body.in .panel.tobe .row.plumb.done{
+  animation:absorb 1.05s cubic-bezier(.2,.7,.2,1) var(--d) both,
+            scafshrink 1.2s cubic-bezier(.34,1.05,.5,1) 3.6s forwards}
+@keyframes scafshrink{
+  from{height:clamp(34px,4.6vh,46px);opacity:1}
+  to{height:clamp(25px,3.2vh,33px);opacity:.7}}
 @keyframes absorb{
   0%{opacity:0;transform:translateX(16px);
     background:linear-gradient(180deg,rgba(147,164,204,.20),rgba(147,164,204,.10));
@@ -105,11 +94,20 @@ body.in .row.plumb.done .scafby{animation:tagpop 1.05s ease var(--d) both}
 .panel.tobe .row.biz{opacity:0;transform:translateY(-8px) scale(.98)}
 body.in .panel.tobe .row.biz{
   animation:bizin .55s cubic-bezier(.2,.7,.2,1) var(--d) forwards,
-            focuspulse 2.4s ease-in-out 2.3s infinite}
+            focuspulse 2.4s ease-in-out 2.3s infinite,
+            bizgrow 1.2s cubic-bezier(.34,1.45,.5,1) 3.6s forwards,
+            bizbreath 3.2s ease-in-out 4.9s infinite}
 @keyframes bizin{to{opacity:1;transform:translateY(0) scale(1.03)}}
 @keyframes focuspulse{
   0%,100%{box-shadow:0 0 0 1px rgba(63,169,245,.45),0 0 16px rgba(63,169,245,.16)}
   50%{box-shadow:0 0 0 1px var(--cyan),0 0 30px rgba(63,169,245,.42)}}
+
+/* ── 마지막 강조 : 순수 비즈니스 로직 영역이 상·하로 커지며 부각 ── */
+/* 본질 영역은 점점 커지고, 아래 Scaffold 공통 영역은 줄어든다 */
+@keyframes bizgrow{from{height:clamp(34px,4.6vh,46px)}
+  to{height:clamp(52px,7.4vh,78px)}}
+@keyframes bizbreath{0%,100%{height:clamp(52px,7.4vh,78px)}
+  50%{height:clamp(60px,8.8vh,92px)}}
 
 /* panel 하단 캡션 */
 .pfoot{margin-top:2px;opacity:0;transform:translateY(8px)}
@@ -154,4 +152,6 @@ body.in .rdot{animation:rise .5s ease forwards 2.9s}
 @media (prefers-reduced-motion:reduce){
   .domain-bar,.ptag,.row,.pfoot,.bridge2,.rmetric,.rdot{opacity:1!important;transform:none!important}
   .row.plumb.done::after{display:none}
+  /* 강조 확대/축소 비활성화 — 정적 최종 상태 유지 */
+  .panel.tobe .row.biz,.panel.tobe .row.plumb.done{height:clamp(34px,4.6vh,46px)!important}
 }

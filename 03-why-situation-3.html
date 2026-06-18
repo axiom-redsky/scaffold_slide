@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/03-why-situation.css">
+<link rel="stylesheet" href="css/03-why-situation-3.css">
 </head>
 <body class="after">
   <span class="reg tl"></span><span class="reg tr"></span>
@@ -21,14 +22,127 @@
           <span class="sep"></span>
           <span class="step"><b>01</b> / 02</span>
         </div>
-        <h2>이미 완성되어 있는 <span class="em">기반 코드(scaffold)</span>필요.</h2>
-        <!-- <p class="lead">UI/UX 디자인 시스템, 공통 함수·유틸, 상태관리 로직까지 — <b>처음부터 갖춰진 상태</b>에서 비즈니스 로직만 얹으면 됩니다.</p> -->
+        <h2>이미 완성되어 있는 <span class="em">기반 코드(scaffold)</span> 필요.</h2>
       </div>
-      <figure class="shot shrink" data-ph="개선 방향 ① · 완성된 세팅 — img/why-after-1.png">
-        <img src="img/03_03.png" alt="UI/UX 디자인 시스템·공통 함수·유틸·상태관리 로직이 이미 완성 세팅된 모습"
-             onload="this.closest('.shot').classList.add('has-img')"
-             onerror="this.style.display='none'">
-      </figure>
+
+      <div class="scene">
+        <div class="diagram">
+          <!-- 아래(Core)에서 위(UI/UX)로 조립되는 4단 스택 -->
+          <svg class="stack-svg" viewBox="0 0 240 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#7DE3F8"/><stop offset="1" stop-color="#45C2E6"/></linearGradient>
+              <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#4FB4D8"/><stop offset="1" stop-color="#3492BC"/></linearGradient>
+              <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#6E92C0"/><stop offset="1" stop-color="#46669A"/></linearGradient>
+              <linearGradient id="g4" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#44608E"/><stop offset="1" stop-color="#2C4268"/></linearGradient>
+            </defs>
+
+            <!-- 결속 기둥 (레이어 뒤에서 네 모서리를 관통) -->
+            <g>
+              <line class="strut" x1="5" y1="69" x2="5" y2="411"/>
+              <line class="strut" x1="235" y1="69" x2="235" y2="411"/>
+              <line class="strut" x1="120" y1="114" x2="120" y2="456"/>
+              <circle class="snode" cx="5" cy="69" r="4"/><circle class="snode" cx="5" cy="411" r="4"/>
+              <circle class="snode" cx="235" cy="69" r="4"/><circle class="snode" cx="235" cy="411" r="4"/>
+              <circle class="snode" cx="120" cy="114" r="4"/><circle class="snode" cx="120" cy="456" r="4"/>
+            </g>
+
+            <!-- p4 · Core (맨 아래) -->
+            <g class="layer l4" style="--o:0">
+              <polygon class="side" points="5,399 120,444 120,456 5,411" fill="#1B2A47" stroke="rgba(120,150,200,.5)"/>
+              <polygon class="side" points="120,444 235,399 235,411 120,456" fill="#243657" stroke="rgba(120,150,200,.5)"/>
+              <g transform="matrix(115 45 -115 45 120 354)">
+                <rect class="topface" width="1" height="1" fill="url(#g4)" stroke="rgba(120,150,200,.55)"/>
+                <rect class="fblock" x=".13" y=".20" width=".34" height=".1"/>
+                <rect class="fblock" x=".13" y=".37" width=".34" height=".1"/>
+                <rect class="fblock" x=".13" y=".54" width=".34" height=".1"/>
+                <rect class="fblock" x=".13" y=".71" width=".34" height=".1"/>
+                <rect class="fblock" x=".55" y=".20" width=".15" height=".14"/>
+                <rect class="fblock" x=".73" y=".20" width=".15" height=".14"/>
+                <rect class="fblock" x=".55" y=".42" width=".15" height=".14"/>
+                <rect class="fblock" x=".73" y=".42" width=".15" height=".14"/>
+                <rect class="fblock" x=".55" y=".64" width=".15" height=".14"/>
+                <rect class="fblock" x=".73" y=".64" width=".15" height=".14"/>
+              </g>
+            </g>
+
+            <!-- p3 · Network & State -->
+            <g class="layer l3" style="--o:1">
+              <polygon class="side" points="5,289 120,334 120,346 5,301" fill="#2E4569" stroke="rgba(150,180,220,.55)"/>
+              <polygon class="side" points="120,334 235,289 235,301 120,346" fill="#3A557F" stroke="rgba(150,180,220,.55)"/>
+              <g transform="matrix(115 45 -115 45 120 244)">
+                <rect class="topface" width="1" height="1" fill="url(#g3)" stroke="rgba(150,180,220,.6)"/>
+                <line class="fline" x1=".24" y1=".30" x2=".52" y2=".54"/>
+                <line class="fline" x1=".72" y1=".26" x2=".52" y2=".54"/>
+                <line class="fline" x1=".52" y1=".54" x2=".30" y2=".74"/>
+                <line class="fline" x1=".52" y1=".54" x2=".76" y2=".72"/>
+                <line class="fline" x1=".24" y1=".30" x2=".72" y2=".26"/>
+                <circle class="fnode" cx=".24" cy=".30" r=".055"/>
+                <circle class="fnode" cx=".72" cy=".26" r=".055"/>
+                <circle class="fnode" cx=".52" cy=".54" r=".065"/>
+                <circle class="fnode" cx=".30" cy=".74" r=".05"/>
+                <circle class="fnode" cx=".76" cy=".72" r=".05"/>
+              </g>
+            </g>
+
+            <!-- p2 · Navigation -->
+            <g class="layer l2" style="--o:2">
+              <polygon class="side" points="5,179 120,224 120,236 5,191" fill="#235F7E" stroke="rgba(120,210,235,.6)"/>
+              <polygon class="side" points="120,224 235,179 235,191 120,236" fill="#2C7595" stroke="rgba(120,210,235,.6)"/>
+              <g transform="matrix(115 45 -115 45 120 134)">
+                <rect class="topface" width="1" height="1" fill="url(#g2)" stroke="rgba(120,210,235,.65)"/>
+                <rect class="fblock" x=".12" y=".12" width=".17" height=".12"/>
+                <rect class="fblock" x=".32" y=".12" width=".17" height=".12"/>
+                <rect class="fblock" x=".52" y=".12" width=".17" height=".12"/>
+                <rect class="fblock" x=".72" y=".12" width=".16" height=".12"/>
+                <rect class="fblock" x=".12" y=".34" width=".76" height=".54"/>
+                <line class="fline" x1=".22" y1=".60" x2=".78" y2=".60"/>
+                <circle class="fnode" cx=".22" cy=".60" r=".035"/>
+                <circle class="fnode" cx=".78" cy=".60" r=".035"/>
+              </g>
+            </g>
+
+            <!-- p1 · UI/UX (맨 위) -->
+            <g class="layer l1" style="--o:3">
+              <polygon class="side" points="5,69 120,114 120,126 5,81" fill="#2A86A6" stroke="rgba(180,240,255,.7)"/>
+              <polygon class="side" points="120,114 235,69 235,81 120,126" fill="#34A0C2" stroke="rgba(180,240,255,.7)"/>
+              <g transform="matrix(115 45 -115 45 120 24)">
+                <rect class="topface" width="1" height="1" fill="url(#g1)" stroke="rgba(180,240,255,.8)"/>
+                <rect class="fblock" x=".12" y=".12" width=".76" height=".13"/>
+                <rect class="fblock" x=".12" y=".31" width=".22" height=".57"/>
+                <rect class="fblock" x=".40" y=".31" width=".22" height=".26"/>
+                <rect class="fblock" x=".66" y=".31" width=".22" height=".26"/>
+                <rect class="fblock" x=".40" y=".61" width=".48" height=".27"/>
+              </g>
+            </g>
+          </svg>
+
+          <!-- 통이미지의 우측 콜아웃을 재현 (위→아래 순서) -->
+          <ul class="legend2">
+            <li class="lg l1" style="--o:0; --a:125 227 248">
+              <div class="lg-head"><b><em>UI/UX</em>디자인 시스템</b></div>
+              <div class="chips"><span class="chip" style="--cd:0">일관된 스타일</span><span class="chip" style="--cd:1">디자인 토큰</span></div>
+            </li>
+            <li class="lg l2" style="--o:1; --a:105 205 235">
+              <div class="lg-head"><b><em>Navigation</em>라우팅 시스템</b></div>
+              <div class="chips"><span class="chip" style="--cd:0">화면 전환</span><span class="chip" style="--cd:1">라우터 구조</span></div>
+            </li>
+            <li class="lg l3" style="--o:2; --a:150 192 230">
+              <div class="lg-head"><b><em>Network &amp; State</em>통신·상태</b></div>
+              <div class="chips"><span class="chip" style="--cd:0">API 통신 모듈</span><span class="chip" style="--cd:1">유틸 함수</span><span class="chip" style="--cd:2">상태관리 로직</span></div>
+            </li>
+            <li class="lg l4" style="--o:3; --a:160 192 232">
+              <div class="lg-head"><b><em>Core</em>기반 설정</b></div>
+              <div class="chips"><span class="chip" style="--cd:0">환경설정</span><span class="chip" style="--cd:1">최적화된 폴더구조</span></div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="seal">매번 반복되던 이 모든 작업이 <b>Scaffold 적용 단 한 번</b>으로 완벽하게 세팅됩니다.</div>
+      </div>
     </div>
   </div>
 

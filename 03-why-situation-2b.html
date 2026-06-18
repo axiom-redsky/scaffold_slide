@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>왜 만들었나 — 개선 전 ② · 화면 개발 부가 작업</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/03-why-situation.css">
+<link rel="stylesheet" href="css/03-why-situation-2b.css">
+</head>
+<body class="before">
+  <span class="reg tl"></span><span class="reg tr"></span>
+  <span class="reg bl"></span><span class="reg br"></span>
+  <div class="stage">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow">
+          <span class="tag">Before · 개선 전</span>
+          <span class="sep"></span>
+          <span class="step"><b>02</b> / 02</span>
+        </div>
+        <h2>화면 개발에도 <span class="em">부가 작업</span>이 겹겹이 쌓입니다</h2>
+        <p class="lead">정작 만들고 싶은 건 <b>비즈니스 로직</b>이지만, API 통신·공통 함수·커스텀 훅·상태관리처럼 <b>매 화면마다 새로 만드는 부가 작업</b>이 둘러쌉니다. 이 영역은 <b>Scaffold로 충분히 대체</b>할 수 있습니다.</p>
+      </div>
+
+      <div class="field">
+        <!-- 본질(비즈니스 로직)을 부가 작업이 둘러싸 묻히는 모습 -->
+        <div class="matrix">
+          <div class="cell task" style="--d:.80"><span class="ic">＋</span><b>API 통신<br>모듈</b><span class="s">요청 · 응답</span></div>
+          <div class="cell task" style="--d:.87"><span class="ic">＋</span><b>공통 함수</b></div>
+          <div class="cell task" style="--d:.94"><span class="ic">＋</span><b>유틸리티</b></div>
+
+          <div class="cell task" style="--d:1.08"><span class="ic">＋</span><b>커스텀 훅</b></div>
+          <div class="cell core"><span class="ic">CORE</span><b>순수<br>비즈니스 로직</b><span class="ctag">본질</span></div>
+          <div class="cell task" style="--d:1.15"><span class="ic">＋</span><b>라우터 설정</b><span class="s">화면 전환</span></div>
+
+          <div class="cell task" style="--d:1.22"><span class="ic">＋</span><b>상태 저장<br>· 사용</b></div>
+          <div class="cell task" style="--d:1.29"><span class="ic">＋</span><b>로딩 · 에러<br>처리</b></div>
+          <div class="cell task" style="--d:1.36"><span class="ic">＋</span><b>UI 컴포넌트<br>사용</b></div>
+        </div>
+
+        <div class="stat">
+          <span class="metric core-m"><em>1</em><i>정작 핵심 · 비즈니스 로직</i></span>
+          <span class="vs">VS</span>
+          <span class="metric task-m"><em>8＋</em><i>매 화면 따라붙는 부가 작업</i></span>
+        </div>
+
+        <div class="bridge"><span class="ar">›››</span> 이 부가 작업이 <b>미리 갖춰져 있다면?</b></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>
