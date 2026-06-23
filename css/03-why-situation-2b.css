@@ -49,29 +49,32 @@ body.in .cell.core{
   0%,100%{box-shadow:0 0 0 1px rgba(94,211,240,.4),0 0 18px rgba(94,211,240,.16)}
   50%{box-shadow:0 0 0 1px var(--cyan),0 0 34px rgba(94,211,240,.42)}}
 
-/* ── 비율 강조 : 본질 1 vs 부가 작업 8＋ ── */
-.stat{display:flex;align-items:center;gap:clamp(16px,2.6vw,36px);
-  opacity:0;transform:translateY(10px)}
-body.in .stat{animation:rise .6s ease forwards 1.55s}
-.metric{display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
-.metric em{font-style:normal;font-family:"JetBrains Mono",monospace;font-weight:500;
-  font-size:clamp(22px,2.8vw,32px);line-height:1}
-.metric i{font-style:normal;font-family:"Noto Sans KR",sans-serif;font-size:11.5px;color:var(--muted)}
-.metric.core-m em{color:var(--cyan)}
-.metric.task-m em{color:var(--accent)}
-.stat .vs{font-family:"JetBrains Mono",monospace;font-size:13px;letter-spacing:.1em;
-  color:var(--muted);opacity:.7}
+/* ── 표준 없이 개발했을 때의 3가지 결과 : 시간 · 일관성 · 품질 ── */
+.result{display:flex;gap:clamp(12px,1.6vw,20px);width:min(720px,84%)}
+.rc{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  text-align:center;gap:5px;padding:13px 12px;border-radius:13px;
+  background:linear-gradient(180deg,rgba(245,177,76,.13),rgba(245,177,76,.04));
+  border:1px solid var(--accent-line);
+  opacity:0;transform:translateY(12px) scale(.96)}
+body.in .rc{animation:cellpop .5s cubic-bezier(.2,.7,.2,1) forwards;
+  animation-delay:calc(var(--rd) * 1s)}
+.rc .ic{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;
+  color:var(--accent);opacity:.85}
+.rc b{font-family:"Noto Sans KR",sans-serif;font-weight:700;
+  font-size:clamp(12.5px,1.15vw,15px);color:#ffdca6;line-height:1.25}
+.rc .s{font-family:"Noto Sans KR",sans-serif;font-weight:500;
+  font-size:clamp(9.5px,.85vw,11px);line-height:1.35;color:var(--muted)}
 
 /* ── 다음 페이지로 잇는 브리지 ── */
 .bridge{display:inline-flex;align-items:center;gap:10px;
   font-family:"Noto Sans KR",sans-serif;font-size:clamp(12px,1.3vw,15px);
   color:var(--muted);opacity:0;transform:translateY(8px)}
-body.in .bridge{animation:rise .6s ease forwards 1.8s}
+body.in .bridge{animation:rise .6s ease forwards 2.15s}
 .bridge b{color:var(--accent);font-weight:700}
 .bridge .ar{font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--cyan)}
 body.in .bridge .ar{animation:apulse 1.5s ease-in-out 2.1s infinite}
 @keyframes apulse{0%,100%{transform:translateX(-2px);opacity:.7}50%{transform:translateX(3px);opacity:1}}
 
 @media (prefers-reduced-motion:reduce){
-  .field,.cell,.cell.core,.stat,.bridge{opacity:1!important;transform:none!important}
+  .field,.cell,.cell.core,.result,.rc,.bridge{opacity:1!important;transform:none!important}
 }

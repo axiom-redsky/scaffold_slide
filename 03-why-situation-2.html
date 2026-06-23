@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>왜 만들었나 — 개선 전 ②</title>
+<title>왜 만들었나 — 개선 전 ② · 표준 없이 개발하면</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/03-why-situation.css">
+<link rel="stylesheet" href="css/03-why-situation-2b.css">
 </head>
 <body class="before">
   <span class="reg tl"></span><span class="reg tr"></span>
@@ -19,16 +20,34 @@
         <div class="eyebrow">
           <span class="tag">Before · 개선 전</span>
           <span class="sep"></span>
-          <span class="step"><b>02</b> / 03</span>
+          <span class="step"><b>02</b> / 02</span>
         </div>
-        <h2>중요한 <span class="em">기반 요소 작업</span>, 매번 시간 투자를 해야함.</h2>
-        <!-- <p class="lead">프론트엔드 개발 시 매번 토대부터 새로 쌓느라, <b>정작 풀어야 할 비즈니스 로직</b>에 쓸 에너지가 분산됩니다.</p> -->
+        <h2>화면 작업에 필요한 <span class="em">표준</span>이 없으면, 매 화면 반복</h2>
+        <p class="lead">정작 만들고 싶은 <b>비즈니스 로직</b> 외에 <b>부가 작업</b>때문에 품질 저하는 물론 개발 시간도 늘어날 수 있습니다.</p>
       </div>
-      <figure class="shot shrink" data-ph="개선 전 ② · 기반 요소 부재 — img/why-before-2.png">
-        <img src="img/03_02.png" alt="공통 함수·유틸 같은 기반 요소 부재로 비즈니스 로직에 집중하지 못하는 상황"
-             onload="this.closest('.shot').classList.add('has-img')"
-             onerror="this.style.display='none'">
-      </figure>
+
+      <div class="field">
+        <!-- 표준 없이 개발했을 때 따라오는 3가지 결과 -->
+        <div class="result">
+          <div class="rc" style="--rd:1.7"><span class="ic">TIME · 시간</span><b>화면마다 반복</b><span class="s">같은 세팅을 화면마다<br>처음부터 다시</span></div>
+          <div class="rc" style="--rd:1.82"><span class="ic">SCATTER · 일관성</span><b>개발자마다 제각각</b><span class="s">API · 상태 · UI 처리 방식이<br>화면마다 다름</span></div>
+          <div class="rc" style="--rd:1.94"><span class="ic">QUALITY · 품질</span><b>품질 저하</b><span class="s">캐싱 · 에러 · 접근성 등<br>빠뜨리기 쉬움</span></div>
+        </div>
+        <!-- 본질(비즈니스 로직)을 부가 작업이 둘러싸 묻히는 모습 -->
+        <div class="matrix">
+          <div class="cell task" style="--d:.80"><span class="ic">＋</span><b>API 통신<br>요청 · 응답</b><span class="s"></span></div>
+          <div class="cell task" style="--d:.87"><span class="ic">＋</span><b>공통 함수</b></div>
+          <div class="cell task" style="--d:.94"><span class="ic">＋</span><b>유틸리티</b></div>
+
+          <div class="cell task" style="--d:1.08"><span class="ic">＋</span><b>커스텀 훅</b></div>
+          <div class="cell core"><span class="ic">CORE</span><b>순수<br>비즈니스 로직</b><span class="ctag">본질</span></div>
+          <div class="cell task" style="--d:1.15"><span class="ic">＋</span><b>라우터 설정</b><span class="s">화면 전환</span></div>
+
+          <div class="cell task" style="--d:1.22"><span class="ic">＋</span><b>상태 저장<br>· 사용</b></div>
+          <div class="cell task" style="--d:1.29"><span class="ic">＋</span><b>로딩 · 에러<br>처리</b></div>
+          <div class="cell task" style="--d:1.36"><span class="ic">＋</span><b>UI 컴포넌트<br>사용</b></div>
+        </div>
+      </div>
     </div>
   </div>
 
