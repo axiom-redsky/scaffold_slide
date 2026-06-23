@@ -44,12 +44,19 @@ body.in .lane{animation:rise .6s cubic-bezier(.2,.8,.2,1) forwards;
   animation-delay:calc(.52s + var(--i) * .12s)}
 @keyframes rise{to{opacity:1;transform:translateY(0)}}
 
-.lane-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
-.dev{font-size:12.5px;color:var(--text);font-weight:500;display:flex;align-items:center;gap:6px}
+.lane-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}
+.dev{font-size:14.5px;color:var(--ac);font-weight:700;letter-spacing:-.01em;
+  display:flex;align-items:center;gap:7px;
+  text-shadow:0 0 18px color-mix(in srgb,var(--ac) 55%,transparent)}
+.dev::first-letter{font-size:16px}
 .lock{font-size:13px;filter:saturate(.4)}
-.lane-name{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);
-  margin-bottom:11px}
-.lane-name b{color:var(--ac);font-weight:600}
+.lane-name{font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--text);
+  margin-bottom:11px;display:inline-flex;align-items:center;align-self:flex-start;
+  padding:4px 10px;border-radius:7px;font-weight:500;
+  background:color-mix(in srgb,var(--ac) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--ac) 40%,transparent);
+  box-shadow:inset 0 0 14px -8px var(--ac)}
+.lane-name b{color:var(--ac);font-weight:700;text-shadow:0 0 14px color-mix(in srgb,var(--ac) 50%,transparent)}
 .chips{display:flex;flex-wrap:wrap;gap:5px}
 .chips span{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:#aab8da;
   background:rgba(94,211,240,.05);border:1px solid var(--line);border-radius:6px;
@@ -195,7 +202,7 @@ body.in .b{animation:rise .6s ease forwards;animation-delay:calc(1.34s + var(--d
 .dom .dh b{font-weight:600}
 .dom .dh .tag{margin-left:8px;font-size:9.5px;letter-spacing:.02em;color:var(--muted);
   background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:20px;
-  padding:1px 8px;opacity:0;transition:opacity .25s ease}
+  padding:1px 8px;opacity:0;transition:opacity .25s ease,transform .25s ease,font-size .25s ease}
 .dom .sub{max-height:0;overflow:hidden;opacity:0;
   transition:max-height .32s ease,opacity .25s ease}
 
@@ -203,12 +210,17 @@ body.in .b{animation:rise .6s ease forwards;animation-delay:calc(1.34s + var(--d
 .dom:not(.active) .dh .ic{filter:saturate(0)}
 
 .dom.active{opacity:1}
-.dom.active .dh{background:linear-gradient(90deg,color-mix(in srgb,var(--pac) 22%,transparent),transparent);
-  box-shadow:inset 2px 0 0 var(--pac)}
-.dom.active .dh b{color:var(--pac)}
-.dom.active .dh .ic{filter:none}
-.dom.active .dh .tag{opacity:1;color:var(--pac);border-color:color-mix(in srgb,var(--pac) 45%,transparent);
-  background:color-mix(in srgb,var(--pac) 14%,transparent)}
+.dom.active .dh{background:linear-gradient(90deg,color-mix(in srgb,var(--pac) 26%,transparent),transparent);
+  box-shadow:inset 3px 0 0 var(--pac);padding-top:6px;padding-bottom:6px;
+  border-radius:8px;font-size:14px}
+.dom.active .dh b{color:var(--pac);font-weight:800;font-size:15.5px;letter-spacing:.01em;
+  text-shadow:0 0 16px color-mix(in srgb,var(--pac) 60%,transparent)}
+.dom.active .dh .ic{filter:none;font-size:14px}
+.dom.active .dh .tag{opacity:1;font-size:11px;font-weight:700;padding:3px 11px;
+  transform:scale(1.04);color:var(--pac);
+  border-color:color-mix(in srgb,var(--pac) 60%,transparent);
+  background:color-mix(in srgb,var(--pac) 18%,transparent);
+  box-shadow:0 0 16px -4px var(--pac)}
 .dom.active .sub{max-height:220px;opacity:1}
 .dom.active .sub .t-row{color:var(--text)}
 .dom.active .sub .t-row .ic{filter:saturate(.7)}
