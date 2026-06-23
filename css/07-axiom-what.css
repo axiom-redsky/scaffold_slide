@@ -31,6 +31,14 @@ h2 .vs-em{color:var(--cyan);text-shadow:0 0 34px rgba(94,211,240,.4);
   opacity:0;transform:translateY(14px)}
 body.in .lede{animation:rise .7s ease forwards .34s}
 .lede b{color:var(--text);font-weight:600}
+/* 핵심 한 문구 — 빨간색 하이라이트 칩 (설치 동작 강조) */
+.lede b.key{color:#FF6B6B;font-weight:700;
+  padding:2px 9px;border-radius:7px;
+  background:rgba(255,80,80,.12);
+  border:1px solid rgba(255,80,80,.45);
+  box-shadow:0 0 18px rgba(255,80,80,.22);
+  text-shadow:0 0 16px rgba(255,80,80,.4);
+  -webkit-box-decoration-break:clone;box-decoration-break:clone}
 
 /* ── combine stage ────────────────────── */
 .combine{position:relative;display:flex;align-items:center;justify-content:center;
