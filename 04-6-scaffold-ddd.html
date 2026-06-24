@@ -13,19 +13,19 @@
 <body>
   <div class="stage">
     <div class="eyebrow">react-app-scaffold · DDD 폴더구조</div>
-    <h2>도메인 기반 폴더구조로 업무별 <span class="em">충돌 최소화</span></h2>
+    <h2><span class="em">도메인 기반 폴더구조</span>로 업무별 <span class="em">충돌 최소화</span></h2>
     <p class="lead"><b>DDD(Domain Driven Design)</b> 방법론을 따라 <code>src/domains</code> 아래 업무를 독립 단위로 분리합니다.
       각 개발자는 <b>자신의 도메인에서만</b> 작업해 — 여러 도메인을 <b>동시에 개발해도 코드 충돌을 최소화</b>하고 <b>확장성</b>을 높입니다.</p>
 
     <div class="board">
       <!-- ── 도메인 레인 (격리된 병렬 작업 영역) ── -->
       <div class="lanes">
-        <div class="lane" style="--i:0;--ac:var(--cyan)" data-dom="order">
+        <div class="lane" style="--i:0;--ac:var(--cyan)" data-dom="account">
           <div class="lane-top">
             <span class="dev">👩‍💻 개발자 A</span>
             <span class="lock" title="격리">🔒</span>
           </div>
-          <div class="lane-name">domains/<b>order</b></div>
+          <div class="lane-name">domains/<b>account</b> (계좌)</div>
           <div class="chips">
             <span>api</span><span>components</span><span>pages</span>
             <span>router</span><span>store</span><span>types</span>
@@ -33,12 +33,12 @@
           <span class="peek">🔍 클릭하여 폴더 구조 보기</span>
         </div>
 
-        <div class="lane" style="--i:1;--ac:var(--gold)" data-dom="payment">
+        <div class="lane" style="--i:1;--ac:var(--gold)" data-dom="transfer">
           <div class="lane-top">
             <span class="dev">🧑‍💻 개발자 B</span>
             <span class="lock" title="격리">🔒</span>
           </div>
-          <div class="lane-name">domains/<b>payment</b></div>
+          <div class="lane-name">domains/<b>transfer</b> (이체)</div>
           <div class="chips">
             <span>api</span><span>components</span><span>pages</span>
             <span>router</span><span>store</span><span>types</span>
@@ -46,12 +46,12 @@
           <span class="peek">🔍 클릭하여 폴더 구조 보기</span>
         </div>
 
-        <div class="lane" style="--i:2;--ac:var(--violet)" data-dom="member">
+        <div class="lane" style="--i:2;--ac:var(--violet)" data-dom="loan">
           <div class="lane-top">
             <span class="dev">👨‍💻 개발자 C</span>
             <span class="lock" title="격리">🔒</span>
           </div>
-          <div class="lane-name">domains/<b>member</b></div>
+          <div class="lane-name">domains/<b>loan</b> (대출)</div>
           <div class="chips">
             <span>api</span><span>components</span><span>pages</span>
             <span>router</span><span>store</span><span>types</span>
@@ -113,8 +113,8 @@
         <div class="t-row lv1 muted"><span class="ic">📁</span>core <i>핵심 코어</i></div>
         <div class="t-row lv1"><span class="ic">📂</span>domains</div>
 
-        <div class="dom" data-dom="order">
-          <div class="t-row lv2 dh"><span class="ic">📁</span><b>order</b><span class="tag">👩‍💻 개발자 A</span></div>
+        <div class="dom" data-dom="account">
+          <div class="t-row lv2 dh"><span class="ic">📁</span><b>account</b> (계좌)<span class="tag">👩‍💻 개발자 A</span></div>
           <div class="sub">
             <div class="t-row lv3"><span class="ic">📁</span>api</div>
             <div class="t-row lv3"><span class="ic">📁</span>components</div>
@@ -125,8 +125,8 @@
           </div>
         </div>
 
-        <div class="dom" data-dom="payment">
-          <div class="t-row lv2 dh"><span class="ic">📁</span><b>payment</b><span class="tag">🧑‍💻 개발자 B</span></div>
+        <div class="dom" data-dom="transfer">
+          <div class="t-row lv2 dh"><span class="ic">📁</span><b>transfer</b> (이체)<span class="tag">🧑‍💻 개발자 B</span></div>
           <div class="sub">
             <div class="t-row lv3"><span class="ic">📁</span>api</div>
             <div class="t-row lv3"><span class="ic">📁</span>components</div>
@@ -137,8 +137,8 @@
           </div>
         </div>
 
-        <div class="dom" data-dom="member">
-          <div class="t-row lv2 dh"><span class="ic">📁</span><b>member</b><span class="tag">👨‍💻 개발자 C</span></div>
+        <div class="dom" data-dom="loan">
+          <div class="t-row lv2 dh"><span class="ic">📁</span><b>loan</b> (대출)<span class="tag">👨‍💻 개발자 C</span></div>
           <div class="sub">
             <div class="t-row lv3"><span class="ic">📁</span>api</div>
             <div class="t-row lv3"><span class="ic">📁</span>components</div>
@@ -150,7 +150,7 @@
         </div>
 
         <div class="dom dom-new" data-dom="add">
-          <div class="t-row lv2 dh"><span class="ic">➕</span><b>새 도메인</b><span class="tag">예: product</span></div>
+          <div class="t-row lv2 dh"><span class="ic">➕</span><b>새 도메인</b><span class="tag">예: card (카드)</span></div>
           <div class="sub">
             <div class="t-row lv3"><span class="ic">📁</span>api</div>
             <div class="t-row lv3"><span class="ic">📁</span>components</div>
@@ -213,8 +213,8 @@
       flow.setAttribute('viewBox','0 0 '+br.width+' '+br.height);
       var sh=pt(shareCell,br);
       var flows=[
-        {id:'f1', s:pt(lane('member'),br),  t:pt(lane('order'),br),  sh:{x:sh.x-20,cy:sh.cy}, c1:'#A78BFA', c2:'#5ED3F0', label:'order 함수·API 호출'},
-        {id:'f2', s:pt(lane('payment'),br), t:pt(lane('member'),br), sh:{x:sh.x+20,cy:sh.cy}, c1:'#F5B14C', c2:'#A78BFA', label:'공통 컴포넌트 공유'}
+        {id:'f1', s:pt(lane('loan'),br),     t:pt(lane('account'),br),  sh:{x:sh.x-20,cy:sh.cy}, c1:'#A78BFA', c2:'#5ED3F0', label:'account 잔액 조회 API'},
+        {id:'f2', s:pt(lane('transfer'),br), t:pt(lane('loan'),br),     sh:{x:sh.x+20,cy:sh.cy}, c1:'#F5B14C', c2:'#A78BFA', label:'공통 컴포넌트 공유'}
       ];
       while(flow.firstChild)flow.removeChild(flow.firstChild);
       groups=[];
