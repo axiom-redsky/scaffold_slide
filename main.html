@@ -151,11 +151,11 @@
     L.className = "layer" + (i===0?" active":"");
     const f = document.createElement("iframe");
     f.src = s.file; f.title = s.name; f.loading = "eager";
-    // forward key events from inside the slide to the parent handler,
-    // so arrow keys work even when focus is within the iframe
-    f.addEventListener("load", ()=>{
-      try{ f.contentWindow.addEventListener("keydown", onKey); }catch(err){}
-    });
+    // NOTE: key events from inside the slide are forwarded to the parent
+    // via postMessage (see each slide's keydown → 'slide:key' handler).
+    // Do NOT also attach onKey to the iframe's contentWindow here — that
+    // double-fires navigation (two slides per keypress) once focus is
+    // inside the iframe.
     L.appendChild(f); cube.appendChild(L); layers.push(L);
   });
 
@@ -193,13 +193,21 @@
     ["prev","cprev"].forEach(id=>{const el=document.getElementById(id); if(el) el.disabled=atStart;});
     ["next","cnext"].forEach(id=>{const el=document.getElementById(id); if(el) el.disabled=atEnd;});
   }
+  // seed the initial history entry (slide 1). if the page was opened with a
+  // deep-link hash like #7, jump there without pushing an extra entry.
+  const startAt = Math.min(Math.max(parseInt(location.hash.slice(1),10)-1||0, 0), SLIDES.length-1);
+  try{ history.replaceState({slide:startAt}, "", "#"+(startAt+1)); }catch(err){}
   updateHUD(); notify(0);
+  if(startAt!==0) goTo(startAt, true);
 
-  function goTo(target){
+  function goTo(target, fromHistory){
     if(target<0 || target>=SLIDES.length) return;
     if(target===dest) return;              // already there / already heading there
     if(animating) finalizeNow();           // snap the in-flight transition to its end
     if(target===cur) return;               // re-check after settling
+    // add a browser-history entry so back/forward buttons navigate slides.
+    // skip when the move itself came from a popstate (would loop / double-push).
+    if(!fromHistory){ try{ history.pushState({slide:target}, "", "#"+(target+1)); }catch(err){} }
     startTransition(cur, target);
   }
 
@@ -288,6 +296,14 @@
     }
   }
   addEventListener("keydown", onKey);
+
+  // browser back / forward buttons → navigate slides (no new history push)
+  addEventListener("popstate", e=>{
+    let i = e.state && typeof e.state.slide==="number" ? e.state.slide
+          : (parseInt(location.hash.slice(1),10)-1 || 0);
+    i = Math.min(Math.max(i, 0), SLIDES.length-1);
+    goTo(i, true);
+  });
 
   // slides forward their key presses here (works even across origins / file://)
   addEventListener("message", e=>{
