@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axiom AI — 작은 모델 최적화</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/07-4b-axiom-slm.css">
+</head>
+<body>
+  <div class="stage">
+    <header class="head">
+      <div class="eyebrow">The Axiom · 작은 모델 최적화</div>
+      <h2>작은 모델·토큰으로 인한 <span class="em">프롬프트 절약</span></h2>
+      <p class="lede">
+        폐쇄망에서는 거대 모델을 쓰기 어렵습니다. 그래서 Axiom은
+        <b>제한된 sLLM에서도 잘 동작하도록</b> 프롬프트를 정교하게 다듬습니다 —
+        <b>보낼 건 가볍게, 줄일 건 동적으로, 낭비는 차단</b>합니다.
+      </p>
+    </header>
+
+    <div class="slm">
+      <!-- ── 좌: 프롬프트 다이어트 시각화 ───────────────── -->
+      <div class="diet">
+        <div class="dt-head">
+          <span class="dt-title">프롬프트 다이어트</span>
+          <span class="dt-sub">제한된 sLLM에 맞춰 보내는 양을 줄입니다</span>
+        </div>
+
+        <div class="stack">
+          <!-- 유지되는 블록 -->
+          <div class="blk keep b1">
+            <span class="bk-ico">▣</span>
+            <span class="bk-name">System · 역할</span>
+            <span class="bk-tag">유지</span>
+          </div>
+
+          <!-- Q&A 게이팅: 편집 지시문 제거 -->
+          <div class="blk drop b2">
+            <span class="bk-ico">✎</span>
+            <span class="bk-name">편집 지시문 (multi-patch 규칙)</span>
+            <span class="bk-tag cut">단순 질의 시 제거</span>
+          </div>
+
+          <!-- 적응형 예산: RAG 컨텍스트 축소 -->
+          <div class="blk shrink b3">
+            <span class="bk-ico">▤</span>
+            <span class="bk-name">RAG 컨텍스트</span>
+            <span class="bk-fill"><i></i></span>
+            <span class="bk-tag adapt">분량 동적 축소</span>
+          </div>
+
+          <!-- thinking off -->
+          <div class="blk drop b4">
+            <span class="bk-ico">◌</span>
+            <span class="bk-name">thinking 토큰 (Qwen 추론)</span>
+            <span class="bk-tag cut">off</span>
+          </div>
+
+          <!-- 유지되는 블록 -->
+          <div class="blk keep b5">
+            <span class="bk-ico">▸</span>
+            <span class="bk-name">사용자 질문</span>
+            <span class="bk-tag">유지</span>
+          </div>
+        </div>
+
+        <!-- 토큰 미터 -->
+        <div class="meter">
+          <div class="mt-row">
+            <span class="mt-label">프롬프트 토큰</span>
+            <span class="mt-val"><b id="pct">100</b>%</span>
+          </div>
+          <div class="mt-track"><div class="mt-fill"></div></div>
+        </div>
+
+        <!-- 작은 모델 칩 -->
+        <div class="chip">
+          <span class="cp-ico">▦</span>
+          <div class="cp-text">
+            <div class="cp-name">사내 sLLM <span class="cp-sub">qwen3-coder · 제한된 자원</span></div>
+          </div>
+          <span class="cp-ok">✓ 빠른 응답</span>
+        </div>
+      </div>
+
+      <!-- ── 우: 3가지 최적화 기법 ──────────────────────── -->
+      <div class="techs">
+        <div class="tech t1">
+          <span class="tico">⊘</span>
+          <div class="ttext">
+            <div class="tt">Q&amp;A 게이팅 <span class="ttag">gating</span></div>
+            <p>단순 질의응답에는 <b>편집 지시문을 빼서</b> 가볍게 보냅니다. 코드를 고칠 때만 무거운 규칙을 싣습니다.</p>
+          </div>
+        </div>
+        <div class="tech t2">
+          <span class="tico">⇄</span>
+          <div class="ttext">
+            <div class="tt">적응형 예산 <span class="ttag">adaptive budget</span></div>
+            <p>컨텍스트가 클 때는 <b>RAG 분량을 동적으로 줄여</b> 전체 프롬프트가 무한정 커지지 않게 합니다.</p>
+          </div>
+        </div>
+        <div class="tech t3">
+          <span class="tico">◌</span>
+          <div class="ttext">
+            <div class="tt">Thinking off <span class="ttag">no-think</span></div>
+            <p>Qwen 계열의 불필요한 <b>추론(thinking) 토큰을 꺼서</b> 빈 응답·토큰 낭비를 줄입니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <span class="dot"></span>
+      <b>작은 모델 + 정교한 프롬프트</b> — 거대 모델이 없어도 폐쇄망에서 <b>빠르고 안정적인 응답</b>을 끌어냅니다.
+    </div>
+  </div>
+
+<script>
+  /* 토큰 % 카운터를 CSS 미터 루프(6s, 2s 지연)와 동기화해 무한 반복 */
+  var PCT_PERIOD=9000, PCT_DELAY=2000, pctEl=null, pctStart=0, pctRaf=0;
+  var REDUCE=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  /* 0~1 사이클 위치 → 토큰 % (미터 keyframes 20/34/92/96 과 동일) */
+  function pctAt(p){
+    if(p<0.20)return 100;
+    if(p<0.34)return 100+(45-100)*((p-0.20)/0.14);
+    if(p<0.92)return 45;     /* 92%부터는 fade-out 구간 → 안 보이는 사이 100으로 복귀 */
+    return 100;
+  }
+  function pctTick(ts){
+    if(!pctStart)pctStart=ts;
+    var t=ts-pctStart, v;
+    if(t<PCT_DELAY)v=100;
+    else v=pctAt(((t-PCT_DELAY)%PCT_PERIOD)/PCT_PERIOD);
+    if(pctEl){
+      pctEl.textContent=Math.round(v);
+      pctEl.style.color=v>72?'#F5B14C':'var(--grn)';
+    }
+    pctRaf=requestAnimationFrame(pctTick);
+  }
+  function play(){
+    document.body.classList.add('in');
+    pctEl=document.getElementById('pct');
+    if(pctRaf)cancelAnimationFrame(pctRaf);
+    if(REDUCE){if(pctEl){pctEl.textContent='100';pctEl.style.color='var(--grn)';}return;}
+    pctStart=0;
+    pctRaf=requestAnimationFrame(pctTick);
+  }
+  function reset(){
+    document.body.classList.remove('in');
+    if(pctRaf){cancelAnimationFrame(pctRaf);pctRaf=0;}
+    var p=document.getElementById('pct'); if(p)p.textContent='100';
+    void document.body.offsetWidth;
+    requestAnimationFrame(play);
+  }
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>

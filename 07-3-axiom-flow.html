@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axiom AI — 전체 처리 흐름</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  body{
+    background:
+      radial-gradient(100% 70% at 14% -10%, rgba(94,211,240,.09), transparent 55%),
+      radial-gradient(80% 80% at 100% 110%, rgba(167,139,250,.06), transparent 50%),
+      linear-gradient(rgba(94,211,240,.09) 1px,transparent 1px) 0 0/46px 46px,
+      linear-gradient(90deg,rgba(94,211,240,.09) 1px,transparent 1px) 0 0/46px 46px,
+      var(--ink);
+  }
+  .stage{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;
+    gap:clamp(10px,1.4vw,16px);padding:clamp(14px,2.2vw,30px) clamp(28px,4vw,64px)}
+  .head{max-width:1320px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.34em;
+    color:var(--cyan);text-transform:uppercase;margin-bottom:10px;
+    display:flex;align-items:center;gap:12px;opacity:0;transform:translateX(-12px)}
+  .eyebrow::before{content:"07";color:var(--gold);font-weight:500}
+  body.in .eyebrow{animation:slin .6s ease forwards .1s}
+  h2{font-family:"Space Grotesk",sans-serif;font-weight:600;
+    font-size:clamp(23px,2.9vw,40px);letter-spacing:-.02em;line-height:1.08;
+    opacity:0;transform:translateY(18px)}
+  body.in h2{animation:rise .7s ease forwards .2s}
+  h2 .em{color:var(--cyan);text-shadow:0 0 38px rgba(94,211,240,.4)}
+  .lede{margin-top:8px;max-width:88em;color:var(--muted);
+    font-size:clamp(12px,1.12vw,14.5px);line-height:1.5;opacity:0;transform:translateY(14px)}
+  body.in .lede{animation:rise .7s ease forwards .34s}
+  .lede b{color:var(--text);font-weight:600}
+
+  /* ── diagram (native HTML/CSS) ── */
+  .diagram{flex:0 1 auto;min-height:0;display:flex;align-items:center;
+    gap:clamp(14px,1.6vw,26px);
+    padding:clamp(14px,1.7vw,24px) clamp(14px,1.6vw,24px);border-radius:16px;
+    border:1px solid rgba(94,211,240,.18);background:rgba(8,14,26,.42)}
+  .legend{position:absolute;display:flex;gap:16px;font-size:clamp(10px,.92vw,12.5px);color:var(--muted)}
+  .lg{display:flex;align-items:center;gap:6px}
+  .sw{width:14px;height:14px;border-radius:4px;border:1.5px solid}
+  .sw.c{border-color:var(--cyan);background:#0b1a24}
+  .sw.v{border-color:var(--violet);background:#160f26}
+
+  .node{position:relative;display:flex;flex-direction:column;justify-content:center;gap:2px;
+    border-radius:12px;padding:clamp(7px,.85vw,13px) clamp(9px,1vw,15px);
+    border:1.7px solid rgba(94,211,240,.22);background:#0d1424;text-align:center;
+    font-family:"Space Grotesk",sans-serif;font-weight:600;
+    font-size:clamp(12.5px,1.15vw,17px);color:var(--text);line-height:1.12}
+  .node small{font-family:"Inter",sans-serif;font-weight:400;
+    font-size:clamp(9.5px,.86vw,12.5px);color:var(--muted);line-height:1.2}
+  .node.cyan{border-color:var(--cyan);background:#0b1a24}
+  .node.violet{border-color:var(--violet);background:#160f26}
+  .node.gold{border-color:var(--gold);background:#1d1608}
+  .node.decision{border-color:var(--gold);background:#101a2c;border-style:dashed}
+
+  /* entry column */
+  .entry{flex:0 0 clamp(168px,15vw,232px);display:flex;flex-direction:column;
+    justify-content:center;gap:clamp(2px,.4vw,6px);
+    opacity:0;transform:translateY(20px)}
+  body.in .entry{animation:rise .6s cubic-bezier(.2,.7,.2,1) forwards .5s}
+  .down{text-align:center;color:#5d6b8c;font-size:clamp(12px,1.1vw,16px);line-height:1}
+  .down em{display:block;font-style:normal;color:var(--cyan);font-family:"JetBrains Mono",monospace;
+    font-size:clamp(9.5px,.85vw,12px);margin-top:1px}
+
+  /* lanes */
+  .lanes{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;
+    gap:clamp(10px,1.2vw,18px);min-width:0}
+  .lane{display:flex;align-items:center;gap:clamp(6px,.8vw,13px);
+    opacity:0;transform:translateY(18px)}
+  body.in .lane.q{animation:rise .6s cubic-bezier(.2,.7,.2,1) forwards .68s}
+  body.in .lane.c{animation:rise .6s cubic-bezier(.2,.7,.2,1) forwards .84s}
+  .ltag{flex:0 0 auto;width:clamp(52px,5vw,78px);text-align:center;
+    font-family:"Space Grotesk",sans-serif;font-weight:700;letter-spacing:.02em;
+    font-size:clamp(12.5px,1.15vw,17px);color:#c8d4f0;line-height:1.12}
+  .lane.q .ltag{color:var(--cyan)}
+  .lane.c .ltag{color:var(--gold)}
+  .lane .node{flex:1 1 0}
+  .arr{flex:0 0 auto;color:#6b7aa0;font-size:clamp(15px,1.35vw,22px);line-height:1}
+
+  /* branch connector: 요청 판단 → 두 갈래 */
+  .split{position:relative;display:flex;flex-direction:column;
+    gap:clamp(10px,1.2vw,18px);padding-left:clamp(34px,3.6vw,58px)}
+  .branchsvg{position:absolute;left:0;top:0;width:clamp(34px,3.6vw,58px);height:100%;
+    overflow:visible;pointer-events:none;opacity:0}
+  body.in .branchsvg{animation:rise .6s ease forwards .74s}
+  .jarr{flex:0 0 auto;width:0;height:0;margin-right:3px;
+    border-top:7px solid transparent;border-bottom:7px solid transparent;
+    border-left:10px solid var(--cyan)}
+
+  .diet{margin-top:clamp(4px,.5vw,8px);text-align:center;border-radius:11px;
+    border:1.5px dashed rgba(94,211,240,.5);background:rgba(11,26,36,.6);
+    padding:clamp(7px,.85vw,12px);color:#bfe9f7;
+    font-size:clamp(11px,1.02vw,14px);line-height:1.3;
+    opacity:0;transform:translateY(14px)}
+  .diet b{color:#eaf6fc;font-weight:600}
+  body.in .diet{animation:rise .6s ease forwards 1s}
+
+  /* offline */
+  .offline{flex:0 0 clamp(224px,21vw,318px);display:flex;flex-direction:column;
+    gap:clamp(6px,.8vw,11px);border-radius:14px;padding:clamp(12px,1.3vw,18px);
+    border:1.7px solid rgba(245,177,76,.42);background:rgba(29,22,8,.5);
+    opacity:0;transform:translateX(16px)}
+  body.in .offline{animation:slin .6s cubic-bezier(.2,.7,.2,1) forwards .62s}
+  .off-tag{align-self:flex-start;font-family:"JetBrains Mono",monospace;font-size:clamp(9.5px,.86vw,12px);
+    letter-spacing:.06em;color:var(--gold);padding:3px 10px;border-radius:999px;
+    border:1px dashed rgba(245,177,76,.5)}
+  .off-h{font-family:"Space Grotesk",sans-serif;font-weight:600;
+    font-size:clamp(14px,1.3vw,19px);color:#f3c583;line-height:1.15}
+  .off-b{display:flex;flex-direction:column;gap:clamp(5px,.7vw,9px);margin-top:2px}
+  .off-b div{color:var(--muted);font-size:clamp(11px,1.02vw,14px);line-height:1.3}
+  .off-b b{color:var(--text);font-weight:600}
+
+  /* takeaway = key message */
+  .takeaway{display:flex;align-items:center;gap:12px;padding:11px 18px;border-radius:12px;
+    border:1px solid rgba(94,211,240,.3);
+    background:radial-gradient(120% 130% at 0% 50%,rgba(94,211,240,.1),transparent 70%);
+    color:var(--muted);font-size:clamp(12.5px,1.2vw,16px);line-height:1.4;
+    opacity:0;transform:translateY(14px)}
+  .takeaway b.cy{color:var(--cyan);font-weight:700}
+  .takeaway b.vi{color:var(--violet);font-weight:700}
+  body.in .takeaway{animation:rise .6s ease forwards 1.15s}
+  .takeaway .dot{flex:0 0 auto;width:11px;height:11px;border-radius:50%;background:var(--cyan);
+    box-shadow:0 0 16px rgba(94,211,240,.7)}
+
+  @media (max-width:1000px){
+    .diagram{flex-direction:column;align-items:stretch}
+    .entry{flex:0 0 auto;flex-direction:row;justify-content:center;flex-wrap:wrap}
+    .offline{flex:0 0 auto}
+  }
+  @media (prefers-reduced-motion:reduce){*{opacity:1!important;transform:none!important}}
+</style>
+</head>
+<body>
+  <div class="stage">
+    <header class="head">
+      <div class="eyebrow">The Axiom · 전체 흐름</div>
+      <h2>먼저 <span class="em">전체 그림</span>부터 — Axiom은 이렇게 움직입니다</h2>
+      <p class="lede">
+        입력이 들어오면 <b>서버 연결을 확인</b>하고 <b>무슨 요청인지</b> 판단합니다. <b>질문</b>이면 문서를 찾아 AI가 답하고,
+        <b>코드 수정</b>이면 프로그램이 고칠 곳·규약을 정한 뒤 AI에게 조각만 맡기고 안전 검사를 거칩니다. 서버가 없으면 <b>오프라인</b>으로 자동 전환됩니다.
+      </p>
+    </header>
+
+    <div class="diagram">
+      <!-- 입구 -->
+      <div class="entry">
+        <div class="node">프롬프트 입력</div>
+        <div class="down">▼</div>
+        <div class="node decision">서버 연결 확인<small>온라인? / 오프라인?</small></div>
+        <div class="down">▼<em>온라인</em></div>
+        <div class="node violet">요청 판단<small>질문 / 코드수정</small></div>
+      </div>
+
+      <!-- 두 갈래 -->
+      <div class="lanes">
+        <div class="split">
+          <svg class="branchsvg" viewBox="0 0 40 100" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0,50 H20 M20,24 V76 M20,24 H40 M20,76 H40" fill="none"
+              stroke="#6b7aa0" stroke-width="2" vector-effect="non-scaling-stroke"/>
+          </svg>
+          <div class="lane q">
+            <span class="jarr"></span>
+            <span class="ltag">질문<br>Q&amp;A</span>
+            <div class="node cyan">관련 문서 찾기<small>RAG · 유사도</small></div>
+            <span class="arr">→</span>
+            <div class="node violet">사내 AI 모델<small>답변 생성</small></div>
+            <span class="arr">→</span>
+            <div class="node">답변 표시</div>
+          </div>
+          <div class="lane c">
+            <span class="jarr"></span>
+            <span class="ltag">코드<br>수정</span>
+            <div class="node cyan">고칠 곳 + 규약<small>Axiom이 지정·첨부</small></div>
+            <span class="arr">→</span>
+            <div class="node violet">사내 AI 모델<small>코드 ‘조각만’ 생성</small></div>
+            <span class="arr">→</span>
+            <div class="node gold">안전 검사 → diff<small>게이트 + 타입 검사</small></div>
+          </div>
+        </div>
+        <div class="diet">AI에 보낼 땐 작은 모델에 맞춰 <b>프롬프트를 줄여 전송</b> — 프롬프트 다이어트 · thinking off</div>
+      </div>
+
+      <!-- 오프라인 -->
+      <div class="offline">
+        <span class="off-tag">◄ 서버 없을 때</span>
+        <div class="off-h">오프라인 — 모델 없이 로컬</div>
+        <div class="off-b">
+          <div>· 로컬 문서 검색 + 규칙 기반 응답</div>
+          <div>· 규칙 기반 코드 이식 / 수동 안내</div>
+          <div>· <b>데이터 외부 전송 0</b> — 폐쇄망 안전</div>
+          <div>· 서버 복구되면 온라인 흐름 자동 사용</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <span class="dot"></span>
+      <b class="cy">핵심</b> — 틀리면 안 되는 ‘결정·검증’은 <b class="cy">프로그램(파랑)</b>이, 틀려도 걸러낼 수 있는 ‘생성’만 <b class="vi">AI(보라)</b>가 맡습니다.
+    </div>
+  </div>
+
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>

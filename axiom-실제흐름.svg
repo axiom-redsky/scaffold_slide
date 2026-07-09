@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 960" font-family="'Malgun Gothic','Apple SD Gothic Neo','Segoe UI',sans-serif">
+  <defs>
+    <marker id="am" markerWidth="13" markerHeight="13" refX="8.5" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#7E8FB8"/>
+    </marker>
+    <marker id="ag" markerWidth="13" markerHeight="13" refX="8.5" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#F5B14C"/>
+    </marker>
+    <style>
+      .t{fill:#f2f5fc;font-weight:700;font-size:19px}
+      .s{fill:#a4b4d8;font-size:14px}
+      .lane{fill:#dbe4fb;font-weight:700;font-size:20px;letter-spacing:1px}
+      .box{stroke-width:2.2;rx:13}
+      .neutral{fill:#0d1424;stroke:#3a496b}
+      .cyan{fill:#0b1a24;stroke:#5ED3F0}
+      .violet{fill:#160f26;stroke:#A78BFA}
+      .gold{fill:#1d1608;stroke:#F5B14C}
+      .decision{fill:#101a2c;stroke:#F5B14C}
+      .flow{stroke:#8394ba;stroke-width:2.4;fill:none}
+      .fb{stroke:#F5B14C;stroke-width:2.4;fill:none;stroke-dasharray:7 5}
+      .fblabel{fill:#F5B14C;font-size:13.5px;font-weight:600}
+      .zonelbl{font-size:18px;font-weight:700}
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1500" height="960" fill="#070B16"/>
+
+  <!-- Header -->
+  <text x="40" y="56" fill="#f2f5fc" font-size="38" font-weight="700">Axiom AI · 실제 처리 흐름</text>
+  <text x="42" y="88" class="s" font-size="16.5">프롬프트 입력 → 응답까지 · 온·오프라인 분기와 ‘누가 처리하는가’</text>
+
+  <!-- Legend -->
+  <rect x="1040" y="16" width="430" height="86" rx="11" fill="#0b1120" stroke="#2a3550"/>
+  <rect x="1056" y="30" width="16" height="16" rx="3" class="cyan"/>
+  <text x="1082" y="44" class="s" font-size="14">프로그램이 규칙대로 처리 (확실 · 서버 계산)</text>
+  <rect x="1056" y="54" width="16" height="16" rx="3" class="violet"/>
+  <text x="1082" y="68" class="s" font-size="14">사내 AI 모델 sLLM 이 생성 (불확실)</text>
+  <rect x="1056" y="78" width="16" height="16" rx="3" class="gold"/>
+  <text x="1082" y="92" class="s" font-size="14">적용 전 안전 검사 · 게이트</text>
+
+  <!-- ONLINE ZONE -->
+  <rect x="30" y="108" width="985" height="782" rx="16" fill="#5ED3F0" fill-opacity="0.03" stroke="#5ED3F0" stroke-opacity="0.32" stroke-dasharray="7 5"/>
+  <circle cx="68" cy="140" r="7" fill="#4ade80"/>
+  <text x="84" y="147" class="zonelbl" fill="#8fe3c4">온라인 — 사내 AI 서버 연결됨</text>
+
+  <!-- OFFLINE ZONE -->
+  <rect x="1040" y="108" width="430" height="782" rx="16" fill="#F5B14C" fill-opacity="0.04" stroke="#F5B14C" stroke-opacity="0.4" stroke-dasharray="7 5"/>
+  <circle cx="1060" cy="140" r="7" fill="#F5B14C"/>
+  <text x="1076" y="147" class="zonelbl" fill="#f3c583">오프라인 — 서버 없이 로컬만</text>
+
+  <!-- input -->
+  <rect x="408" y="158" width="244" height="62" class="box neutral"/>
+  <text x="530" y="197" class="t" text-anchor="middle">프롬프트 입력</text>
+
+  <!-- health check -->
+  <line class="flow" x1="530" y1="220" x2="530" y2="247" marker-end="url(#am)"/>
+  <rect x="368" y="250" width="324" height="80" class="box decision"/>
+  <text x="530" y="285" class="t" text-anchor="middle">① 서버(사내 AI) 연결 확인</text>
+  <text x="530" y="310" class="s" text-anchor="middle">5초 내 응답? · 결과 10초 캐시</text>
+
+  <line class="flow" x1="530" y1="330" x2="530" y2="359" marker-end="url(#am)"/>
+  <text x="552" y="350" fill="#5ED3F0" font-size="14" font-weight="700">온라인 ✓</text>
+
+  <!-- intent -->
+  <rect x="378" y="362" width="304" height="72" class="box violet"/>
+  <text x="530" y="395" class="t" text-anchor="middle">② 무슨 요청인지 판단</text>
+  <text x="530" y="418" class="s" text-anchor="middle">AI 모델이 분류 · 질문 / 수정 / 생성</text>
+
+  <!-- intent -> lanes -->
+  <path class="flow" d="M458,434 C378,464 288,470 255,480" marker-end="url(#am)"/>
+  <path class="flow" d="M602,434 C682,464 760,470 760,480" marker-end="url(#am)"/>
+
+  <!-- Lane A : Q&A -->
+  <text x="255" y="468" class="lane" text-anchor="middle">질문 (Q&amp;A)</text>
+  <rect x="115" y="482" width="280" height="72" class="box cyan"/>
+  <text x="255" y="515" class="t" text-anchor="middle">관련 문서 찾아 첨부</text>
+  <text x="255" y="538" class="s" text-anchor="middle">RAG · Scaffold 질문일 때만</text>
+
+  <line class="flow" x1="255" y1="554" x2="255" y2="583" marker-end="url(#am)"/>
+  <rect x="115" y="586" width="280" height="72" class="box violet"/>
+  <text x="255" y="619" class="t" text-anchor="middle">사내 AI 모델(sLLM)로 전송</text>
+  <text x="255" y="642" class="s" text-anchor="middle">← 실제로 여기서 모델이 답변 생성</text>
+
+  <line class="flow" x1="255" y1="658" x2="255" y2="687" marker-end="url(#am)"/>
+  <rect x="115" y="690" width="280" height="60" class="box neutral"/>
+  <text x="255" y="726" class="t" text-anchor="middle">답변 표시</text>
+
+  <text x="255" y="772" class="s" text-anchor="middle" font-size="14">일반(비-Scaffold) 질문도 sLLM이 답변</text>
+  <text x="255" y="794" class="s" text-anchor="middle" font-size="14">— 관련 문서 첨부만 생략될 뿐</text>
+
+  <!-- Lane B : code edit -->
+  <text x="760" y="468" class="lane" text-anchor="middle">코드 수정</text>
+  <rect x="608" y="482" width="304" height="66" class="box cyan"/>
+  <text x="760" y="511" class="t" text-anchor="middle">고칠 곳, 프로그램이 지정</text>
+  <text x="760" y="533" class="s" text-anchor="middle">정해진 규칙대로 · 모델에 위치 안 물음</text>
+
+  <line class="flow" x1="760" y1="548" x2="760" y2="561" marker-end="url(#am)"/>
+  <rect x="608" y="564" width="304" height="66" class="box cyan"/>
+  <text x="760" y="593" class="t" text-anchor="middle">‘정답 사용법’ 자동 첨부</text>
+  <text x="760" y="615" class="s" text-anchor="middle">사내 규약 감지되면 정답 카드 삽입</text>
+
+  <line class="flow" x1="760" y1="630" x2="760" y2="643" marker-end="url(#am)"/>
+  <rect x="608" y="646" width="304" height="66" class="box violet"/>
+  <text x="760" y="675" class="t" text-anchor="middle">사내 AI 모델(sLLM)</text>
+  <text x="760" y="697" class="s" text-anchor="middle">필요한 코드 ‘조각만’ 생성</text>
+
+  <line class="flow" x1="760" y1="712" x2="760" y2="725" marker-end="url(#am)"/>
+  <rect x="608" y="728" width="304" height="66" class="box gold"/>
+  <text x="760" y="757" class="t" text-anchor="middle">적용 전 안전 검사</text>
+  <text x="760" y="779" class="s" text-anchor="middle">안전 게이트 + 타입 검사 (불합격 거부)</text>
+
+  <line class="flow" x1="760" y1="794" x2="760" y2="807" marker-end="url(#am)"/>
+  <rect x="608" y="810" width="304" height="60" class="box neutral"/>
+  <text x="760" y="846" class="t" text-anchor="middle">diff(변경분)로 제안 → 사람 확인</text>
+
+  <!-- prompt diet callout (applies to both model calls) -->
+  <rect x="410" y="582" width="194" height="106" rx="12" fill="#0b1a24" stroke="#5ED3F0" stroke-opacity="0.55" stroke-width="1.8" stroke-dasharray="5 4"/>
+  <text x="507" y="607" text-anchor="middle" fill="#bfe9f7" font-size="15" font-weight="700">프롬프트 다이어트</text>
+  <text x="507" y="627" text-anchor="middle" class="s" font-size="12.5">작은 모델(sLLM)에 맞게 축소</text>
+  <text x="424" y="650" class="s" font-size="12.5">· 편집 지시문 게이팅</text>
+  <text x="424" y="669" class="s" font-size="12.5">· RAG 분량 동적 축소</text>
+  <text x="424" y="688" class="s" font-size="12.5">· thinking 토큰 off</text>
+  <line x1="410" y1="622" x2="396" y2="622" stroke="#5ED3F0" stroke-opacity="0.5" stroke-width="1.6" stroke-dasharray="4 3"/>
+  <line x1="604" y1="672" x2="620" y2="679" stroke="#5ED3F0" stroke-opacity="0.5" stroke-width="1.6" stroke-dasharray="4 3"/>
+
+  <!-- health -> offline (server down) -->
+  <path class="fb" d="M692,272 C832,232 962,216 1055,215" marker-end="url(#ag)"/>
+  <text x="864" y="218" class="fblabel" text-anchor="middle">서버 없음 → 오프라인</text>
+
+  <!-- mid-stream fallback -->
+  <path class="fb" d="M914,672 C1004,658 1014,360 1058,236" marker-end="url(#ag)"/>
+  <text x="1002" y="716" class="fblabel" text-anchor="middle">온라인 중 모델 응답 실패 시</text>
+  <text x="1002" y="735" class="fblabel" text-anchor="middle">→ 오프라인 ‘요청 판단’으로 재진입</text>
+
+  <!-- OFFLINE content -->
+  <rect x="1058" y="180" width="394" height="78" class="box gold"/>
+  <text x="1255" y="212" class="t" text-anchor="middle">요청 판단 (로컬 규칙·임베딩)</text>
+  <text x="1255" y="236" class="s" text-anchor="middle">사내 AI 모델 안 씀 — 확장이 직접 분류</text>
+
+  <path class="flow" d="M1255,258 L1255,274 L1152,274 L1152,290" marker-end="url(#am)"/>
+  <path class="flow" d="M1255,258 L1255,274 L1355,274 L1355,290" marker-end="url(#am)"/>
+
+  <rect x="1055" y="293" width="194" height="130" class="box neutral"/>
+  <text x="1152" y="323" class="lane" text-anchor="middle" font-size="17">질문</text>
+  <text x="1152" y="352" class="s" text-anchor="middle" font-size="14">로컬 문서 검색</text>
+  <text x="1152" y="375" class="s" text-anchor="middle" font-size="14">+ 규칙 기반 답변</text>
+  <text x="1152" y="400" class="s" text-anchor="middle" font-size="14">(모델 호출 없음)</text>
+
+  <rect x="1258" y="293" width="194" height="130" class="box neutral"/>
+  <text x="1355" y="323" class="lane" text-anchor="middle" font-size="17">코드 수정</text>
+  <text x="1355" y="352" class="s" text-anchor="middle" font-size="14">규칙 기반 자동 이식</text>
+  <text x="1355" y="375" class="s" text-anchor="middle" font-size="14">또는 수동 체크리스트</text>
+  <text x="1355" y="400" class="s" text-anchor="middle" font-size="14">(모델 호출 없음)</text>
+
+  <rect x="1055" y="456" width="397" height="120" class="box gold" fill-opacity="0.5"/>
+  <text x="1075" y="487" class="s" font-size="14.5">· 사내 AI 모델(sLLM) 호출 없음</text>
+  <text x="1075" y="515" class="s" font-size="14.5">· 데이터 외부 전송 0 — 폐쇄망 안전</text>
+  <text x="1075" y="543" class="s" font-size="14.5">· 실패 사례는 로컬 파일에만 기록(phone-home ✕)</text>
+
+  <text x="1255" y="622" fill="#f3c583" font-size="16" font-weight="700" text-anchor="middle">AI 서버가 복구되면 → 위 온라인 흐름을 자동 사용</text>
+
+  <!-- Bottom key message -->
+  <rect x="30" y="906" width="1440" height="54" rx="13" fill="#0d1424" stroke="#3a496b"/>
+  <text x="750" y="940" text-anchor="middle" font-size="19.5" fill="#f2f5fc">
+    <tspan font-weight="700" fill="#5ED3F0">핵심 — </tspan>틀리면 안 되는 ‘결정·검증’은 <tspan font-weight="700" fill="#5ED3F0">프로그램(파랑)</tspan>이, 틀려도 걸러낼 수 있는 ‘생성’만 <tspan font-weight="700" fill="#A78BFA">AI(보라)</tspan>가 맡습니다
+  </text>
+</svg>

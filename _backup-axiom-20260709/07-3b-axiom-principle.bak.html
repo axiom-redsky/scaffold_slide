@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axiom AI — 핵심 원리</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  body{
+    background:
+      radial-gradient(90% 70% at 8% -10%, rgba(94,211,240,.10), transparent 55%),
+      radial-gradient(90% 80% at 100% 110%, rgba(167,139,250,.09), transparent 52%),
+      linear-gradient(rgba(94,211,240,.08) 1px,transparent 1px) 0 0/46px 46px,
+      linear-gradient(90deg,rgba(94,211,240,.08) 1px,transparent 1px) 0 0/46px 46px,
+      var(--ink);
+  }
+  .stage{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;
+    gap:clamp(12px,1.7vw,20px);padding:clamp(20px,3vw,42px) clamp(40px,6vw,90px)}
+  .head{max-width:1180px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.34em;
+    color:var(--cyan);text-transform:uppercase;margin-bottom:12px;
+    display:flex;align-items:center;gap:12px;opacity:0;transform:translateX(-12px)}
+  .eyebrow::before{content:"07";color:var(--gold);font-weight:500}
+  body.in .eyebrow{animation:slin .6s ease forwards .1s}
+  h2{font-family:"Space Grotesk",sans-serif;font-weight:600;
+    font-size:clamp(24px,3.1vw,42px);letter-spacing:-.02em;line-height:1.08;
+    opacity:0;transform:translateY(18px)}
+  body.in h2{animation:rise .7s ease forwards .2s}
+  h2 .cy{color:var(--cyan);text-shadow:0 0 34px rgba(94,211,240,.4)}
+  h2 .vi{color:var(--violet);text-shadow:0 0 34px rgba(167,139,250,.4)}
+  .lede{margin-top:9px;max-width:76em;color:var(--muted);
+    font-size:clamp(12px,1.15vw,14.5px);line-height:1.55;opacity:0;transform:translateY(14px)}
+  body.in .lede{animation:rise .7s ease forwards .34s}
+  .lede b{color:var(--text);font-weight:600}
+
+  .split{display:flex;align-items:stretch;gap:clamp(14px,2vw,30px)}
+  .col{flex:1 1 0;border-radius:16px;padding:clamp(16px,1.8vw,24px);
+    display:flex;flex-direction:column;gap:clamp(10px,1.1vw,14px);
+    opacity:0;transform:translateY(22px)}
+  body.in .col.prog{animation:rise .65s cubic-bezier(.2,.7,.2,1) forwards .5s}
+  body.in .col.ai{animation:rise .65s cubic-bezier(.2,.7,.2,1) forwards .66s}
+  .col.prog{border:1px solid rgba(94,211,240,.32);background:rgba(94,211,240,.05)}
+  .col.ai{border:1px solid rgba(167,139,250,.34);background:rgba(167,139,250,.06);
+    justify-content:flex-start}
+  .col-head{display:flex;flex-direction:column;gap:5px;padding-bottom:6px}
+  .badge{align-self:flex-start;font-family:"JetBrains Mono",monospace;font-size:11px;
+    letter-spacing:.12em;text-transform:uppercase;padding:4px 11px;border-radius:999px}
+  .prog .badge{color:var(--cyan);border:1px solid rgba(94,211,240,.45);background:rgba(94,211,240,.1)}
+  .ai .badge{color:var(--violet);border:1px solid rgba(167,139,250,.45);background:rgba(167,139,250,.1)}
+  .col-title{font-family:"Space Grotesk",sans-serif;font-weight:600;
+    font-size:clamp(17px,1.7vw,23px);color:var(--text)}
+  .col-sub{color:var(--muted);font-size:clamp(11.5px,1.05vw,13.5px)}
+  .col-sub b{color:var(--text)}
+
+  .item{display:flex;align-items:center;gap:12px;padding:clamp(9px,1vw,13px) clamp(11px,1.1vw,15px);
+    border-radius:11px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02)}
+  .prog .item{border-color:rgba(94,211,240,.18)}
+  .ico{flex:0 0 auto;display:grid;place-items:center;width:34px;height:34px;border-radius:9px;
+    font-size:17px}
+  .prog .ico{color:var(--cyan);border:1px solid rgba(94,211,240,.4);background:rgba(94,211,240,.1)}
+  .ai .ico{color:var(--violet);border:1px solid rgba(167,139,250,.4);background:rgba(167,139,250,.1)}
+  .itx{display:flex;flex-direction:column;gap:2px}
+  .itt{font-weight:600;font-size:clamp(13px,1.2vw,15.5px);color:var(--text)}
+  .its{color:var(--muted);font-size:clamp(11px,1vw,12.5px)}
+
+  /* AI side — one big single item to show asymmetry */
+  .ai .solo{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:12px;
+    align-items:center;text-align:center;border-radius:13px;padding:clamp(14px,1.6vw,22px);
+    border:1px solid rgba(167,139,250,.28);background:rgba(167,139,250,.05)}
+  .ai .solo .big{display:grid;place-items:center;width:60px;height:60px;border-radius:16px;
+    font-size:30px;color:var(--violet);border:1px solid rgba(167,139,250,.45);background:rgba(167,139,250,.12)}
+  .ai .solo .st{font-family:"Space Grotesk",sans-serif;font-weight:600;
+    font-size:clamp(15px,1.5vw,20px);color:var(--text)}
+  .ai .solo .ss{color:var(--muted);font-size:clamp(11.5px,1.05vw,13.5px);line-height:1.5;max-width:22em}
+  .ai .solo .only{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;
+    color:var(--violet);padding:4px 12px;border-radius:999px;border:1px dashed rgba(167,139,250,.5)}
+
+  .takeaway{display:flex;align-items:center;gap:12px;padding:12px 18px;border-radius:12px;
+    border:1px solid rgba(245,177,76,.3);
+    background:radial-gradient(120% 130% at 0% 50%,rgba(245,177,76,.1),transparent 70%);
+    color:var(--muted);font-size:clamp(12px,1.15vw,14.5px);line-height:1.45;
+    opacity:0;transform:translateY(14px)}
+  .takeaway b{color:var(--gold);font-weight:600}
+  body.in .takeaway{animation:rise .6s ease forwards 1s}
+  .takeaway .dot{flex:0 0 auto;width:11px;height:11px;border-radius:50%;background:var(--gold);
+    box-shadow:0 0 16px rgba(245,177,76,.7)}
+  @media (max-width:900px){.split{flex-direction:column}}
+  @media (prefers-reduced-motion:reduce){*{opacity:1!important;transform:none!important}}
+</style>
+</head>
+<body>
+  <div class="stage">
+    <header class="head">
+      <div class="eyebrow">The Axiom · 핵심 원리</div>
+      <h2><span class="cy">결정</span>은 프로그램이, <span class="vi">생성</span>은 AI 조각 하나만</h2>
+      <p class="lede">
+        Axiom을 관통하는 원리는 하나입니다 — <b>틀리면 안 되는 '결정·검증'은 프로그램이 규칙대로</b> 처리하고,
+        <b>AI 모델에게는 '의미 있는 코드 조각 하나'만</b> 맡깁니다. 편집의 안전을 <b>모델 성능이 아니라 프로그램이</b> 보장하죠.
+      </p>
+    </header>
+
+    <div class="split">
+      <!-- 프로그램 -->
+      <div class="col prog">
+        <div class="col-head">
+          <span class="badge">프로그램 · 결정론</span>
+          <div class="col-title">프로그램이 맡는 것 — 결정·검증</div>
+          <div class="col-sub">같은 입력이면 <b>항상 같은 결과</b> · 검증된 로직은 안 틀림</div>
+        </div>
+        <div class="item">
+          <span class="ico">▤</span>
+          <div class="itx"><div class="itt">구조 분해</div><div class="its">파일을 규칙대로 섹션으로 나눔</div></div>
+        </div>
+        <div class="item">
+          <span class="ico">⌖</span>
+          <div class="itx"><div class="itt">고칠 곳 결정</div><div class="its">편집 위치를 프로그램이 콕 집음 (모델에 위치 안 물음)</div></div>
+        </div>
+        <div class="item">
+          <span class="ico">◆</span>
+          <div class="itx"><div class="itt">정답 규약 주입</div><div class="its">사내 API 사용법 '정답지'를 트리거로 자동 첨부</div></div>
+        </div>
+        <div class="item">
+          <span class="ico">⛉</span>
+          <div class="itx"><div class="itt">안전 검사</div><div class="its">게이트 + 타입 검사로 불합격품 차단</div></div>
+        </div>
+      </div>
+
+      <!-- AI -->
+      <div class="col ai">
+        <div class="col-head">
+          <span class="badge">AI 모델 · 생성</span>
+          <div class="col-title">AI가 맡는 것 — 생성 (딱 하나)</div>
+          <div class="col-sub">틀려도 <b>프로그램이 걸러낼 수 있는</b> 부분만</div>
+        </div>
+        <div class="solo">
+          <span class="big">✦</span>
+          <span class="only">단 한 가지</span>
+          <div class="st">의미 있는 코드 '조각' 하나 생성</div>
+          <div class="ss">또는 프로그램이 제시한 후보 중 <b>번호만 선택</b>.<br>파일 전체 재작성은 <b>절대 맡기지 않습니다.</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <span class="dot"></span>
+      그래서 <b>작은 모델(sLLM)로도 구조가 안 깨집니다</b> — 편집 무결성이 모델 신뢰도와 분리돼, 약한 모델에서도 안전합니다.
+    </div>
+  </div>
+
+<script>
+  function play(){document.body.classList.add('in');}
+  function reset(){document.body.classList.remove('in');void document.body.offsetWidth;requestAnimationFrame(play);}
+  if(document.readyState==='complete')requestAnimationFrame(play);
+  else window.addEventListener('load',()=>requestAnimationFrame(play));
+  window.addEventListener('message',e=>{if(e&&e.data&&e.data.type==='slide:enter')reset();});
+  window.addEventListener('keydown',function(e){var k=e.key,nav=['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','PageUp','PageDown',' ','Home','End','f','F'];if(nav.indexOf(k)>-1){e.preventDefault();if(parent!==window)parent.postMessage({type:'slide:key',key:k},'*');}});
+</script>
+</body>
+</html>
